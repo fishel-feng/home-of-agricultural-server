@@ -1,0 +1,13 @@
+package com.fx.homeofagriculturalserver.entity;
+
+import lombok.Data;
+
+@Data
+public class Type {
+    private Integer id;
+
+    private String area;
+
+    private String specific;
+
+}

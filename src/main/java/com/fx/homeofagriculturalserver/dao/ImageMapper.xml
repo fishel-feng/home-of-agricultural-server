@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fx.homeofagriculturalserver.dao.ImageMapper">
+    <resultMap id="BaseResultMap" type="com.fx.homeofagriculturalserver.entity.Image">
+        <id column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="target_id" property="targetId" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    content, type, target_id
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from image
+        where content = #{content,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByQuestion" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from image
+        where type=0 and target_id = #{questionId}
+    </select>
+    <delete id="deleteByQuestion" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from image
+        where type=0 and target_id=#{questionId}
+    </delete>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from image
+    where content = #{content,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.fx.homeofagriculturalserver.entity.Image">
+    insert into image (content, type, target_id
+      )
+    values (#{content,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{targetId,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.fx.homeofagriculturalserver.entity.Image">
+        insert into image
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="content != null">
+                content,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="targetId != null">
+                target_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+            <if test="targetId != null">
+                #{targetId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.fx.homeofagriculturalserver.entity.Image">
+        update image
+        <set>
+            <if test="type != null">
+                type = #{type,jdbcType=TINYINT},
+            </if>
+            <if test="targetId != null">
+                target_id = #{targetId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where content = #{content,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.fx.homeofagriculturalserver.entity.Image">
+    update image
+    set type = #{type,jdbcType=TINYINT},
+      target_id = #{targetId,jdbcType=INTEGER}
+    where content = #{content,jdbcType=VARCHAR}
+  </update>
+</mapper>

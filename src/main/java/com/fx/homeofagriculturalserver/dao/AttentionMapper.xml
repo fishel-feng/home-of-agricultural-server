@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fx.homeofagriculturalserver.dao.AttentionMapper" >
+  <resultMap id="BaseResultMap" type="com.fx.homeofagriculturalserver.entity.AttentionKey" >
+    <id column="user_tel" property="userTel" jdbcType="BIGINT" />
+    <id column="target_tel" property="targetTel" jdbcType="BIGINT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.fx.homeofagriculturalserver.entity.AttentionKey" >
+    delete from attention
+    where user_tel = #{userTel,jdbcType=BIGINT}
+      and target_tel = #{targetTel,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.fx.homeofagriculturalserver.entity.AttentionKey" >
+    insert into attention (user_tel, target_tel)
+    values (#{userTel,jdbcType=BIGINT}, #{targetTel,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fx.homeofagriculturalserver.entity.AttentionKey" >
+    insert into attention
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userTel != null" >
+        user_tel,
+      </if>
+      <if test="targetTel != null" >
+        target_tel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userTel != null" >
+        #{userTel,jdbcType=BIGINT},
+      </if>
+      <if test="targetTel != null" >
+        #{targetTel,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>
