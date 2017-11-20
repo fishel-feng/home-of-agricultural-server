@@ -1,5 +1,5 @@
 {
-  "name": "y",
+  "name": "home-of-agricultural-server",
   "version": "1.0.0",
   "description": "the server of an application ",
   "private": true,
@@ -37,7 +37,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/fx109138/home-of-agricultural-server.git"
   },
   "author": "fx",
   "license": "MIT"
