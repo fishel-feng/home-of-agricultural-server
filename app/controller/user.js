@@ -21,6 +21,20 @@ class UserController extends Controller {
     const user = await this.service.user.signup(tel, password, code);
     this.ctx.body = user;
   }
+
+  async signin() {
+    const {
+      tel,
+      password,
+    } = this.ctx.request.body;
+    if (!tel || !password) {
+      throw new Error('参数错误');
+    }
+    const status = await this.service.user.signin(tel, password);
+    this.ctx.body = {
+      status,
+    };
+  }
 }
 
 module.exports = UserController;

@@ -23,12 +23,12 @@ module.exports = appInfo => {
     },
   };
 
-  // config.aliSms = {
-  //   client: {
-  //     accessKeyId: 'LTAIrJINHCYQmG1z',
-  //     secretAccessKey: 'nFj6YLN55ukrEC51nFK2KH8n9yN15h',
-  //   },
-  // };
+  config.aliSms = {
+    client: {
+      accessKeyId: 'LTAIC2RTwc2egSTi',
+      secretAccessKey: '4UyjdFtn9ubES63V5MJtRW8A7e7QjV',
+    },
+  };
 
   config.security = {
     csrf: {

@@ -6,7 +6,7 @@ module.exports = app => {
   // const appendUserDetail = app.middlewares.auth.appendUserDetail({});
 
   app.post('/user/signup', app.controller.user.signup);
-  // app.post('/user/signin', app.controller.user.signin);
+  app.post('/user/signin', app.controller.user.signin);
   // app.post('/user/reset', app.controller.user.resetPassword);
   // app.post('/user/code', app.controller.user.sendCode);
 
