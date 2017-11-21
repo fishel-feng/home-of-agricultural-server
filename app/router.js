@@ -9,6 +9,7 @@ module.exports = app => {
   app.post('/user/signin', app.controller.user.signin);
   // app.post('/user/resetPassword', app.controller.user.resetPassword);
   // app.post('/user/sendCode', app.controller.user.sendCode);
+  
 
   // app.post('/circle/addCircle', app.controller.circle.addCircle);
   // app.post('/circle/addComment', app.controller.addComment);
