@@ -3,6 +3,11 @@
 module.exports = appInfo => {
   const config = exports = {};
 
+  config.keys = 'W6ujBEqz2FtGCoFT';
+  config.accountCookieId = 'aid';
+  config.cookieDomain = 'localhost';
+  config.accountCookieExpires = 2592000;
+
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1511172666978_5691';
 
