@@ -11,6 +11,7 @@
     "egg-redis": "^1.0.2",
     "egg-scripts": "^2.1.0",
     "egg-validate": "^1.0.0",
+    "err1st": "^0.2.7",
     "jsonwebtoken": "^8.1.0"
   },
   "devDependencies": {

@@ -1,11 +1,14 @@
 'use strict';
-
+const Err = require('err1st');
 const Controller = require('egg').Controller;
 
 class UserController extends Controller {
   // todo 发送验证码
   async sendCode() {
-    const code = await this.service.user.sendCode();
+    const code = 0;
+    if (code === 0) {
+      throw new Err('NOT_FOUND');
+    }
     console.log(code);
   }
 
