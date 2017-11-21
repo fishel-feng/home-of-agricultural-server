@@ -12,6 +12,9 @@ class UserController extends Controller {
     console.log(code);
   }
 
+  /**
+   * 用户注册
+   */
   async signup() {
     const {
       tel,
