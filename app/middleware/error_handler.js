@@ -3,7 +3,7 @@
 const Err = require('err1st');
 
 module.exports = () => {
-  return async function errorHandler(next) {
+  return async next => {
     try {
       await next;
     } catch (err) {

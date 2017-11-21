@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = () => {
-  return async function(next) {
+  return async next => {
     // const { accountCookieId } = this.app.config;
     // let accountToken = this.cookies.get(accountCookieId);
 
