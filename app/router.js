@@ -11,9 +11,19 @@ module.exports = app => {
   // app.post('/user/sendCode', app.controller.user.sendCode);
 
   // app.post('/circle/addCircle', app.controller.circle.addCircle);
-  // app.post('/circle/addComment', app.controller.addComment);
+  // app.post('/circle/addComment', app.controller.circle.addComment);
   // app.post('/circle/deleteCircle', app.controller.circle.deleteCircle);
   // app.post('/circle/deleteComment', app.controller.circle.deleteComment);
 
+  // app.post('/question/addQuestion', app.controller.question.addQuestion);
+  // app.post('/question/addAnswer', app.controller.question.addAnswer);
+  // app.post('/question/deleteQuestion', app.controller.question.deleteQuestion);
+  // app.post('/question/deleteAnswer', app.controller.question.deleteAnswer);
+
+  // app.get('/news/getAll', app.controller.news.getAll);
+
+  // app.get('/wiki/getAll', app.controller.wiki.getAll);
+
+  // app.post('/admin/login', app.controller.admin.login);
 
 };
