@@ -3,7 +3,7 @@
 module.exports = app => {
   // const verifyAccount = app.middlewares.verifyAccount({});
   // const appendUserDetail = app.middlewares.auth.appendUserDetail({});
-
+  app.get('/', app.controller.user.index);
   app.post('/user/signup', app.controller.user.signup);
   app.post('/user/signin', app.controller.user.signin);
   // app.post('/user/resetPassword', app.controller.user.resetPassword);

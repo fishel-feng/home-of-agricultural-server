@@ -27,13 +27,13 @@ module.exports = app => {
       // 2.验证码正确，检索数据库，查看手机号手否存在，存在则返回错误
       // 3.存储用户tel+密码，生成token返回，注册成功
       if (code !== '2222') {
-        throw new Error('验证码错误');
+        throw new Err('VERIFY_FAILED');
       }
       const user = await User.find({
         tel,
       });
       if (user.length) {
-        throw new Err('NOT_FOUND');
+        throw new Err('BIND_CONFLICT');
       }
       await new User({
         tel,

@@ -1,16 +1,15 @@
 'use strict';
-const Err = require('err1st');
 const Controller = require('egg').Controller;
-
 class UserController extends Controller {
   async index() {
-    this.ctx.body = 'Hello world';
+    throw new Error('NOT_FOUND');
+    // this.ctx.body = 'Hello world';
   }
   // todo 发送验证码
   async sendCode() {
     const code = 0;
     if (code === 0) {
-      throw new Err('NOT_FOUND');
+      throw new Error('BIND_CONFLICT');
     }
     console.log(code);
   }
