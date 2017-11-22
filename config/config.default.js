@@ -13,7 +13,7 @@ module.exports = appInfo => {
 
   // add your config here
   config.middleware = [];
-  config.middleware = [ 'errorHandler' ];
+  config.middleware = [ 'errorHandler', 'bodyFormat' ];
 
   config.mongoose = {
     url: 'mongodb://127.0.0.1:27017/home-of-agricultural',
