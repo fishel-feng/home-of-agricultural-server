@@ -1,4 +1,5 @@
 'use strict';
+const Err = require('err1st');
 
 module.exports = app => {
   const {
@@ -28,13 +29,18 @@ module.exports = app => {
       if (code !== '2222') {
         throw new Error('验证码错误');
       }
+      const user = await User.find({
+        tel,
+      });
+      if (user.length) {
+        throw new Err('NOT_FOUND');
+      }
       await new User({
         tel,
         password,
       }).save();
-      return await User.find({
-        tel,
-      });
+      const token = await this.signin(tel, password);
+      return token;
     }
 
     /**
@@ -47,16 +53,17 @@ module.exports = app => {
       // 登录逻辑
       // 1.查数据库，验证用户名密码是否匹配，不匹配则返回错误
       // 2.生成token返回，登陆成功
-      const user = await User.find({
-        tel,
-      });
-      if (user.length === 0) {
-        return 'no user';
-      }
-      if (user[0].password === password) {
-        return 'success';
-      }
-      return 'fail';
+      // const user = await User.find({
+      //   tel,
+      // });
+      // if (user.length === 0) {
+      //   return 'no user';
+      // }
+      // if (user[0].password === password) {
+      //   return 'success';
+      // }
+      // return 'fail';
+      return `token+${tel}+${password}`;
     }
   }
   return UserService;

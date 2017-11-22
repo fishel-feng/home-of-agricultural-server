@@ -3,6 +3,9 @@ const Err = require('err1st');
 const Controller = require('egg').Controller;
 
 class UserController extends Controller {
+  async index() {
+    this.ctx.body = 'Hello world';
+  }
   // todo 发送验证码
   async sendCode() {
     const code = 0;
@@ -24,8 +27,8 @@ class UserController extends Controller {
     if (!tel || !password || !code) {
       throw new Error('参数错误');
     }
-    const user = await this.service.user.signup(tel, password, code);
-    this.ctx.body = user;
+    const token = await this.service.user.signup(tel, password, code);
+    this.ctx.body = token;
   }
 
   async signin() {
