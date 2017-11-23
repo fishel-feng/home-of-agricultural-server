@@ -1,9 +1,11 @@
 'use strict';
 
 module.exports = app => {
-  // const verifyAccount = app.middlewares.verifyAccount({});
-  // const appendUserDetail = app.middlewares.auth.appendUserDetail({});
-  // app.get('/', app.controller.user.index);
+
+  app.get('/news/getIndex', app.controller.news.getIndex);
+  app.get('/news/getArticleInfo/:id', app.controller.news.getArticleInfo);
+  app.get('/news/getAtricleList/:name', app.controller.news.getAtricleList);
+
   app.post('/user/signup', app.controller.user.signup);
   app.post('/user/signin', app.controller.user.signin);
   // app.post('/user/resetPassword', app.controller.user.resetPassword);
@@ -18,10 +20,6 @@ module.exports = app => {
   // app.post('/question/addAnswer', app.controller.question.addAnswer);
   // app.post('/question/deleteQuestion', app.controller.question.deleteQuestion);
   // app.post('/question/deleteAnswer', app.controller.question.deleteAnswer);
-
-  app.get('/news/getIndex', app.controller.news.getIndex);
-  app.get('/news/getArticleInfo/:id', app.controller.news.getArticleInfo);
-  app.get('/news/getAtricleList/:name', app.controller.news.getAtricleList);
 
   // app.get('/wiki/getAll', app.controller.wiki.getAll);
 
