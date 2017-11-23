@@ -18,26 +18,39 @@ class UserController extends Controller {
    * 用户注册
    */
   async signup() {
+    this.ctx.validate({
+      tel: {
+        type: 'string',
+      },
+      password: {
+        type: 'string',
+      },
+      code: {
+        type: 'string',
+      },
+    });
     const {
       tel,
       password,
       code,
     } = this.ctx.request.body;
-    if (!tel || !password || !code) {
-      throw new Error('参数错误');
-    }
     const token = await this.service.user.signup(tel, password, code);
     this.ctx.body = token;
   }
 
   async signin() {
+    this.ctx.validate({
+      tel: {
+        type: 'string',
+      },
+      password: {
+        type: 'string',
+      },
+    });
     const {
       tel,
       password,
     } = this.ctx.request.body;
-    if (!tel || !password) {
-      throw new Error('参数错误');
-    }
     const status = await this.service.user.signin(tel, password);
     this.ctx.body = {
       status,
