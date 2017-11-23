@@ -6,6 +6,16 @@ class NewsController extends Controller {
     const result = await this.service.news.getIndex();
     this.ctx.body = result;
   }
+  async getArticleInfo() {
+    const articleId = this.ctx.params.id;
+    const result = await this.service.news.getArticleInfo(articleId);
+    this.ctx.body = result;
+  }
+  async getAtricleList() {
+    const itemName = this.ctx.params.name;
+    const result = await this.service.news.getAtricleList(itemName);
+    this.ctx.body = result;
+  }
 }
 
 module.exports = NewsController;

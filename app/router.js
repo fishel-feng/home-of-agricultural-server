@@ -20,6 +20,8 @@ module.exports = app => {
   // app.post('/question/deleteAnswer', app.controller.question.deleteAnswer);
 
   app.get('/news/getIndex', app.controller.news.getIndex);
+  app.get('/news/getArticleInfo/:id', app.controller.news.getArticleInfo);
+  app.get('/news/getAtricleList/:name', app.controller.news.getAtricleList);
 
   // app.get('/wiki/getAll', app.controller.wiki.getAll);
 
