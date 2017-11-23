@@ -1,10 +1,10 @@
 'use strict';
 const Controller = require('egg').Controller;
 class UserController extends Controller {
-  async index() {
-    throw new Error('NOT_FOUND');
-    // this.ctx.body = 'Hello world';
-  }
+  // async index() {
+  //   throw new Error('NOT_FOUND');
+  //   // this.ctx.body = 'Hello world';
+  // }
   // todo 发送验证码
   async sendCode() {
     const code = 0;
