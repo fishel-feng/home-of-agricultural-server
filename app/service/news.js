@@ -6,7 +6,7 @@ module.exports = app => {
     getArticleId(articleUrl) {
       return articleUrl.slice(articleUrl.lastIndexOf('/') + 1, -5);
     }
-    async getIndex() {
+    async getArticleIndex() {
       const result = await this.ctx.curl(baseUrl, {
         timeout: 3000,
         dataType: 'text',

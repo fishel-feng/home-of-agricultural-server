@@ -2,8 +2,8 @@
 
 const Controller = require('egg').Controller;
 class NewsController extends Controller {
-  async getIndex() {
-    const result = await this.service.news.getIndex();
+  async getArticleIndex() {
+    const result = await this.service.news.getArticleIndex();
     this.ctx.body = result;
   }
   async getArticleInfo() {
