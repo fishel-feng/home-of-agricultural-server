@@ -2,22 +2,52 @@
 
 const Controller = require('egg').Controller;
 
-class UserController extends Controller {
+class CircleController extends Controller {
   async addCircle() {
-    return 0;
+    // const id = this.ctx.params.id;
+    // if (!id) {
+    //   this.ctx.body = {
+    //     index: 1,
+    //   };
+    //   return;
+    // }
+    // this.ctx.body = {
+    //   index: 2,
+    // };
   }
-
-  async addComment() {
-    return 0;
-  }
-
   async deleteCircle() {
-    return 0;
+    //
   }
-
+  async addComment() {
+    //
+  }
+  async addInnerComment() {
+    //
+  }
   async deleteComment() {
-    return 0;
+    //
+  }
+  async deleteInnerComment() {
+    //
+  }
+  async giveLike() {
+    //
+  }
+  async cancelLike() {
+    //
+  }
+  async getCircleList() {
+    //
+  }
+  async getComment() {
+    //
+  }
+  async getInnerComment() {
+    //
+  }
+  async getLikeList() {
+    //
   }
 }
 
-module.exports = UserController;
+module.exports = CircleController;
