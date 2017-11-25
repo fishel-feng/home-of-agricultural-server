@@ -58,10 +58,8 @@ module.exports = app => {
   app.get('/circle/getLikeList', app.controller.circle.getLikeList);
 
   // ----------问答模块------------
-  // app.post('/question/addQuestion', app.controller.question.addQuestion);
-  // app.post('/question/addAnswer', app.controller.question.addAnswer);
-  // app.post('/question/deleteQuestion', app.controller.question.deleteQuestion);
-  // app.post('/question/deleteAnswer', app.controller.question.deleteAnswer);
+  // 获取专家列表
+  app.get('/question/getExpertList', app.controller.question.getExpertList);
 
 
   // *************管理后台接口************
