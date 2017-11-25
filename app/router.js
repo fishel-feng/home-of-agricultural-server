@@ -9,15 +9,19 @@ module.exports = app => {
   // 用户登录
   app.post('/user/signin', app.controller.user.signin);
   // 重置密码
-  // app.post('/user/resetPassword', app.controller.user.resetPassword);
+  app.post('/user/resetPassword', app.controller.user.resetPassword);
   // 发送验证码
-  // app.post('/user/sendCode', verifyAccount, app.controller.user.sendCode);
+  app.post('/user/sendVerifyCode', app.controller.user.sendVerifyCode);
   // 修改用户资料
-  // app.post('/user/modifyUserInfo', app.controller.user.modifyUserInfo);
+  app.post('/user/modifyUserInfo', app.controller.user.modifyUserInfo);
   // 查看用户信息
-  // app.get('/user/getUserInfo', app.controller.user.getUserInfo);
+  app.get('/user/getUserInfo', app.controller.user.getUserInfo);
   // 查看‘我的’
-  // app.get('/user/getUserIndex', app.controller.user.getUserIndex);
+  app.get('/user/getUserIndex', app.controller.user.getUserIndex);
+  // 查看收藏列表
+  app.get('/user/getFavoriteList', app.controller.user.getFavoriteList);
+  // 查看关注列表
+  app.get('/user/getFollowList', app.controller.user.getFollowList);
 
   // ----------新闻模块-----------
   // 查看‘首页’
