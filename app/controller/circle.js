@@ -4,16 +4,9 @@ const Controller = require('egg').Controller;
 
 class CircleController extends Controller {
   async addCircle() {
-    // const id = this.ctx.params.id;
-    // if (!id) {
-    //   this.ctx.body = {
-    //     index: 1,
-    //   };
-    //   return;
-    // }
-    // this.ctx.body = {
-    //   index: 2,
-    // };
+    this.ctx.validate({});
+    // todo
+    // const {} = this.ctx.request.body;
   }
   async deleteCircle() {
     //
