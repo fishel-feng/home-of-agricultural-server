@@ -5,9 +5,9 @@ module.exports = app => {
   // ************用户app接口*************
   // ----------用户模块-----------
   // 用户注册
-  app.post('/user/signup', app.controller.user.signup);
+  app.post('/user/signUp', app.controller.user.signUp);
   // 用户登录
-  app.post('/user/signin', app.controller.user.signin);
+  app.post('/user/signIn', app.controller.user.signIn);
   // 重置密码
   app.post('/user/resetPassword', app.controller.user.resetPassword);
   // 发送验证码
@@ -29,7 +29,7 @@ module.exports = app => {
   // 获取文章详情
   app.get('/news/getArticleInfo/:id', app.controller.news.getArticleInfo);
   // 获取文章列表
-  app.get('/news/getAtricleList/:name', app.controller.news.getAtricleList);
+  app.get('/news/getArticleList/:name', app.controller.news.getArticleList);
 
   // ----------百科模块------------
   // app.get('/wiki/getAll', app.controller.wiki.getAll);

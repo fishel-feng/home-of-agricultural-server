@@ -20,7 +20,7 @@ module.exports = app => {
      * @param {String} code 验证码
      * @return {String} 本次token信息
      */
-    async signup(tel, password, code) {
+    async signUp(tel, password, code) {
       // 注册逻辑
       // 1.取验证码，验证是否正确，不正确直接返回错误信息
       // 2.验证码正确，检索数据库，查看手机号手否存在，存在则返回错误
@@ -48,7 +48,7 @@ module.exports = app => {
      * @param {String} password 密码
      * @return {String} 本次token信息
      */
-    async signin(tel, password) {
+    async signIn(tel, password) {
       // 登录逻辑
       // 1.查数据库，验证用户名密码是否匹配，不匹配则返回错误
       // 2.生成token返回，登陆成功

@@ -5,7 +5,7 @@ class UserController extends Controller {
   /**
    * 用户注册
    */
-  async signup() {
+  async signUp() {
     this.ctx.validate({
       tel: {
         type: 'string',
@@ -22,11 +22,11 @@ class UserController extends Controller {
       password,
       code,
     } = this.ctx.request.body;
-    const token = await this.service.user.signup(tel, password, code);
+    const token = await this.service.user.signUp(tel, password, code);
     this.ctx.body = token;
   }
 
-  async signin() {
+  async signIn() {
     this.ctx.validate({
       tel: {
         type: 'string',
@@ -39,7 +39,7 @@ class UserController extends Controller {
       tel,
       password,
     } = this.ctx.request.body;
-    const status = await this.service.user.signin(tel, password);
+    const status = await this.service.user.signIn(tel, password);
     this.ctx.body = {
       status,
     };
