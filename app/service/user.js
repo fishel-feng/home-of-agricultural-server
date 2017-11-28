@@ -38,7 +38,7 @@ module.exports = app => {
         tel,
         password,
       }).save();
-      const token = await this.signin(tel, password);
+      const token = await this.signIn(tel, password);
       return token;
     }
 
