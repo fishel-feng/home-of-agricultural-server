@@ -13,7 +13,10 @@ module.exports = app => {
     },
     content: String,
     images: Array,
-    commentCount: Number,
+    commentCount: {
+      type: Number,
+      default: 0,
+    },
     comments: [{
       userId: Schema.Types.ObjectId,
       nickName: String,
@@ -27,7 +30,10 @@ module.exports = app => {
         // todo
       ],
     }],
-    likeCount: Number,
+    likeCount: {
+      type: Number,
+      default: 0,
+    },
     likes: [{
       userId: Schema.Types.ObjectId,
       nickName: String,
