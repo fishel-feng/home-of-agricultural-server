@@ -9,7 +9,18 @@ class CircleController extends Controller {
     // const {} = this.ctx.request.body;
   }
   async deleteCircle() {
-    //
+    this.ctx.validate({
+      id: {
+        type: 'string',
+      },
+    });
+    const {
+      id,
+    } = this.ctx.request.body;
+    const status = await this.service.circle.deleteCircle(id);
+    this.ctx.body = {
+      status,
+    };
   }
   async addComment() {
     //

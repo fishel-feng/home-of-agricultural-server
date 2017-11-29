@@ -83,7 +83,7 @@ module.exports = app => {
         content,
       };
     }
-    async getAtricleList(itemName) {
+    async getArticleList(itemName) {
       const url = `${baseUrl}${itemName}`;
       const result = await this.ctx.curl(url, {
         timeout: 3000,
