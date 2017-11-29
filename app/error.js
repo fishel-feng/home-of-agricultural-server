@@ -10,4 +10,8 @@ module.exports = {
     code: 422,
     message: '参数错误',
   },
+  NO_USER: {
+    code: 423,
+    message: '用户名或密码错误',
+  },
 };

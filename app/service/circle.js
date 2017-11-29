@@ -5,6 +5,7 @@ module.exports = app => {
     Circle,
   } = app.model;
   class CircleService extends app.Service {
+
     async addCircle() {
       // 添加圈子记录逻辑
       // 参数 内容 用户 插入数据库
@@ -14,7 +15,7 @@ module.exports = app => {
       // 删除圈子，传入id，删之
       try {
         await Circle.remove({
-          _id: `ObjectId("${id}")`,
+          _id: app.mongoose.Types.ObjectId(id),
           userId,
         });
         return {

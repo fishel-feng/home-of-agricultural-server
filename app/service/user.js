@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = app => {
+  const jwt = require('jsonwebtoken');
   const {
     User,
   } = app.model;
@@ -50,19 +51,21 @@ module.exports = app => {
      */
     async signIn(tel, password) {
       // 登录逻辑
-      // 1.查数据库，验证用户名密码是否匹配，不匹配则返回错误
       // 2.生成token返回，登陆成功
-      // const user = await User.find({
-      //   tel,
-      // });
-      // if (user.length === 0) {
-      //   return 'no user';
-      // }
-      // if (user[0].password === password) {
-      //   return 'success';
-      // }
-      // return 'fail';
-      return `token+${tel}+${password}`;
+      const user = await User.findOne({
+        tel,
+        password,
+      });
+      if (!user) {
+        throw new Error('NO_USER');
+      }
+      const token = jwt.sign({
+        userId: user._id,
+        iat: Math.floor(Date.now() / 1000) - 30,
+      }, 'shhhhh');
+      // todo
+      console.log(jwt.verify(token, 'shhhhh'));
+      return token;
     }
   }
   return UserService;

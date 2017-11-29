@@ -39,9 +39,9 @@ class UserController extends Controller {
       tel,
       password,
     } = this.ctx.request.body;
-    const status = await this.service.user.signIn(tel, password);
+    const token = await this.service.user.signIn(tel, password);
     this.ctx.body = {
-      status,
+      token,
     };
   }
 
