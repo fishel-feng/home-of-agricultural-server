@@ -14,4 +14,8 @@ module.exports = {
     code: 423,
     message: '用户名或密码错误',
   },
+  UPLOAD_FAILED: {
+    code: 425,
+    message: '图片上传失败',
+  },
 };
