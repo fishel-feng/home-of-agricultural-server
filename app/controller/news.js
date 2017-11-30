@@ -13,7 +13,7 @@ class NewsController extends Controller {
   }
   async getArticleList() {
     const itemName = this.ctx.params.name;
-    const result = await this.service.news.getAtricleList(itemName);
+    const result = await this.service.news.getArticleList(itemName);
     this.ctx.body = result;
   }
 }

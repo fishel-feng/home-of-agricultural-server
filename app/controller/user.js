@@ -7,15 +7,9 @@ class UserController extends Controller {
    */
   async signUp() {
     this.ctx.validate({
-      tel: {
-        type: 'string',
-      },
-      password: {
-        type: 'string',
-      },
-      code: {
-        type: 'string',
-      },
+      tel: 'string',
+      password: 'string',
+      code: 'string',
     });
     const {
       tel,
@@ -28,12 +22,8 @@ class UserController extends Controller {
 
   async signIn() {
     this.ctx.validate({
-      tel: {
-        type: 'string',
-      },
-      password: {
-        type: 'string',
-      },
+      tel: 'string',
+      password: 'string',
     });
     const {
       tel,

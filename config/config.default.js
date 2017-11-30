@@ -8,7 +8,7 @@ module.exports = appInfo => {
 
   // add your config here
   config.middleware = [];
-  config.middleware = [ 'errorHandler', 'bodyFormat' ];
+  config.middleware = ['errorHandler', 'bodyFormat'];
 
   config.mongoose = {
     url: 'mongodb://127.0.0.1:27017/home-of-agricultural',
@@ -34,6 +34,16 @@ module.exports = appInfo => {
   config.security = {
     csrf: {
       ignoreJSON: true,
+    },
+  };
+
+  config.multipart = {
+    fileSize: '50mb',
+  };
+
+  exports.security = {
+    csrf: {
+      enable: false,
     },
   };
 

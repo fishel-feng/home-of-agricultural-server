@@ -4,15 +4,18 @@
   "description": "the server of an application ",
   "private": true,
   "dependencies": {
+    "await-stream-ready": "^1.0.1",
     "bcryptjs": "^2.4.3",
     "cheerio": "^1.0.0-rc.2",
     "egg": "^1.9.0",
     "egg-ali-sms": "0.0.2",
     "egg-mongoose": "^2.1.1",
+    "egg-multipart": "^2.0.0",
     "egg-redis": "^1.0.2",
     "egg-scripts": "^2.1.0",
     "egg-validate": "^1.0.0",
-    "jsonwebtoken": "^8.1.0"
+    "jsonwebtoken": "^8.1.0",
+    "stream-wormhole": "^1.0.3"
   },
   "devDependencies": {
     "autod": "^2.10.0",
