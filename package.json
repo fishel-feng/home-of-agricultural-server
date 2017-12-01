@@ -13,6 +13,7 @@
     "egg-multipart": "^2.0.0",
     "egg-redis": "^1.0.2",
     "egg-scripts": "^2.1.0",
+    "egg-socket.io": "^3.0.0",
     "egg-validate": "^1.0.0",
     "jsonwebtoken": "^8.1.0",
     "stream-wormhole": "^1.0.3"
@@ -31,9 +32,9 @@
     "node": ">=8.9.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon",
+    "start": "egg-scripts start --sticky",
     "stop": "egg-scripts stop",
-    "dev": "egg-bin dev",
+    "dev": "egg-bin dev --sticky",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",

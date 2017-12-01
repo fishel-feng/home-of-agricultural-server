@@ -22,3 +22,8 @@ exports['ali-sms'] = {
   package: 'egg-ali-sms',
 };
 
+exports.io = {
+  enable: true,
+  package: 'egg-socket.io',
+};
+

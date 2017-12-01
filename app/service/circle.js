@@ -184,6 +184,11 @@ module.exports = app => {
       //
     }
 
+    /**
+     * 查看点赞列表
+     * @param {String} circleId 内容id
+     * @return {*} 点赞列表
+     */
     async getLikeList(circleId) {
       try {
         const likeList = await Circle.findById(circleId, 'likes');

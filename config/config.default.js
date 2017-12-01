@@ -8,7 +8,7 @@ module.exports = appInfo => {
 
   // add your config here
   config.middleware = [];
-  config.middleware = ['errorHandler', 'bodyFormat'];
+  config.middleware = [ 'errorHandler', 'bodyFormat' ];
 
   config.mongoose = {
     url: 'mongodb://127.0.0.1:27017/home-of-agricultural',
@@ -41,9 +41,23 @@ module.exports = appInfo => {
     fileSize: '50mb',
   };
 
-  exports.security = {
+  config.security = {
     csrf: {
       enable: false,
+    },
+  };
+
+  config.io = {
+    init: {}, // passed to engine.io
+    namespace: {
+      '/question': {
+        connectionMiddleware: [],
+        packetMiddleware: [],
+      },
+    },
+    redis: {
+      host: '127.0.0.1',
+      port: 6379,
     },
   };
 
