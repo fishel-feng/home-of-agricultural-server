@@ -16,25 +16,25 @@ class CircleController extends Controller {
   }
   async deleteCircle() {
     this.ctx.validate({
-      id: 'string',
+      circleId: 'string',
     });
     const {
-      id,
+      circleId,
     } = this.ctx.request.body;
     // TODO 删除图片
-    const status = await this.service.circle.deleteCircle(id);
+    const status = await this.service.circle.deleteCircle(circleId);
     this.ctx.body = status;
   }
   async addComment() {
     this.ctx.validate({
-      id: 'string',
+      circleId: 'string',
       content: 'string',
     });
     const {
-      id,
+      circleId,
       content,
     } = this.ctx.request.body;
-    const status = await this.service.circle.addComment(id, content);
+    const status = await this.service.circle.addComment(circleId, content);
     this.ctx.body = status;
   }
   async addInnerComment() {
@@ -47,7 +47,14 @@ class CircleController extends Controller {
     //
   }
   async giveLike() {
-    //
+    this.ctx.validate({
+      circleId: 'string',
+    });
+    const {
+      circleId,
+    } = this.ctx.request.body;
+    const status = await this.service.circle.giveLike(circleId);
+    this.ctx.body = status;
   }
   async cancelLike() {
     //

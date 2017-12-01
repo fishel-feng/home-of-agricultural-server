@@ -3,6 +3,7 @@
 module.exports = app => {
   const {
     Circle,
+    User,
   } = app.model;
   class CircleService extends app.Service {
     /**
@@ -30,13 +31,13 @@ module.exports = app => {
     }
     /**
      * 删除动态
-     * @param {String} id 内容id
+     * @param {String} circleId 内容id
      * @return {*} 成功状态
      */
-    async deleteCircle(id) {
+    async deleteCircle(circleId) {
       try {
         const res = await Circle.remove({
-          _id: id,
+          _id: circleId,
           userId: this.ctx.user._id,
         });
         if (res.result.n !== 1) {
@@ -49,15 +50,15 @@ module.exports = app => {
     }
     /**
      * 添加评论
-     * @param {String} id 内容id
+     * @param {String} circleId 内容id
      * @param {String} content 内容
      * @return {*} 成功状态
      */
-    async addComment(id, content) {
+    async addComment(circleId, content) {
       const user = this.ctx.user;
       try {
         await Circle.update({
-          _id: id,
+          _id: circleId,
         }, {
           $push: {
             comments: {
@@ -82,8 +83,44 @@ module.exports = app => {
     async deleteInnerComment() {
       //
     }
-    async giveLike() {
-      //
+    /**
+     * 点赞
+     * @param {String} circleId 内容id
+     * @return {*} 成功状态
+     */
+    async giveLike(circleId) {
+      const user = this.ctx.user;
+      user.likes.forEach(element => {
+        if (element === circleId) {
+          throw new Error('REPEAT_LIKE');
+        }
+      });
+      try {
+        await User.update({
+          _id: user._id,
+        }, {
+          $push: {
+            likes: circleId,
+          },
+        });
+        await Circle.update({
+          _id: circleId,
+        }, {
+          $push: {
+            likes: {
+              userId: user._id,
+              nickName: user.nickName,
+              HeadImage: user.HeadImage,
+            },
+          },
+          $inc: {
+            likeCount: 1,
+          },
+        });
+        return 'success';
+      } catch (e) {
+        throw new Error('GIVE_LIKE_ERROR');
+      }
     }
     async cancelLike() {
       //

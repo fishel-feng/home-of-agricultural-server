@@ -30,4 +30,8 @@ module.exports = {
     code: 494,
     message: '添加评论动态失败',
   },
+  REPEAT_LIKE: {
+    code: 499,
+    message: '重复点赞',
+  },
 };

@@ -5,6 +5,7 @@ module.exports = app => {
   const UserSchema = new mongoose.Schema({
     tel: String,
     password: String,
+    likes: Array,
   });
 
   return mongoose.model('User', UserSchema);
