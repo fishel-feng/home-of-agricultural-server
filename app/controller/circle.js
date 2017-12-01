@@ -3,6 +3,7 @@
 const Controller = require('egg').Controller;
 
 class CircleController extends Controller {
+
   async addCircle() {
     const parts = this.ctx.multipart({
       autoFields: true,
@@ -14,6 +15,7 @@ class CircleController extends Controller {
     const circle = await this.service.circle.addCircle(content, images);
     this.ctx.body = circle;
   }
+
   async deleteCircle() {
     this.ctx.validate({
       circleId: 'string',
@@ -25,6 +27,7 @@ class CircleController extends Controller {
     const status = await this.service.circle.deleteCircle(circleId);
     this.ctx.body = status;
   }
+
   async addComment() {
     this.ctx.validate({
       circleId: 'string',
@@ -37,15 +40,19 @@ class CircleController extends Controller {
     const status = await this.service.circle.addComment(circleId, content);
     this.ctx.body = status;
   }
+
   async addInnerComment() {
     //
   }
+
   async deleteComment() {
     //
   }
+
   async deleteInnerComment() {
     //
   }
+
   async giveLike() {
     this.ctx.validate({
       circleId: 'string',
@@ -56,18 +63,30 @@ class CircleController extends Controller {
     const status = await this.service.circle.giveLike(circleId);
     this.ctx.body = status;
   }
+
   async cancelLike() {
-    //
+    this.ctx.validate({
+      circleId: 'string',
+    });
+    const {
+      circleId,
+    } = this.ctx.request.body;
+    const status = await this.service.circle.cancelLike(circleId);
+    this.ctx.body = status;
   }
+
   async getCircleList() {
     //
   }
+
   async getComment() {
     //
   }
+
   async getInnerComment() {
     //
   }
+
   async getLikeList() {
     //
   }

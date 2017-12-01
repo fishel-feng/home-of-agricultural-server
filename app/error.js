@@ -34,4 +34,12 @@ module.exports = {
     code: 499,
     message: '重复点赞',
   },
+  GIVE_LIKE_ERROR: {
+    code: 499,
+    message: '点赞异常',
+  },
+  CANCEL_LIKE_ERROR: {
+    code: 499,
+    message: '取消赞异常',
+  },
 };
