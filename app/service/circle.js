@@ -5,24 +5,38 @@ module.exports = app => {
     Circle,
   } = app.model;
   class CircleService extends app.Service {
-
-    async addCircle() {
-      // 添加圈子记录逻辑
-      // 参数 内容 用户 插入数据库
-      // 成功提示成功信息 失败返回失败数据
-    }
-    async deleteCircle(id, userId) {
-      // 删除圈子，传入id，删之
+    /**
+     * 发表动态
+     * @param {String} content 文本内容
+     * @param {String} images 图片地址
+     * @return {*} 动态详情数据
+     */
+    async addCircle(content, images) {
       try {
-        await Circle.remove({
-          _id: app.mongoose.Types.ObjectId(id),
-          userId,
-        });
+        const circle = await new Circle({
+          content,
+          images,
+          userId: this.ctx.user._id,
+        }).save();
         return {
-          // todo
+          circle,
         };
       } catch (e) {
-        throw new Error('NOT_FOUND');
+        throw new Error('ADD_CIRCLE_ERROR');
+      }
+    }
+    async deleteCircle(id) {
+      try {
+        const res = await Circle.remove({
+          _id: id,
+          userId: this.ctx.user._id,
+        });
+        if (res.result.n !== 1) {
+          throw new Error();
+        }
+        return 'success';
+      } catch (e) {
+        throw new Error('DELETE_CIRCLE_ERROR');
       }
     }
     async addComment() {

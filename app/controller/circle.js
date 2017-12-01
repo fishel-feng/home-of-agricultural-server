@@ -4,9 +4,15 @@ const Controller = require('egg').Controller;
 
 class CircleController extends Controller {
   async addCircle() {
-    // this.ctx.validate({});
-    // todo
-    // console.log(this.ctx.user);
+    const parts = this.ctx.multipart({
+      autoFields: true,
+    });
+    const images = await this.service.upload.upload(parts, 'circle');
+    const {
+      content,
+    } = parts.field;
+    const circle = await this.service.circle.addCircle(content, images);
+    this.ctx.body = circle;
   }
   async deleteCircle() {
     this.ctx.validate({

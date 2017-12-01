@@ -18,4 +18,12 @@ module.exports = {
     code: 425,
     message: '图片上传失败',
   },
+  ADD_CIRCLE_ERROR: {
+    code: 466,
+    message: '发表动态失败',
+  },
+  DELETE_CIRCLE_ERROR: {
+    code: 488,
+    message: '删除动态失败',
+  },
 };

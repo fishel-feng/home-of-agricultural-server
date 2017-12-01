@@ -9,7 +9,7 @@ module.exports = app => {
     async upload(parts, targetDir) {
       const files = [];
       let stream;
-      while ((stream = await parts()) != null) {
+      while ((stream = await parts()) != null && stream._readableState.buffer.length) {
         const filename = await this.generateFileName(stream.filename);
         const target = path.join(this.config.baseDir, 'app/public', targetDir, filename);
         const writeStream = fs.createWriteStream(target);
