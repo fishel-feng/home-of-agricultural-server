@@ -12,11 +12,14 @@ module.exports = app => {
      * @return {*} 动态详情数据
      */
     async addCircle(content, images) {
+      const user = this.ctx.user;
       try {
         const circle = await new Circle({
           content,
           images,
-          userId: this.ctx.user._id,
+          userId: user._id,
+          nickName: user.nickName,
+          HeadImage: user.HeadImage,
         }).save();
         return {
           circle,
@@ -25,6 +28,11 @@ module.exports = app => {
         throw new Error('ADD_CIRCLE_ERROR');
       }
     }
+    /**
+     * 删除动态
+     * @param {String} id 内容id
+     * @return {*} 成功状态
+     */
     async deleteCircle(id) {
       try {
         const res = await Circle.remove({
@@ -39,8 +47,31 @@ module.exports = app => {
         throw new Error('DELETE_CIRCLE_ERROR');
       }
     }
-    async addComment() {
-      // 添加评论 内容 用户 评论的文章id
+    /**
+     * 添加评论
+     * @param {String} id 内容id
+     * @param {String} content 内容
+     * @return {*} 成功状态
+     */
+    async addComment(id, content) {
+      const user = this.ctx.user;
+      try {
+        await Circle.update({
+          _id: id,
+        }, {
+          $push: {
+            comments: {
+              content,
+              userId: user._id,
+              nickName: user.nickName,
+              HeadImage: user.HeadImage,
+            },
+          },
+        });
+        return 'success';
+      } catch (e) {
+        throw new Error('ADD_COMMENT_ERROR');
+      }
     }
     async addInnerComment() {
       //

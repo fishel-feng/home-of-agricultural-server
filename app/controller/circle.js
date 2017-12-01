@@ -21,13 +21,21 @@ class CircleController extends Controller {
     const {
       id,
     } = this.ctx.request.body;
+    // TODO 删除图片
     const status = await this.service.circle.deleteCircle(id);
-    this.ctx.body = {
-      status,
-    };
+    this.ctx.body = status;
   }
   async addComment() {
-    //
+    this.ctx.validate({
+      id: 'string',
+      content: 'string',
+    });
+    const {
+      id,
+      content,
+    } = this.ctx.request.body;
+    const status = await this.service.circle.addComment(id, content);
+    this.ctx.body = status;
   }
   async addInnerComment() {
     //

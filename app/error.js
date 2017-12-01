@@ -26,4 +26,8 @@ module.exports = {
     code: 488,
     message: '删除动态失败',
   },
+  ADD_COMMENT_ERROR: {
+    code: 494,
+    message: '添加评论动态失败',
+  },
 };
