@@ -35,11 +35,15 @@ module.exports = {
     message: '重复点赞',
   },
   GIVE_LIKE_ERROR: {
-    code: 499,
+    code: 459,
     message: '点赞异常',
   },
   CANCEL_LIKE_ERROR: {
-    code: 499,
+    code: 493,
     message: '取消赞异常',
+  },
+  GET_LIST_ERROR: {
+    code: 423,
+    message: '获取列表信息',
   },
 };

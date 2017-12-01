@@ -88,7 +88,9 @@ class CircleController extends Controller {
   }
 
   async getLikeList() {
-    //
+    const circleId = this.ctx.params.circleId;
+    const result = await this.service.circle.getLikeList(circleId);
+    this.ctx.body = result;
   }
 }
 

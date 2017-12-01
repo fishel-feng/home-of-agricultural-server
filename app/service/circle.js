@@ -184,8 +184,13 @@ module.exports = app => {
       //
     }
 
-    async getLikeList() {
-      //
+    async getLikeList(circleId) {
+      try {
+        const likeList = await Circle.findById(circleId, 'likes');
+        return likeList;
+      } catch (e) {
+        throw new Error('GET_LIKE_LIST_ERROR');
+      }
     }
   }
   return CircleService;

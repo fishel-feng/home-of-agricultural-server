@@ -62,7 +62,7 @@ module.exports = app => {
   // 查看回复
   app.get('/circle/getInnerComment', app.controller.circle.getInnerComment);
   // 查看点赞列表
-  app.get('/circle/getLikeList', app.controller.circle.getLikeList);
+  app.get('/circle/getLikeList/:circleId', app.controller.circle.getLikeList);
 
   // ----------问答模块------------
   // 获取专家列表
