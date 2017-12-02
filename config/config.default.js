@@ -7,7 +7,6 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1511172666978_5691';
 
   // add your config here
-  config.middleware = [];
   config.middleware = [ 'errorHandler', 'bodyFormat' ];
 
   config.mongoose = {
@@ -18,7 +17,7 @@ module.exports = appInfo => {
   config.redis = {
     client: {
       port: 6379,
-      host: 'localhost',
+      host: '127.0.0.1',
       password: '',
       db: 0,
     },
@@ -48,10 +47,10 @@ module.exports = appInfo => {
   };
 
   config.io = {
-    init: {}, // passed to engine.io
+    init: {},
     namespace: {
-      '/question': {
-        connectionMiddleware: [],
+      '/': {
+        connectionMiddleware: [ 'auth' ],
         packetMiddleware: [],
       },
     },

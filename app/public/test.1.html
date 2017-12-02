@@ -29,8 +29,7 @@
     var socket = io('ws://127.0.0.1:7001');
     socket.on('connect', () => {
       console.log('connect!');
-      socket.emit('login', 'tom');
-      // socket.emit('chat', 'tom', 'jerry', 'hello world!');
+      socket.emit('login', 'jerry');
     });
     socket.on('res', msg => {
       console.log(msg);

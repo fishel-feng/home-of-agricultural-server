@@ -67,9 +67,10 @@ module.exports = app => {
   // ----------问答模块------------
   // 获取专家列表
   app.get('/question/getExpertList', app.controller.question.getExpertList);
-  // ws 聊天接口
-  app.io.of('/question').route('chat', app.controller.chat.index);
+
+  // socket.io接口
+  app.io.route('chat', app.io.controllers.io.login);
+  app.io.route('chat', app.io.controllers.io.chat);
   // *************管理后台接口************
   // app.post('/admin/login', app.controller.admin.login);
-
 };

@@ -67,6 +67,10 @@ module.exports = app => {
       console.log(jwt.verify(token, 'shhhhh'));
       return token;
     }
+    * login() {
+      console.log(this.ctx.socket.nsp.sockets);
+      return 'Helle Man!';
+    }
   }
   return UserService;
 };
