@@ -2,6 +2,11 @@
 
 module.exports = app => {
   const verifyAccount = app.middlewares.verifyAccount({});
+  // todo jwt配置
+  const socketioJwt = require('socketio-jwt').authorize({
+    secret: 'jwtSecret',
+    handshake: true,
+  });
 
   app.post('/test/upload', app.controller.test.upload);
 
@@ -69,8 +74,10 @@ module.exports = app => {
   app.get('/question/getExpertList', app.controller.question.getExpertList);
 
   // socket.io接口
+  // app.io.set('authorization', socketioJwt);
   app.io.route('chat', app.io.controllers.io.login);
   app.io.route('chat', app.io.controllers.io.chat);
+
   // *************管理后台接口************
   // app.post('/admin/login', app.controller.admin.login);
 };
