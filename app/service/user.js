@@ -1,19 +1,21 @@
 'use strict';
 
 module.exports = app => {
+
   const jwt = require('jsonwebtoken');
-  const VERIFY_CODE_PREFIX = 'CODE';
+  const fs = require('fs');
+  const path = require('path');
+  const cryptos = require('cryptos');
+  const crypto = require('crypto');
+
   const {
     User,
   } = app.model;
-  class UserService extends app.Service {
-    async sendCode() {
-      return 2;
-    }
 
-    async checkCode() {
-      return 2;
-    }
+  const VERIFY_CODE_PREFIX = 'CODE';
+  const SALT = 'dcv9u89h93ggf78rth3cng02n';
+
+  class UserService extends app.Service {
 
     /**
      * 用户注册
@@ -33,13 +35,15 @@ module.exports = app => {
       if (user.length) {
         throw new Error('USER_EXIST');
       }
-      // 3.存储用户tel+密码，生成token返回，注册成功
-      // todo
-      await new User({
+      const keyPath = path.join(__dirname, './rsa_private_key.pem');
+      const privatePem = fs.readFileSync(keyPath);
+      const realPassword = cryptos.RSADecrypt(password, privatePem);
+      const encryptedPassword = this.generateEncryptedPassword(realPassword);
+      const newUser = await new User({
         tel,
-        password,
+        password: encryptedPassword,
       }).save();
-      const token = await this.signIn(tel, password);
+      const token = this.generateToken(newUser._id);
       return token;
     }
 
@@ -71,7 +75,7 @@ module.exports = app => {
     }
 
     /**
-     * 用户登录
+     * 发送验证码
      * @param {String} tel 用户信息
      * @return {String} 验证码
      */
@@ -92,6 +96,26 @@ module.exports = app => {
      */
     generateVerifyCode() {
       return Math.random().toString().slice(2, 8);
+    }
+
+    /**
+     * 生成加密的密码
+     * @param {string} password 原密码
+     * @return {string} 加密的密码
+     */
+    generateEncryptedPassword(password) {
+      return crypto.createHash('md5').update(password + SALT).digest('hex');
+    }
+
+    /**
+     * 根据用户id生成token
+     * @param {string} userId 用户id
+     * @return {string} token
+     */
+    generateToken(userId) {
+      return app.jwt.sign({
+        userId,
+      }, app.config.jwt.secret);
     }
   }
   return UserService;

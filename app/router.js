@@ -10,7 +10,7 @@ module.exports = app => {
 
   app.post('/test/upload', app.controller.test.upload);
   // app.get('/test/index', app.jwt, app.controller.test.index);
-  app.get('/test/index', app.controller.test.index);
+  app.get('/test/index', app.jwt, app.controller.test.index);
 
   // ************用户app接口*************
   // ----------用户模块-----------
@@ -83,19 +83,4 @@ module.exports = app => {
 
   // *************管理后台接口************
   // app.post('/admin/login', app.controller.admin.login);
-
-
-  // app.post('/refresh_token', function (req, res) { // verify the existing token
-  //   const profile = jwt.verify(req.body.token, secret); // if more than 14 days old, force login
-  //   if (profile.original_iat - new Date() > 14) { // iat == issued at
-  //     return res.send(401); // re-logging
-  //   } // check if the user still exists or if authorization hasn't been revoked
-  //   if (!valid) return res.send(401); // re-logging // issue a new token
-  //   const refreshed_token = jwt.sign(profile, secret, {
-  //     expiresInMinutes: 60 * 5
-  //   });
-  //   res.json({
-  //     token: refreshed_token
-  //   });
-  // });
 };
