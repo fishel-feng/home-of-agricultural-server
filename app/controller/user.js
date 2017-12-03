@@ -7,9 +7,9 @@ class UserController extends Controller {
    */
   async signUp() {
     this.ctx.validate({
-      tel: 'string',
+      tel: /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/,
       password: 'string',
-      code: 'string',
+      code: /^\d{6}$/,
     });
     const {
       tel,
@@ -25,14 +25,14 @@ class UserController extends Controller {
    */
   async signIn() {
     this.ctx.validate({
-      userInfo: 'string',
-      key: 'string',
+      tel: /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/,
+      password: 'string',
     });
     const {
-      userInfo,
-      key,
+      tel,
+      password,
     } = this.ctx.request.body;
-    const token = await this.service.user.signIn(userInfo, key);
+    const token = await this.service.user.signIn(tel, password);
     this.ctx.body = {
       token,
     };

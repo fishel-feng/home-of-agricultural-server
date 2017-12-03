@@ -1,8 +1,6 @@
 'use strict';
 
 module.exports = app => {
-
-  const jwt = require('jsonwebtoken');
   const fs = require('fs');
   const path = require('path');
   const cryptos = require('cryptos');
@@ -35,9 +33,7 @@ module.exports = app => {
       if (user.length) {
         throw new Error('USER_EXIST');
       }
-      const keyPath = path.join(__dirname, './rsa_private_key.pem');
-      const privatePem = fs.readFileSync(keyPath);
-      const realPassword = cryptos.RSADecrypt(password, privatePem);
+      const realPassword = this.getRealPassword(password);
       const encryptedPassword = this.generateEncryptedPassword(realPassword);
       const newUser = await new User({
         tel,
@@ -54,23 +50,16 @@ module.exports = app => {
      * @return {String} 本次token信息
      */
     async signIn(tel, password) {
-      // 登录逻辑
-      // 1.解密
-      // 2.生成token返回，登陆成功
-      // todo
+      const realPassword = this.getRealPassword(password);
+      const encryptedPassword = this.generateEncryptedPassword(realPassword);
       const user = await User.findOne({
         tel,
-        password,
+        password: encryptedPassword,
       });
       if (!user) {
         throw new Error('NO_USER');
       }
-      const token = jwt.sign({
-        userId: user._id,
-        iat: Math.floor(Date.now() / 1000) - 30,
-      }, 'shhhhh');
-      // todo
-      console.log(jwt.verify(token, 'shhhhh'));
+      const token = this.generateToken(user._id);
       return token;
     }
 
@@ -96,6 +85,17 @@ module.exports = app => {
      */
     generateVerifyCode() {
       return Math.random().toString().slice(2, 8);
+    }
+
+    /**
+     * 获取真实密码
+     * @param {string} password rsa加密的密码
+     * @return {string} 真实密码
+     */
+    getRealPassword(password) {
+      const keyPath = path.join(__dirname, './rsa_private_key.pem');
+      const privatePem = fs.readFileSync(keyPath);
+      return cryptos.RSADecrypt(password, privatePem);
     }
 
     /**
