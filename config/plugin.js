@@ -27,3 +27,8 @@ exports.io = {
   package: 'egg-socket.io',
 };
 
+exports.jwt = {
+  enable: true,
+  package: 'egg-jwt',
+};
+
