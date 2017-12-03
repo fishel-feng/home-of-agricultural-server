@@ -20,16 +20,19 @@ class UserController extends Controller {
     this.ctx.body = token;
   }
 
+  /**
+   * 用户登录
+   */
   async signIn() {
     this.ctx.validate({
-      tel: 'string',
-      password: 'string',
+      userInfo: 'string',
+      key: 'string',
     });
     const {
-      tel,
-      password,
+      userInfo,
+      key,
     } = this.ctx.request.body;
-    const token = await this.service.user.signIn(tel, password);
+    const token = await this.service.user.signIn(userInfo, key);
     this.ctx.body = {
       token,
     };
@@ -38,8 +41,18 @@ class UserController extends Controller {
   async resetPassword() {
     //
   }
+
   async sendVerifyCode() {
-    //
+    this.ctx.validate({
+      tel: /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/,
+    });
+    const {
+      tel,
+    } = this.ctx.request.body;
+    const status = await this.service.user.sendVerifyCode(tel);
+    this.ctx.body = {
+      status,
+    };
   }
   async modifyUserInfo() {
     //
@@ -59,4 +72,3 @@ class UserController extends Controller {
 }
 
 module.exports = UserController;
-

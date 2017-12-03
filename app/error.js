@@ -46,4 +46,16 @@ module.exports = {
     code: 423,
     message: '获取列表信息',
   },
+  SEND_CODE_ERROR: {
+    code: 427,
+    message: '发送验证码异常',
+  },
+  VERIFY_CODE_ERROR: {
+    code: 457,
+    message: '验证码错误',
+  },
+  USER_EXIST: {
+    code: 455,
+    message: '此手机号已注册',
+  },
 };
