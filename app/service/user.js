@@ -146,6 +146,24 @@ module.exports = app => {
     }
 
     /**
+     * 修改用户头像
+     * @param {String} headImage 头像
+     * @return {String} 成功状态
+     */
+    async modifyHeadImage(headImage) {
+      try {
+        await User.update({
+          _id: this.ctx.user._id,
+        }, {
+          headImage,
+        });
+      } catch (e) {
+        throw new Error('MODIFY_FAIL');
+      }
+      return 'success';
+    }
+
+    /**
      * 生成随机验证码
      * @return {string} 验证码
      */

@@ -127,7 +127,14 @@ class UserController extends Controller {
    * 修改用户头像
    */
   async modifyHeadImage() {
-    //
+    const parts = this.ctx.multipart({
+      autoFields: true,
+    });
+    const images = await this.service.upload.upload(parts, 'headImage');
+    const status = await this.service.user.modifyHeadImage(images[0]);
+    this.ctx.body = {
+      status,
+    };
   }
   async getUserInfo() {
     //
