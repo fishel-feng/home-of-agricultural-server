@@ -21,7 +21,7 @@ module.exports = app => {
           images,
           userId: user._id,
           nickName: user.nickName,
-          HeadImage: user.HeadImage,
+          headImage: user.headImage,
         }).save();
         return {
           circle,
@@ -68,7 +68,7 @@ module.exports = app => {
               content,
               userId: user._id,
               nickName: user.nickName,
-              HeadImage: user.HeadImage,
+              headImage: user.headImage,
             },
           },
         });
@@ -119,7 +119,7 @@ module.exports = app => {
             likes: {
               userId: user._id,
               nickName: user.nickName,
-              HeadImage: user.HeadImage,
+              headImage: user.headImage,
             },
           },
           $inc: {

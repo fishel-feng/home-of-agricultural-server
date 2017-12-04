@@ -78,9 +78,54 @@ class UserController extends Controller {
       status,
     };
   }
+
+  /**
+   * 修改用户信息
+   */
   async modifyUserInfo() {
-    //
+    this.ctx.validate({
+      nickName: {
+        type: 'string',
+        required: true,
+        allowEmpty: true,
+      },
+      gender: {
+        type: 'string',
+        required: true,
+        allowEmpty: true,
+      },
+      age: {
+        type: 'integer',
+        required: true,
+        allowEmpty: true,
+      },
+      job: {
+        type: 'string',
+        required: true,
+        allowEmpty: true,
+      },
+      location: {
+        type: 'string',
+        required: true,
+        allowEmpty: true,
+      },
+    });
+    const {
+      nickName,
+      gender,
+      age,
+      job,
+      location,
+    } = this.ctx.request.body;
+    const status = await this.ctx.service.user.modifyUserInfo(nickName, gender, age, job, location);
+    this.ctx.body = {
+      status,
+    };
   }
+
+  /**
+   * 修改用户头像
+   */
   async modifyHeadImage() {
     //
   }

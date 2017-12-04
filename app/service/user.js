@@ -120,11 +120,37 @@ module.exports = app => {
     }
 
     /**
+     * 修改用户资料
+     * @param {String} nickName 昵称
+     * @param {String} gender 性别
+     * @param {Number} age 年龄
+     * @param {String} job 职业
+     * @param {String} location 地区
+     * @return {String} 成功状态
+     */
+    async modifyUserInfo(nickName, gender, age, job, location) {
+      try {
+        await User.update({
+          _id: this.ctx.user._id,
+        }, {
+          nickName,
+          gender,
+          age,
+          job,
+          location,
+        });
+      } catch (e) {
+        throw new Error('MODIFY_FAIL');
+      }
+      return 'success';
+    }
+
+    /**
      * 生成随机验证码
      * @return {string} 验证码
      */
     generateVerifyCode() {
-      return Math.random().toString().slice(2, 8);
+      return (Math.random() + '').slice(2, 8);
     }
 
     /**

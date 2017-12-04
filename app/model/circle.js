@@ -6,7 +6,7 @@ module.exports = app => {
   const CircleSchema = new mongoose.Schema({
     userId: Schema.Types.ObjectId,
     nickName: String,
-    HeadImage: String,
+    headImage: String,
     time: {
       type: Date,
       default: Date.now,
@@ -20,13 +20,13 @@ module.exports = app => {
     comments: [{
       userId: Schema.Types.ObjectId,
       nickName: String,
-      HeadImage: String,
+      headImage: String,
       time: {
         type: Date,
         default: Date.now,
       },
       content: String,
-      InnerComments: [
+      innerComments: [
         // todo
       ],
     }],
@@ -37,7 +37,7 @@ module.exports = app => {
     likes: [{
       userId: Schema.Types.ObjectId,
       nickName: String,
-      HeadImage: String,
+      headImage: String,
     }],
   });
 

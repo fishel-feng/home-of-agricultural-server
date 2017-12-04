@@ -5,6 +5,12 @@ module.exports = app => {
   const UserSchema = new mongoose.Schema({
     tel: String,
     password: String,
+    nickName: String,
+    headImage: String,
+    gender: String,
+    age: Number,
+    job: String,
+    location: String,
     likes: Array,
   });
 

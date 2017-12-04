@@ -74,4 +74,8 @@ module.exports = {
     code: 328,
     message: '认证错误',
   },
+  MODIFY_FAIL: {
+    code: 328,
+    message: '修改失败',
+  },
 };
