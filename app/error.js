@@ -66,4 +66,12 @@ module.exports = {
     code: 428,
     message: '重置密码失败',
   },
+  NO_AUTHORIZATION: {
+    code: 328,
+    message: '未认证',
+  },
+  AUTH_ERROR: {
+    code: 328,
+    message: '认证错误',
+  },
 };

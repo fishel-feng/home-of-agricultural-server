@@ -10,7 +10,7 @@ module.exports = app => {
 
   app.post('/test/upload', app.controller.test.upload);
   // app.get('/test/index', app.jwt, app.controller.test.index);
-  app.get('/test/index', app.jwt, app.controller.test.index);
+  app.get('/test/index', verifyAccount, app.controller.test.index);
 
   // ************用户app接口*************
   // ----------用户模块-----------
@@ -18,8 +18,6 @@ module.exports = app => {
   app.post('/user/signUp', app.controller.user.signUp);
   // 用户登录
   app.post('/user/signIn', app.controller.user.signIn);
-  // 验证用户
-  app.post('/user/verifyUser', app.controller.user.verifyUser);
   // 重置密码
   app.post('/user/resetPassword', app.controller.user.resetPassword);
   // 发送验证码
@@ -29,13 +27,13 @@ module.exports = app => {
   // 修改头像
   app.post('/user/modifyHeadImage', verifyAccount, app.controller.user.modifyHeadImage);
   // 查看用户信息
-  app.get('/user/getUserInfo', app.controller.user.getUserInfo);
+  app.get('/user/getUserInfo', verifyAccount, app.controller.user.getUserInfo);
   // 查看‘我的’
-  app.get('/user/getUserIndex', app.controller.user.getUserIndex);
+  app.get('/user/getUserIndex', verifyAccount, app.controller.user.getUserIndex);
   // 查看收藏列表
-  app.get('/user/getFavoriteList', app.controller.user.getFavoriteList);
+  app.get('/user/getFavoriteList', verifyAccount, app.controller.user.getFavoriteList);
   // 查看关注列表
-  app.get('/user/getFollowList', app.controller.user.getFollowList);
+  app.get('/user/getFollowList', verifyAccount, app.controller.user.getFollowList);
 
   // ----------新闻模块-----------
   // 查看‘首页’

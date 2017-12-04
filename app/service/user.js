@@ -65,26 +65,17 @@ module.exports = app => {
     }
 
     /**
-     * 验证用户
+     * 重置密码
      * @param {String} tel 手机号
      * @param {String} code 验证码
+     * @param {String} password 加密的密码
      * @return {String} 成功状态
      */
-    async verifyUser(tel, code) {
+    async resetPassword(tel, code, password) {
       const realCode = await app.redis.get(RESET_VERIFY_CODE_PREFIX + tel);
       if (code !== realCode) {
         throw new Error('VERIFY_CODE_ERROR');
       }
-      return 'success';
-    }
-
-    /**
-     * 重置密码
-     * @param {String} tel 手机号
-     * @param {String} password 加密的密码
-     * @return {String} 成功状态
-     */
-    async resetPassword(tel, password) {
       const realPassword = this.getRealPassword(password);
       const encryptedPassword = this.generateEncryptedPassword(realPassword);
       try {
