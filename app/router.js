@@ -27,7 +27,7 @@ module.exports = app => {
   // 修改头像
   app.post('/user/modifyHeadImage', verifyAccount, app.controller.user.modifyHeadImage);
   // 查看用户信息
-  app.get('/user/getUserInfo', verifyAccount, app.controller.user.getUserInfo);
+  app.get('/user/getUserInfo/:userId', verifyAccount, app.controller.user.getUserInfo);
   // 查看‘我的’
   app.get('/user/getUserIndex', verifyAccount, app.controller.user.getUserIndex);
   // 查看收藏列表

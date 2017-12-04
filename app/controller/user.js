@@ -109,6 +109,11 @@ class UserController extends Controller {
         required: true,
         allowEmpty: true,
       },
+      description: {
+        type: 'string',
+        required: true,
+        allowEmpty: true,
+      },
     });
     const {
       nickName,
@@ -116,8 +121,9 @@ class UserController extends Controller {
       age,
       job,
       location,
+      description,
     } = this.ctx.request.body;
-    const status = await this.ctx.service.user.modifyUserInfo(nickName, gender, age, job, location);
+    const status = await this.ctx.service.user.modifyUserInfo(nickName, gender, age, job, location, description);
     this.ctx.body = {
       status,
     };
@@ -136,11 +142,26 @@ class UserController extends Controller {
       status,
     };
   }
+
+  /**
+   * 获取用户信息
+   */
   async getUserInfo() {
-    //
+    const userId = this.ctx.params.userId;
+    const user = await this.service.user.getUserInfo(userId);
+    this.ctx.body = {
+      user,
+    };
   }
+
+  /**
+   * 查看我的信息
+   */
   async getUserIndex() {
-    //
+    const user = await this.service.user.getUserIndex();
+    this.ctx.body = {
+      user,
+    };
   }
   async getFavoriteList() {
     //

@@ -84,10 +84,10 @@ module.exports = app => {
         }, {
           password: encryptedPassword,
         });
+        return 'success';
       } catch (e) {
         throw new Error('RESET_PASSWORD_ERROR');
       }
-      return 'success';
     }
 
     /**
@@ -113,10 +113,10 @@ module.exports = app => {
           await app.redis.set(NEW_VERIFY_CODE_PREFIX + tel, verifyCode);
         }
         // todo 发短信
+        return 'success';
       } catch (e) {
         throw new Error('SEND_CODE_ERROR');
       }
-      return 'success';
     }
 
     /**
@@ -126,9 +126,10 @@ module.exports = app => {
      * @param {Number} age 年龄
      * @param {String} job 职业
      * @param {String} location 地区
+     * @param {String} description 个人简介
      * @return {String} 成功状态
      */
-    async modifyUserInfo(nickName, gender, age, job, location) {
+    async modifyUserInfo(nickName, gender, age, job, location, description) {
       try {
         await User.update({
           _id: this.ctx.user._id,
@@ -138,11 +139,12 @@ module.exports = app => {
           age,
           job,
           location,
+          description,
         });
+        return 'success';
       } catch (e) {
         throw new Error('MODIFY_FAIL');
       }
-      return 'success';
     }
 
     /**
@@ -157,10 +159,43 @@ module.exports = app => {
         }, {
           headImage,
         });
+        return 'success';
       } catch (e) {
         throw new Error('MODIFY_FAIL');
       }
-      return 'success';
+    }
+
+    /**
+     * 获取用户信息
+     * @param {String} userId 用户id
+     * @return {String} 用户信息
+     */
+    async getUserInfo(userId) {
+      try {
+        const user = await User.findById(userId);
+        if (!user) {
+          throw new Error('NOT_FOUND');
+        }
+        return user;
+      } catch (e) {
+        throw new Error('NOT_FOUND');
+      }
+    }
+
+    /**
+     * 查看我的信息
+     * @return {String} 我的信息
+     */
+    async getUserIndex() {
+      try {
+        const user = await User.findById(this.ctx.user._id, 'nickName headImage description collectionCount attentionCount');
+        if (!user) {
+          throw new Error('SOMETHING_ERROR');
+        }
+        return user;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
     }
 
     /**
@@ -192,7 +227,7 @@ module.exports = app => {
     }
 
     /**
-     * 根据用户id生成token
+     * 根据用户 id 生成 token
      * @param {string} userId 用户id
      * @return {string} token
      */

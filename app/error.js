@@ -5,7 +5,10 @@ module.exports = {
     code: 404,
     message: '没找到',
   },
-  ERROR_NO: 500,
+  SOMETHING_ERROR: {
+    code: 500,
+    message: '未知错误',
+  },
   INVALID_PARAM: {
     code: 422,
     message: '参数错误',

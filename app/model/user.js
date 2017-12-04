@@ -5,12 +5,27 @@ module.exports = app => {
   const UserSchema = new mongoose.Schema({
     tel: String,
     password: String,
+    certification: {
+      type: Boolean,
+      default: false,
+    },
     nickName: String,
     headImage: String,
     gender: String,
     age: Number,
     job: String,
     location: String,
+    description: String,
+    collectionCount: {
+      type: Number,
+      default: 0,
+    },
+    collections: Array,
+    attentionCount: {
+      type: Number,
+      default: 0,
+    },
+    attentions: Array,
     likes: Array,
   });
 
