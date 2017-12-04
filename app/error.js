@@ -10,7 +10,7 @@ module.exports = {
     code: 422,
     message: '参数错误',
   },
-  NO_USER: {
+  ERROR_USER: {
     code: 423,
     message: '用户名或密码错误',
   },
@@ -57,5 +57,13 @@ module.exports = {
   USER_EXIST: {
     code: 455,
     message: '此手机号已注册',
+  },
+  NO_USER: {
+    code: 492,
+    message: '用户未注册',
+  },
+  RESET_PASSWORD_ERROR: {
+    code: 428,
+    message: '重置密码失败',
   },
 };

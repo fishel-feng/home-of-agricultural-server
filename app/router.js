@@ -18,6 +18,8 @@ module.exports = app => {
   app.post('/user/signUp', app.controller.user.signUp);
   // 用户登录
   app.post('/user/signIn', app.controller.user.signIn);
+  // 验证用户
+  app.post('/user/verifyUser', app.controller.user.verifyUser);
   // 重置密码
   app.post('/user/resetPassword', app.controller.user.resetPassword);
   // 发送验证码

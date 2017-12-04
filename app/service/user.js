@@ -10,7 +10,8 @@ module.exports = app => {
     User,
   } = app.model;
 
-  const VERIFY_CODE_PREFIX = 'CODE';
+  const NEW_VERIFY_CODE_PREFIX = 'NEW';
+  const RESET_VERIFY_CODE_PREFIX = 'RESET';
   const SALT = 'dcv9u89h93ggf78rth3cng02n';
 
   class UserService extends app.Service {
@@ -23,7 +24,7 @@ module.exports = app => {
      * @return {String} 本次token信息
      */
     async signUp(tel, password, code) {
-      const realCode = await app.redis.get(VERIFY_CODE_PREFIX + tel);
+      const realCode = await app.redis.get(NEW_VERIFY_CODE_PREFIX + tel);
       if (code !== realCode) {
         throw new Error('VERIFY_CODE_ERROR');
       }
@@ -57,21 +58,69 @@ module.exports = app => {
         password: encryptedPassword,
       });
       if (!user) {
-        throw new Error('NO_USER');
+        throw new Error('ERROR_USER');
       }
       const token = this.generateToken(user._id);
       return token;
     }
 
     /**
+     * 验证用户
+     * @param {String} tel 手机号
+     * @param {String} code 验证码
+     * @return {String} 成功状态
+     */
+    async verifyUser(tel, code) {
+      const realCode = await app.redis.get(RESET_VERIFY_CODE_PREFIX + tel);
+      if (code !== realCode) {
+        throw new Error('VERIFY_CODE_ERROR');
+      }
+      return 'success';
+    }
+
+    /**
+     * 重置密码
+     * @param {String} tel 手机号
+     * @param {String} password 加密的密码
+     * @return {String} 成功状态
+     */
+    async resetPassword(tel, password) {
+      const realPassword = this.getRealPassword(password);
+      const encryptedPassword = this.generateEncryptedPassword(realPassword);
+      try {
+        await User.update({
+          tel,
+        }, {
+          password: encryptedPassword,
+        });
+      } catch (e) {
+        throw new Error('RESET_PASSWORD_ERROR');
+      }
+      return 'success';
+    }
+
+    /**
      * 发送验证码
      * @param {String} tel 用户信息
-     * @return {String} 验证码
+     * @param {String} reset 是否为重置密码
+     * @return {String} 成功状态
      */
-    async sendVerifyCode(tel) {
+    async sendVerifyCode(tel, reset = false) {
+      if (reset) {
+        const user = await User.findOne({
+          tel,
+        });
+        if (!user) {
+          throw new Error('NO_USER');
+        }
+      }
       try {
         const verifyCode = this.generateVerifyCode();
-        await app.redis.set(VERIFY_CODE_PREFIX + tel, verifyCode);
+        if (reset) {
+          await app.redis.set(RESET_VERIFY_CODE_PREFIX + tel, verifyCode);
+        } else {
+          await app.redis.set(NEW_VERIFY_CODE_PREFIX + tel, verifyCode);
+        }
         // todo 发短信
       } catch (e) {
         throw new Error('SEND_CODE_ERROR');
