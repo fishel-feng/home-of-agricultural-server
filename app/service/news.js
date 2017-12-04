@@ -65,6 +65,7 @@ module.exports = app => {
       const title = $('.la', articles).text();
       const from = $('.words_author', articles).text();
       const time = $('.time', articles).text();
+      const read = $('.reyd', articles).text();
       const desc = $('.ddcon', articles).text();
       let imageUrl;
       $('.wd p', articles).each((index, element) => {
@@ -78,13 +79,14 @@ module.exports = app => {
         title,
         from,
         time,
+        read,
         desc,
         images,
         content,
       };
     }
-    async getArticleList(itemName) {
-      const url = `${baseUrl}${itemName}`;
+    async getArticleListByPage(itemName, page) {
+      const url = `${baseUrl}${itemName}_${page}.html`;
       const result = await this.ctx.curl(url, {
         timeout: 3000,
         dataType: 'text',
@@ -100,12 +102,14 @@ module.exports = app => {
         const desc = $(element).find('.recommend_explain').text()
           .trim();
         const date = $(element).find('.recommend_date').text();
+        const read = $(element).find('.recommend_read').text();
         articles.push({
           articleId,
           title,
           imageUrl,
           desc,
           date,
+          read,
         });
       });
       return {

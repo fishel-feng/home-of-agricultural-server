@@ -11,9 +11,10 @@ class NewsController extends Controller {
     const result = await this.service.news.getArticleInfo(articleId);
     this.ctx.body = result;
   }
-  async getArticleList() {
+  async getArticleListByPage() {
     const itemName = this.ctx.params.name;
-    const result = await this.service.news.getArticleList(itemName);
+    const page = this.ctx.params.page;
+    const result = await this.service.news.getArticleListByPage(itemName, page);
     this.ctx.body = result;
   }
 }

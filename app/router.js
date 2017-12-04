@@ -41,11 +41,10 @@ module.exports = app => {
   // 获取文章详情
   app.get('/news/getArticleInfo/:id', app.controller.news.getArticleInfo);
   // 获取文章列表
-  app.get('/news/getArticleList/:name', app.controller.news.getArticleList);
+  app.get('/news/getArticleListByPage/:name/:page', app.controller.news.getArticleListByPage);
 
   // ----------百科模块------------
   // app.get('/wiki/getAll', app.controller.wiki.getAll);
-
 
   // ----------圈子模块------------
   // 发表动态
