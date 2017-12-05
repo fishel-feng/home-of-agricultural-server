@@ -46,6 +46,11 @@ module.exports = app => {
       default: 0,
     },
     answers: Array,
+    circleCount: {
+      type: Number,
+      default: 0,
+    },
+    circles: Array,
     likes: Array,
   });
 

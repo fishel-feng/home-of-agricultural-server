@@ -147,7 +147,6 @@ class UserController extends Controller {
    * 获取用户信息
    */
   async getUserInfo() {
-    // todo
     const userId = this.ctx.params.userId;
     const user = await this.service.user.getUserInfo(userId);
     this.ctx.body = {
@@ -159,7 +158,6 @@ class UserController extends Controller {
    * 查看我的信息
    */
   async getUserIndex() {
-    // todo
     const user = await this.service.user.getUserIndex();
     this.ctx.body = {
       user,
@@ -212,6 +210,14 @@ class UserController extends Controller {
   async getAnswers() {
     const answers = await this.service.user.getAnswers();
     this.ctx.body = answers;
+  }
+
+  /**
+   * 查看我发表的动态
+   */
+  async getCircles() {
+    const circles = await this.service.user.getCircles();
+    this.ctx.body = circles;
   }
 }
 

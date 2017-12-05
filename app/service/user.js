@@ -172,7 +172,7 @@ module.exports = app => {
      */
     async getUserInfo(userId) {
       try {
-        const user = await User.findById(userId);
+        const user = await User.findById(userId, 'nickName headImage description gender age job location circles followerCount followingCount');
         if (!user) {
           throw new Error('NOT_FOUND');
         }
@@ -188,7 +188,7 @@ module.exports = app => {
      */
     async getUserIndex() {
       try {
-        const user = await User.findById(this.ctx.user._id, 'nickName headImage description collectionCount attentionCount');
+        const user = await User.findById(this.ctx.user._id, 'nickName headImage description collectionCount attentionCount followingCount followerCount questionCount answerCount circleCount');
         if (!user) {
           throw new Error('SOMETHING_ERROR');
         }
@@ -289,6 +289,22 @@ module.exports = app => {
           throw new Error('SOMETHING_ERROR');
         }
         return answers;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    /**
+     * 查看我发表的动态
+     * @return {*} 我发表的动态
+     */
+    async getCircles() {
+      try {
+        const circles = await User.findById(this.ctx.user._id, 'circles');
+        if (!circles) {
+          throw new Error('SOMETHING_ERROR');
+        }
+        return circles;
       } catch (e) {
         throw new Error('SOMETHING_ERROR');
       }
