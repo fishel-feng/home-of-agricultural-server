@@ -10,7 +10,7 @@ module.exports = app => {
 
   app.post('/test/upload', app.controller.test.upload);
   // app.get('/test/index', app.jwt, app.controller.test.index);
-  app.get('/test/index', verifyAccount, app.controller.test.index);
+  app.post('/test/index', verifyAccount, app.controller.test.index);
 
   // ************用户app接口*************
   // ----------用户模块-----------

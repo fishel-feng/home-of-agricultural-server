@@ -37,8 +37,8 @@ class CircleController extends Controller {
       circleId,
       content,
     } = this.ctx.request.body;
-    const status = await this.service.circle.addComment(circleId, content);
-    this.ctx.body = status;
+    const comment = await this.service.circle.addComment(circleId, content);
+    this.ctx.body = comment;
   }
 
   async addInnerComment() {
@@ -46,7 +46,18 @@ class CircleController extends Controller {
   }
 
   async deleteComment() {
-    //
+    this.ctx.validate({
+      circleId: 'string',
+      commentId: 'integer',
+    });
+    const {
+      circleId,
+      commentId,
+    } = this.ctx.request.body;
+    const status = await this.service.circle.deleteComment(circleId, commentId);
+    this.ctx.body = {
+      status,
+    };
   }
 
   async deleteInnerComment() {

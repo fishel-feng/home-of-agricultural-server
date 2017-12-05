@@ -55,16 +55,19 @@ module.exports = app => {
      * 添加评论
      * @param {String} circleId 内容id
      * @param {String} content 内容
-     * @return {*} 成功状态
+     * @return {*} 评论信息
      */
     async addComment(circleId, content) {
       const user = this.ctx.user;
       try {
-        await Circle.update({
-          _id: circleId,
-        }, {
+        const circle = await Circle.findById(circleId);
+        await Circle.findByIdAndUpdate(circleId, {
+          $inc: {
+            count: 1,
+          },
           $push: {
             comments: {
+              _id: circle.count + 1,
               content,
               userId: user._id,
               nickName: user.nickName,
@@ -72,7 +75,8 @@ module.exports = app => {
             },
           },
         });
-        return 'success';
+        const result = await Circle.findById(circleId, 'comments');
+        return result.comments.id(circle.count + 1);
       } catch (e) {
         throw new Error('ADD_COMMENT_ERROR');
       }
@@ -82,8 +86,30 @@ module.exports = app => {
       //
     }
 
-    async deleteComment() {
-      //
+    /**
+     * 删除评论
+     * @param {String} circleId 内容id
+     * @param {String} commentId 评论id
+     * @return {*} 评论信息
+     */
+    async deleteComment(circleId, commentId) {
+      try {
+        const res = await Circle.update({
+          _id: circleId,
+        }, {
+          $pull: {
+            comments: {
+              _id: commentId,
+            },
+          },
+        });
+        if (res.nModified !== 1) {
+          throw new Error();
+        }
+        return 'success';
+      } catch (e) {
+        throw new Error('DELETE_ERROR');
+      }
     }
 
     async deleteInnerComment() {

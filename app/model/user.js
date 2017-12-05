@@ -62,7 +62,9 @@ module.exports = app => {
       default: 0,
     },
     circles: Array,
-    likes: Array,
+    likes: [{
+      circleId: String,
+    }],
   });
 
   return mongoose.model('User', UserSchema);

@@ -12,11 +12,17 @@ module.exports = app => {
     },
     content: String,
     images: Array,
+    count: {
+      type: Number,
+      default: 0,
+    },
     commentCount: {
       type: Number,
       default: 0,
     },
     comments: [{
+      _id: Number,
+      floorNumber: Number,
       userId: String,
       nickName: String,
       headImage: String,
@@ -25,9 +31,17 @@ module.exports = app => {
         default: Date.now,
       },
       content: String,
-      innerComments: [
-        // todo
-      ],
+      innerComments: [{
+        userId: String,
+        nickName: String,
+        targetId: String,
+        targetName: String,
+        time: {
+          type: Date,
+          default: Date.now,
+        },
+        content: String,
+      }],
     }],
     likeCount: {
       type: Number,

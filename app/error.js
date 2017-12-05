@@ -81,4 +81,8 @@ module.exports = {
     code: 328,
     message: '修改失败',
   },
+  DELETE_ERROR: {
+    code: 328,
+    message: '删除失败',
+  },
 };

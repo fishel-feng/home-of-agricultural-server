@@ -20,8 +20,9 @@ class TestController extends Controller {
     };
   }
   async index() {
+    const res = await this.service.test.index();
     this.ctx.body = {
-      hello: 'duck',
+      res,
     };
   }
 
