@@ -20,7 +20,10 @@ module.exports = app => {
       type: Number,
       default: 0,
     },
-    collections: Array,
+    collections: [{
+      articleId: String,
+      title: String,
+    }],
     attentionCount: {
       type: Number,
       default: 0,

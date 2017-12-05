@@ -29,6 +29,40 @@ class NewsController extends Controller {
     const result = await this.service.news.getArticleListByPage(itemName, page);
     this.ctx.body = result;
   }
+
+  /**
+   * 收藏文章
+   */
+  async addToCollections() {
+    this.ctx.validate({
+      articleId: 'string',
+      title: 'string',
+    });
+    const {
+      articleId,
+      title,
+    } = this.ctx.request.body;
+    const status = await this.service.news.addToCollections(articleId, title);
+    this.ctx.body = {
+      status,
+    };
+  }
+
+  /**
+   * 取消收藏
+   */
+  async deleteFromCollections() {
+    this.ctx.validate({
+      articleId: 'string',
+    });
+    const {
+      articleId,
+    } = this.ctx.request.body;
+    const status = await this.service.news.deleteFromCollections(articleId);
+    this.ctx.body = {
+      status,
+    };
+  }
 }
 
 module.exports = NewsController;

@@ -2,6 +2,9 @@
 const cheerio = require('cheerio');
 module.exports = app => {
   const baseUrl = 'http://news.wugu.com.cn/';
+  const {
+    User,
+  } = app.model;
   class UserService extends app.Service {
 
     /**
@@ -130,6 +133,52 @@ module.exports = app => {
       return {
         articles,
       };
+    }
+
+    /**
+     * 收藏文章
+     * @param {string} articleId 新闻id
+     * @param {string} title 新闻标题
+     * @return {string} 成功状态
+     */
+    async addToCollections(articleId, title) {
+      try {
+        await User.update({
+          _id: this.ctx.user._id,
+        }, {
+          $push: {
+            collections: {
+              articleId,
+              title,
+            },
+          },
+        });
+        return 'success';
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    /**
+     * 取消收藏
+     * @param {string} articleId 新闻id
+     * @return {string} 成功状态
+     */
+    async deleteFromCollections(articleId) {
+      try {
+        await User.update({
+          _id: this.ctx.user._id,
+        }, {
+          $pull: {
+            collections: {
+              articleId,
+            },
+          },
+        });
+        return 'success';
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
     }
 
     /**

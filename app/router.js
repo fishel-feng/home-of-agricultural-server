@@ -52,6 +52,10 @@ module.exports = app => {
   app.get('/news/getArticleInfo/:id', app.controller.news.getArticleInfo);
   // 获取文章列表
   app.get('/news/getArticleListByPage/:name/:page', app.controller.news.getArticleListByPage);
+  // 收藏文章
+  app.post('/news/addToCollections', verifyAccount, app.controller.news.addToCollections);
+  // 取消收藏
+  app.post('/news/deleteFromCollections', verifyAccount, app.controller.news.deleteFromCollections);
 
   // ----------百科模块------------
   // app.get('/wiki/getAll', app.controller.wiki.getAll);
