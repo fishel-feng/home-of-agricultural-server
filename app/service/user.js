@@ -199,6 +199,38 @@ module.exports = app => {
     }
 
     /**
+     * 查看收藏的文章列表
+     * @return {String} 收藏的文章
+     */
+    async getCollections() {
+      try {
+        const collections = await User.findById(this.ctx.user._id, 'collections');
+        if (!collections) {
+          throw new Error('SOMETHING_ERROR');
+        }
+        return collections;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    /**
+     * 查看关注的问题列表
+     * @return {String} 关注的问题
+     */
+    async getAttentions() {
+      try {
+        const attentions = await User.findById(this.ctx.user._id, 'attentions');
+        if (!attentions) {
+          throw new Error('SOMETHING_ERROR');
+        }
+        return attentions;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    /**
      * 生成随机验证码
      * @return {string} 验证码
      */

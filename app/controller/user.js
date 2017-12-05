@@ -147,6 +147,7 @@ class UserController extends Controller {
    * 获取用户信息
    */
   async getUserInfo() {
+    // todo
     const userId = this.ctx.params.userId;
     const user = await this.service.user.getUserInfo(userId);
     this.ctx.body = {
@@ -158,15 +159,58 @@ class UserController extends Controller {
    * 查看我的信息
    */
   async getUserIndex() {
+    // todo
     const user = await this.service.user.getUserIndex();
     this.ctx.body = {
       user,
     };
   }
-  async getFavoriteList() {
+
+  /**
+   * 查看收藏的文章列表
+   */
+  async getCollections() {
+    const collections = await this.service.user.getCollections();
+    this.ctx.body = {
+      collections,
+    };
+  }
+
+  /**
+   * 查看关注的问题列表
+   */
+  async getAttentions() {
+    const attentions = await this.service.user.getAttentions();
+    this.ctx.body = {
+      attentions,
+    };
+  }
+
+  /**
+   * 查看关注的人列表
+   */
+  async getFollowings() {
     //
   }
-  async getFollowList() {
+
+  /**
+   * 查看关注我的人列表
+   */
+  async getFollowers() {
+    //
+  }
+
+  /**
+   * 查看我的提问记录
+   */
+  async getQuestions() {
+    //
+  }
+
+  /**
+   * 查看我的回答记录
+   */
+  async getAnswers() {
     //
   }
 }

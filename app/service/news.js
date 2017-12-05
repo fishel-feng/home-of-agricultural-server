@@ -3,9 +3,11 @@ const cheerio = require('cheerio');
 module.exports = app => {
   const baseUrl = 'http://news.wugu.com.cn/';
   class UserService extends app.Service {
-    getArticleId(articleUrl) {
-      return articleUrl.slice(articleUrl.lastIndexOf('/') + 1, -5);
-    }
+
+    /**
+     * 获取新闻首页
+     * @return {*} 导航栏，轮播图，今日热点
+     */
     async getArticleIndex() {
       const result = await this.ctx.curl(baseUrl, {
         timeout: 3000,
@@ -52,6 +54,12 @@ module.exports = app => {
         todayNews,
       };
     }
+
+    /**
+     * 获取文章内容
+     * @param {string} articleId 新闻id
+     * @return {*} 新闻详情
+     */
     async getArticleInfo(articleId) {
       const url = `${baseUrl}article/${articleId}.html`;
       const result = await this.ctx.curl(url, {
@@ -85,6 +93,13 @@ module.exports = app => {
         content,
       };
     }
+
+    /**
+     * 分页查询新闻列表
+     * @param {string} itemName 列表项导航
+     * @param {string} page 页码
+     * @return {string} 列表信息
+     */
     async getArticleListByPage(itemName, page) {
       const url = `${baseUrl}${itemName}_${page}.html`;
       const result = await this.ctx.curl(url, {
@@ -115,6 +130,15 @@ module.exports = app => {
       return {
         articles,
       };
+    }
+
+    /**
+     * 获取新闻id
+     * @param {string} articleUrl 新闻url
+     * @return {string} 新闻id
+     */
+    getArticleId(articleUrl) {
+      return articleUrl.slice(articleUrl.lastIndexOf('/') + 1, -5);
     }
   }
   return UserService;

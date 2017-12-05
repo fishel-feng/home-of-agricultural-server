@@ -26,6 +26,26 @@ module.exports = app => {
       default: 0,
     },
     attentions: Array,
+    followingCount: {
+      type: Number,
+      default: 0,
+    },
+    followings: Array,
+    followerCount: {
+      type: Number,
+      default: 0,
+    },
+    followers: Array,
+    questionCount: {
+      type: Number,
+      default: 0,
+    },
+    questions: Array,
+    answerCount: {
+      type: Number,
+      default: 0,
+    },
+    answers: Array,
     likes: Array,
   });
 

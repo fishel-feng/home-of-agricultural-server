@@ -3,10 +3,10 @@
 module.exports = app => {
   const verifyAccount = app.middlewares.verifyAccount({});
   // todo jwt配置
-  const socketioJwt = require('socketio-jwt').authorize({
-    secret: 'jwtSecret',
-    handshake: true,
-  });
+  // const socketioJwt = require('socketio-jwt').authorize({
+  //   secret: 'jwtSecret',
+  //   handshake: true,
+  // });
 
   app.post('/test/upload', app.controller.test.upload);
   // app.get('/test/index', app.jwt, app.controller.test.index);
@@ -30,10 +30,18 @@ module.exports = app => {
   app.get('/user/getUserInfo/:userId', verifyAccount, app.controller.user.getUserInfo);
   // 查看‘我的’
   app.get('/user/getUserIndex', verifyAccount, app.controller.user.getUserIndex);
-  // 查看收藏列表
-  app.get('/user/getFavoriteList', verifyAccount, app.controller.user.getFavoriteList);
-  // 查看关注列表
-  app.get('/user/getFollowList', verifyAccount, app.controller.user.getFollowList);
+  // 查看收藏文章列表
+  app.get('/user/getCollections', verifyAccount, app.controller.user.getCollections);
+  // 查看关注问题列表
+  app.get('/user/getAttentions', verifyAccount, app.controller.user.getAttentions);
+  // 查看关注的人列表
+  app.get('/user/getFollowings', verifyAccount, app.controller.user.getFollowings);
+  // 查看关注我的人列表
+  app.get('/user/getFollowers', verifyAccount, app.controller.user.getFollowers);
+  // 查看提问的问题
+  app.get('/user/getQuestions', verifyAccount, app.controller.user.getQuestions);
+  // 查看回答的问题
+  app.get('/user/getAnswers', verifyAccount, app.controller.user.getAnswers);
 
   // ----------新闻模块-----------
   // 查看‘首页’
