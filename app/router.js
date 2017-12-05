@@ -26,6 +26,10 @@ module.exports = app => {
   app.post('/user/modifyUserInfo', verifyAccount, app.controller.user.modifyUserInfo);
   // 修改头像
   app.post('/user/modifyHeadImage', verifyAccount, app.controller.user.modifyHeadImage);
+  // 关注用户
+  app.post('/user/giveFollow', verifyAccount, app.controller.user.giveFollow);
+  // 取消关注用户
+  app.post('/user/cancelFollow', verifyAccount, app.controller.user.cancelFollow);
   // 查看用户信息
   app.get('/user/getUserInfo/:userId', verifyAccount, app.controller.user.getUserInfo);
   // 查看‘我的’

@@ -144,6 +144,38 @@ class UserController extends Controller {
   }
 
   /**
+   * 关注用户
+   */
+  async giveFollow() {
+    this.ctx.validate({
+      targetId: 'string',
+    });
+    const {
+      targetId,
+    } = this.ctx.request.body;
+    const status = await this.service.user.giveFollow(targetId);
+    this.ctx.body = {
+      status,
+    };
+  }
+
+  /**
+   * 取消关注用户
+   */
+  async cancelFollow() {
+    this.ctx.validate({
+      targetId: 'string',
+    });
+    const {
+      targetId,
+    } = this.ctx.request.body;
+    const status = await this.service.user.cancelFollow(targetId);
+    this.ctx.body = {
+      status,
+    };
+  }
+
+  /**
    * 获取用户信息
    */
   async getUserInfo() {

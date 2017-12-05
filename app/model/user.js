@@ -33,12 +33,20 @@ module.exports = app => {
       type: Number,
       default: 0,
     },
-    followings: Array,
+    followings: [{
+      userId: String,
+      nickName: String,
+      headImage: String,
+    }],
     followerCount: {
       type: Number,
       default: 0,
     },
-    followers: Array,
+    followers: [{
+      userId: String,
+      nickName: String,
+      headImage: String,
+    }],
     questionCount: {
       type: Number,
       default: 0,

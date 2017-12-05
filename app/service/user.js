@@ -166,6 +166,73 @@ module.exports = app => {
     }
 
     /**
+     * 关注用户
+     * @param {String} targetId 目标用户id
+     * @return {String} 成功状态
+     */
+    async giveFollow(targetId) {
+      try {
+        const user = await User.findById(targetId);
+        await User.update({
+          _id: this.ctx.user._id,
+        }, {
+          $push: {
+            followings: {
+              userId: targetId,
+              nickName: user.nickName,
+              headImage: user.headImage,
+            },
+          },
+        });
+        await User.update({
+          _id: targetId,
+        }, {
+          $push: {
+            followers: {
+              userId: this.ctx.user._id,
+              nickName: this.ctx.user.nickName,
+              headImage: this.ctx.user.headImage,
+            },
+          },
+        });
+        return 'success';
+      } catch (e) {
+        throw new Error('MODIFY_FAIL');
+      }
+    }
+
+    /**
+     * 取消关注用户
+     * @param {String} targetId 目标用户id
+     * @return {String} 成功状态
+     */
+    async cancelFollow(targetId) {
+      try {
+        await User.update({
+          _id: this.ctx.user._id,
+        }, {
+          $pull: {
+            followings: {
+              userId: targetId,
+            },
+          },
+        });
+        await User.update({
+          _id: targetId,
+        }, {
+          $pull: {
+            followers: {
+              userId: this.ctx.user._id,
+            },
+          },
+        });
+        return 'success';
+      } catch (e) {
+        throw new Error('MODIFY_FAIL');
+      }
+    }
+
+    /**
      * 获取用户信息
      * @param {String} userId 用户id
      * @return {String} 用户信息
