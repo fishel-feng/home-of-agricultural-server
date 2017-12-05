@@ -184,7 +184,7 @@ module.exports = app => {
 
     /**
      * 查看我的信息
-     * @return {String} 我的信息
+     * @return {*} 我的信息
      */
     async getUserIndex() {
       try {
@@ -200,7 +200,7 @@ module.exports = app => {
 
     /**
      * 查看收藏的文章列表
-     * @return {String} 收藏的文章
+     * @return {*} 收藏的文章
      */
     async getCollections() {
       try {
@@ -216,7 +216,7 @@ module.exports = app => {
 
     /**
      * 查看关注的问题列表
-     * @return {String} 关注的问题
+     * @return {*} 关注的问题
      */
     async getAttentions() {
       try {
@@ -225,6 +225,70 @@ module.exports = app => {
           throw new Error('SOMETHING_ERROR');
         }
         return attentions;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    /**
+     * 查看关注的人列表
+     * @return {*} 关注的人
+     */
+    async getFollowings() {
+      try {
+        const followings = await User.findById(this.ctx.user._id, 'followings');
+        if (!followings) {
+          throw new Error('SOMETHING_ERROR');
+        }
+        return followings;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    /**
+     * 查看关注我的人列表
+     * @return {*} 关注我的人
+     */
+    async getFollowers() {
+      try {
+        const followers = await User.findById(this.ctx.user._id, 'followers');
+        if (!followers) {
+          throw new Error('SOMETHING_ERROR');
+        }
+        return followers;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    /**
+     * 查看我的提问记录
+     * @return {*} 我的提问
+     */
+    async getQuestions() {
+      try {
+        const questions = await User.findById(this.ctx.user._id, 'questions');
+        if (!questions) {
+          throw new Error('SOMETHING_ERROR');
+        }
+        return questions;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    /**
+     * 查看我的回答记录
+     * @return {*} 我的回答
+     */
+    async getAnswers() {
+      try {
+        const answers = await User.findById(this.ctx.user._id, 'answers');
+        if (!answers) {
+          throw new Error('SOMETHING_ERROR');
+        }
+        return answers;
       } catch (e) {
         throw new Error('SOMETHING_ERROR');
       }

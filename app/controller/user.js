@@ -171,9 +171,7 @@ class UserController extends Controller {
    */
   async getCollections() {
     const collections = await this.service.user.getCollections();
-    this.ctx.body = {
-      collections,
-    };
+    this.ctx.body = collections;
   }
 
   /**
@@ -181,37 +179,39 @@ class UserController extends Controller {
    */
   async getAttentions() {
     const attentions = await this.service.user.getAttentions();
-    this.ctx.body = {
-      attentions,
-    };
+    this.ctx.body = attentions;
   }
 
   /**
    * 查看关注的人列表
    */
   async getFollowings() {
-    //
+    const followings = await this.service.user.getFollowings();
+    this.ctx.body = followings;
   }
 
   /**
    * 查看关注我的人列表
    */
   async getFollowers() {
-    //
+    const followers = await this.service.user.getFollowers();
+    this.ctx.body = followers;
   }
 
   /**
    * 查看我的提问记录
    */
   async getQuestions() {
-    //
+    const questions = await this.service.user.getQuestions();
+    this.ctx.body = questions;
   }
 
   /**
    * 查看我的回答记录
    */
   async getAnswers() {
-    //
+    const answers = await this.service.user.getAnswers();
+    this.ctx.body = answers;
   }
 }
 
