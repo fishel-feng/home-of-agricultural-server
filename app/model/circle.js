@@ -22,7 +22,6 @@ module.exports = app => {
     },
     comments: [{
       _id: Number,
-      floorNumber: Number,
       userId: String,
       nickName: String,
       headImage: String,
@@ -31,17 +30,8 @@ module.exports = app => {
         default: Date.now,
       },
       content: String,
-      innerComments: [{
-        userId: String,
-        nickName: String,
-        targetId: String,
-        targetName: String,
-        time: {
-          type: Date,
-          default: Date.now,
-        },
-        content: String,
-      }],
+      targetId: String,
+      targetName: String,
     }],
     likeCount: {
       type: Number,

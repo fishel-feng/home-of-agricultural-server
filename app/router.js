@@ -71,12 +71,8 @@ module.exports = app => {
   app.post('/circle/deleteCircle', verifyAccount, app.controller.circle.deleteCircle);
   // 评论动态
   app.post('/circle/addComment', verifyAccount, app.controller.circle.addComment);
-  // 回复评论
-  app.post('/circle/addInnerComment', verifyAccount, app.controller.circle.addInnerComment);
   // 删除评论
   app.post('/circle/deleteComment', verifyAccount, app.controller.circle.deleteComment);
-  // 删除回复评论
-  app.post('/circle/deleteInnerComment', verifyAccount, app.controller.circle.deleteInnerComment);
   // 点赞
   app.post('/circle/giveLike', verifyAccount, app.controller.circle.giveLike);
   // 取消赞
@@ -85,15 +81,14 @@ module.exports = app => {
   app.get('/circle/getCircleList', app.controller.circle.getCircleList);
   // 查看评论
   app.get('/circle/getComment', app.controller.circle.getComment);
-  // 查看回复
-  app.get('/circle/getInnerComment', app.controller.circle.getInnerComment);
   // 查看点赞列表
   app.get('/circle/getLikeList/:circleId', app.controller.circle.getLikeList);
 
   // ----------问答模块------------
   // 获取专家列表
   app.get('/question/getExpertList', app.controller.question.getExpertList);
-
+  // 发起提问
+  app.post('/question/addQuestion', app.controller.question.addQuestion);
 
   // socket.io接口
   // app.io.set('authorization', socketioJwt);

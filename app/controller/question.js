@@ -5,6 +5,9 @@ class QuestionController extends Controller {
   async getExpertList() {
     //
   }
+  async addQuestion() {
+    //
+  }
 }
 
 module.exports = QuestionController;

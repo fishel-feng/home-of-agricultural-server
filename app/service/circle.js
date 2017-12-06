@@ -55,12 +55,18 @@ module.exports = app => {
      * 添加评论
      * @param {String} circleId 内容id
      * @param {String} content 内容
+     * @param {String} targetId 目标用户id
      * @return {*} 评论信息
      */
-    async addComment(circleId, content) {
+    async addComment(circleId, content, targetId) {
       const user = this.ctx.user;
       try {
         const circle = await Circle.findById(circleId);
+        let targetName;
+        if (targetId) {
+          const targetUser = await User.findById(targetId, 'nickName');
+          targetName = targetUser.nickName;
+        }
         await Circle.findByIdAndUpdate(circleId, {
           $inc: {
             count: 1,
@@ -72,6 +78,8 @@ module.exports = app => {
               userId: user._id,
               nickName: user.nickName,
               headImage: user.headImage,
+              targetId,
+              targetName,
             },
           },
         });
@@ -80,10 +88,6 @@ module.exports = app => {
       } catch (e) {
         throw new Error('ADD_COMMENT_ERROR');
       }
-    }
-
-    async addInnerComment() {
-      //
     }
 
     /**
@@ -110,10 +114,6 @@ module.exports = app => {
       } catch (e) {
         throw new Error('DELETE_ERROR');
       }
-    }
-
-    async deleteInnerComment() {
-      //
     }
 
     /**
@@ -203,10 +203,6 @@ module.exports = app => {
     }
 
     async getComment() {
-      //
-    }
-
-    async getInnerComment() {
       //
     }
 

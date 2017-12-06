@@ -32,17 +32,18 @@ class CircleController extends Controller {
     this.ctx.validate({
       circleId: 'string',
       content: 'string',
+      targetId: {
+        type: 'string',
+        required: false,
+      },
     });
     const {
       circleId,
       content,
+      targetId,
     } = this.ctx.request.body;
-    const comment = await this.service.circle.addComment(circleId, content);
+    const comment = await this.service.circle.addComment(circleId, content, targetId);
     this.ctx.body = comment;
-  }
-
-  async addInnerComment() {
-    //
   }
 
   async deleteComment() {
@@ -58,10 +59,6 @@ class CircleController extends Controller {
     this.ctx.body = {
       status,
     };
-  }
-
-  async deleteInnerComment() {
-    //
   }
 
   async giveLike() {
@@ -91,10 +88,6 @@ class CircleController extends Controller {
   }
 
   async getComment() {
-    //
-  }
-
-  async getInnerComment() {
     //
   }
 
