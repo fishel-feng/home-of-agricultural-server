@@ -89,9 +89,29 @@ module.exports = app => {
       }
     }
 
-    async deleteAnswer() {
-      //
+    async deleteAnswer(questionId, answerId) {
+      try {
+        const res = await Question.update({
+          _id: questionId,
+        }, {
+          $inc: {
+            answerCount: -1,
+          },
+          $pull: {
+            answers: {
+              _id: answerId,
+            },
+          },
+        });
+        if (res.nModified !== 1) {
+          throw new Error();
+        }
+        return 'success';
+      } catch (e) {
+        throw new Error('DELETE_ERROR');
+      }
     }
+
     async acceptAnswer() {
       //
     }

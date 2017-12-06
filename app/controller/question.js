@@ -55,7 +55,18 @@ class QuestionController extends Controller {
    * 删除回答
    */
   async deleteAnswer() {
-    //
+    this.ctx.validate({
+      questionId: 'string',
+      answerId: 'integer',
+    });
+    const {
+      questionId,
+      answerId,
+    } = this.ctx.request.body;
+    const status = await this.service.question.deleteAnswer(questionId, answerId);
+    this.ctx.body = {
+      status,
+    };
   }
 
   /**
