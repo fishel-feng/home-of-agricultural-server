@@ -60,9 +60,35 @@ module.exports = app => {
         throw new Error('SOMETHING_ERROR');
       }
     }
-    async addAnswer() {
-      //
+
+    async addAnswer(questionId, content, images) {
+      const user = this.ctx.user;
+      try {
+        const question = await Question.findById(questionId);
+        await Question.findByIdAndUpdate(questionId, {
+          $inc: {
+            count: 1,
+            answerCount: 1,
+          },
+          $push: {
+            answers: {
+              _id: question.count + 1,
+              content,
+              userId: user._id,
+              nickName: user.nickName,
+              headImage: user.headImage,
+              certification: user.certification,
+              images,
+            },
+          },
+        });
+        const result = await Question.findById(questionId, 'answers');
+        return result.answers.id(question.count + 1);
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
     }
+
     async deleteAnswer() {
       //
     }

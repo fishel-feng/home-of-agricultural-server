@@ -39,7 +39,16 @@ class QuestionController extends Controller {
    * 添加回答
    */
   async addAnswer() {
-    //
+    const parts = this.ctx.multipart({
+      autoFields: true,
+    });
+    const images = await this.service.upload.upload(parts, 'answer');
+    const {
+      questionId,
+      content,
+    } = parts.field;
+    const answer = await this.service.question.addAnswer(questionId, content, images);
+    this.ctx.body = answer;
   }
 
   /**
