@@ -8,7 +8,7 @@ module.exports = app => {
   class QuestionService extends app.Service {
 
     /**
-     * 发表动态
+     * 新建问题
      * @param {String} title 标题
      * @param {String} content 内容
      * @param {String} tags 分类标签
@@ -18,6 +18,7 @@ module.exports = app => {
     async addQuestion(title, content, tags, images) {
       const user = this.ctx.user;
       try {
+        // todo 无图
         const question = await new Question({
           title,
           content,
@@ -27,6 +28,11 @@ module.exports = app => {
           nickName: user.nickName,
           headImage: user.headImage,
         }).save();
+        await User.findByIdAndUpdate(user._id, {
+          $inc: {
+            questionCount: 1,
+          },
+        });
         return {
           question,
         };
@@ -35,8 +41,24 @@ module.exports = app => {
       }
     }
 
-    async deleteQuestion() {
-      //
+    /**
+     * 删除问题
+     * @param {String} questionId 标题
+     * @return {*} 成功状态
+     */
+    async deleteQuestion(questionId) {
+      try {
+        const res = await Question.remove({
+          _id: questionId,
+          userId: this.ctx.user._id,
+        });
+        if (res.result.n !== 1) {
+          throw new Error();
+        }
+        return 'success';
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
     }
     async addAnswer() {
       //
