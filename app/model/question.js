@@ -32,6 +32,7 @@ module.exports = app => {
       nickName: String,
       headImage: String,
       certification: Boolean,
+      images: Array,
       time: {
         type: Date,
         default: Date.now,

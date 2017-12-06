@@ -217,7 +217,9 @@ class UserController extends Controller {
    */
   async getFollowings() {
     const followings = await this.service.user.getFollowings();
-    this.ctx.body = followings;
+    this.ctx.body = {
+      followings,
+    };
   }
 
   /**
@@ -225,7 +227,9 @@ class UserController extends Controller {
    */
   async getFollowers() {
     const followers = await this.service.user.getFollowers();
-    this.ctx.body = followers;
+    this.ctx.body = {
+      followers,
+    };
   }
 
   /**

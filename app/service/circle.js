@@ -5,8 +5,8 @@ module.exports = app => {
     Circle,
     User,
   } = app.model;
+  const PAGE_SIZE = 20;
   class CircleService extends app.Service {
-
     /**
      * 发表动态
      * @param {String} content 文本内容
@@ -198,6 +198,24 @@ module.exports = app => {
         return 'success';
       } catch (e) {
         throw new Error('CANCEL_LIKE_ERROR');
+      }
+    }
+
+    async getAttentionList(page) {
+      const user = this.ctx.user;
+      try {
+        const res = await Circle.find({
+          userId: {
+            $in: user.followings,
+          },
+        }).sort({
+          time: 'desc',
+        }).skip(page * PAGE_SIZE)
+          .limit(PAGE_SIZE)
+          .exec();
+        return res;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
       }
     }
 

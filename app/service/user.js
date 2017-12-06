@@ -171,28 +171,26 @@ module.exports = app => {
      * @return {String} 成功状态
      */
     async giveFollow(targetId) {
+      // todo 重复关注
       try {
-        const user = await User.findById(targetId);
         await User.update({
           _id: this.ctx.user._id,
         }, {
           $push: {
-            followings: {
-              userId: targetId,
-              nickName: user.nickName,
-              headImage: user.headImage,
-            },
+            followings: targetId,
+          },
+          $inc: {
+            followingCount: 1,
           },
         });
         await User.update({
           _id: targetId,
         }, {
           $push: {
-            followers: {
-              userId: this.ctx.user._id,
-              nickName: this.ctx.user.nickName,
-              headImage: this.ctx.user.headImage,
-            },
+            followers: this.ctx.user._id,
+          },
+          $inc: {
+            followerCount: 1,
           },
         });
         return 'success';
@@ -212,18 +210,20 @@ module.exports = app => {
           _id: this.ctx.user._id,
         }, {
           $pull: {
-            followings: {
-              userId: targetId,
-            },
+            followings: targetId,
+          },
+          $inc: {
+            followingCount: -1,
           },
         });
         await User.update({
           _id: targetId,
         }, {
           $pull: {
-            followers: {
-              userId: this.ctx.user._id,
-            },
+            followers: this.ctx.user._id,
+          },
+          $inc: {
+            followerCount: -1,
           },
         });
         return 'success';
@@ -303,10 +303,11 @@ module.exports = app => {
      */
     async getFollowings() {
       try {
-        const followings = await User.findById(this.ctx.user._id, 'followings');
-        if (!followings) {
-          throw new Error('SOMETHING_ERROR');
-        }
+        const followings = await User.find({
+          _id: {
+            $in: [ this.ctx.user.followings ],
+          },
+        }, '_id nickName headImage');
         return followings;
       } catch (e) {
         throw new Error('SOMETHING_ERROR');
@@ -319,10 +320,11 @@ module.exports = app => {
      */
     async getFollowers() {
       try {
-        const followers = await User.findById(this.ctx.user._id, 'followers');
-        if (!followers) {
-          throw new Error('SOMETHING_ERROR');
-        }
+        const followers = await User.find({
+          _id: {
+            $in: [ this.ctx.user.followers ],
+          },
+        }, '_id nickName headImage');
         return followers;
       } catch (e) {
         throw new Error('SOMETHING_ERROR');
