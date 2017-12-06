@@ -82,7 +82,7 @@ module.exports = app => {
   // 查看动态
   app.get('/circle/getCircleList/:page', app.controller.circle.getCircleList);
   // 查看评论
-  app.get('/circle/getComment', app.controller.circle.getComment);
+  app.get('/circle/getComment/:circleId', app.controller.circle.getComment);
   // 查看点赞列表
   app.get('/circle/getLikeList/:circleId', app.controller.circle.getLikeList);
 

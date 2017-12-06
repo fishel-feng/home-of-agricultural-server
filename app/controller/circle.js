@@ -116,14 +116,20 @@ class CircleController extends Controller {
    * 查看动态
    */
   async getCircleList() {
-    //
+    const page = this.ctx.params.page;
+    const result = await this.service.circle.getCircleList(page);
+    this.ctx.body = {
+      circleList: result,
+    };
   }
 
   /**
    * 查看评论
    */
   async getComment() {
-    //
+    const circleId = this.ctx.params.circleId;
+    const result = await this.service.circle.getComment(circleId);
+    this.ctx.body = result;
   }
 
   /**

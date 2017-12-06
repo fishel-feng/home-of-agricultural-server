@@ -7,6 +7,7 @@ module.exports = app => {
   } = app.model;
   const PAGE_SIZE = 20;
   class CircleService extends app.Service {
+
     /**
      * 发表动态
      * @param {String} content 文本内容
@@ -201,6 +202,11 @@ module.exports = app => {
       }
     }
 
+    /**
+     * 查看关注的人动态
+     * @param {Number} page 页码
+     * @return {*} 关注的人动态
+     */
     async getAttentionList(page) {
       const user = this.ctx.user;
       try {
@@ -208,7 +214,7 @@ module.exports = app => {
           userId: {
             $in: user.followings,
           },
-        }).sort({
+        }, 'userId nickName headImage content images commentCount').sort({
           time: 'desc',
         }).skip(page * PAGE_SIZE)
           .limit(PAGE_SIZE)
@@ -219,13 +225,38 @@ module.exports = app => {
       }
     }
 
-    async getCircleList() {
-      await Circle.find();
-      // todo
+    /**
+     * 查看动态
+     * @param {Number} page 页码
+     * @return {*} 动态
+     */
+    async getCircleList(page) {
+      try {
+        const res = await Circle.find({}, 'userId nickName headImage content images commentCount').sort({
+          time: 'desc',
+        }).skip(page * PAGE_SIZE)
+          .limit(PAGE_SIZE)
+          .exec();
+        return res;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
     }
 
-    async getComment() {
-      //
+    /**
+     * 查看评论
+     * @param {String} circleId 动态id
+     * @return {*} 评论
+     */
+    async getComment(circleId) {
+      try {
+        const res = await Circle.findById(circleId, 'comments').sort({
+          'comments.time': 'desc',
+        });
+        return res;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
     }
 
     /**
