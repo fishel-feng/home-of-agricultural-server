@@ -79,7 +79,7 @@ module.exports = app => {
   app.post('/circle/cancelLike', verifyAccount, app.controller.circle.cancelLike);
   // 查看关注的人动态 从0开始
   app.get('/circle/getAttentionList/:page', verifyAccount, app.controller.circle.getAttentionList);
-  // 查看动态
+  // 查看动态 从0开始
   app.get('/circle/getCircleList/:page', app.controller.circle.getCircleList);
   // 查看评论
   app.get('/circle/getComment/:circleId', app.controller.circle.getComment);
@@ -99,8 +99,8 @@ module.exports = app => {
   app.post('/question/acceptAnswer', verifyAccount, app.controller.question.acceptAnswer);
   // 获取专家列表
   app.get('/question/getExpertList', app.controller.question.getExpertList);
-  // 查看问题列表
-  app.get('/question/getQuestionList', app.controller.question.getQuestionList);
+  // 查看问题列表 从0开始
+  app.get('/question/getQuestionList/:page', app.controller.question.getQuestionList);
 
   // socket.io接口
   // app.io.set('authorization', socketioJwt);

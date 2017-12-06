@@ -73,7 +73,18 @@ class QuestionController extends Controller {
    * 采纳答案
    */
   async acceptAnswer() {
-    //
+    this.ctx.validate({
+      questionId: 'string',
+      answerId: 'integer',
+    });
+    const {
+      questionId,
+      answerId,
+    } = this.ctx.request.body;
+    const status = await this.service.question.acceptAnswer(questionId, answerId);
+    this.ctx.body = {
+      status,
+    };
   }
 
   /**
@@ -87,7 +98,9 @@ class QuestionController extends Controller {
    * 获取问题列表
    */
   async getQuestionList() {
-    //
+    const page = this.ctx.params.page;
+    const result = await this.service.question.getQuestionList(page);
+    this.ctx.body = result;
   }
 }
 

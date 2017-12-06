@@ -5,6 +5,7 @@ module.exports = app => {
     Question,
     User,
   } = app.model;
+  const PAGE_SIZE = 20;
   class QuestionService extends app.Service {
 
     /**
@@ -43,7 +44,7 @@ module.exports = app => {
 
     /**
      * 删除问题
-     * @param {String} questionId 标题
+     * @param {String} questionId 问题id
      * @return {*} 成功状态
      */
     async deleteQuestion(questionId) {
@@ -61,6 +62,13 @@ module.exports = app => {
       }
     }
 
+    /**
+     * 添加回答
+     * @param {String} questionId 问题id
+     * @param {String} content 内容
+     * @param {String} images 图片地址
+     * @return {*} 回答
+     */
     async addAnswer(questionId, content, images) {
       const user = this.ctx.user;
       try {
@@ -89,6 +97,12 @@ module.exports = app => {
       }
     }
 
+    /**
+     * 删除回答
+     * @param {String} questionId 问题id
+     * @param {Number} answerId 回答id
+     * @return {*} 成功状态
+     */
     async deleteAnswer(questionId, answerId) {
       try {
         const res = await Question.update({
@@ -112,14 +126,52 @@ module.exports = app => {
       }
     }
 
-    async acceptAnswer() {
-      //
+    /**
+     * 采纳答案
+     * @param {String} questionId 问题id
+     * @param {Number} answerId 回答id
+     * @return {*} 成功状态
+     */
+    async acceptAnswer(questionId, answerId) {
+      try {
+        const res = await Question.update({
+          _id: questionId,
+          'answers._id': answerId,
+        }, {
+          $set: {
+            'answers.$._id': 0,
+          },
+        });
+        if (res.nModified !== 1) {
+          throw new Error();
+        }
+        console.log(res);
+        return 'success';
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
     }
+
     async getExpertList() {
       //
     }
-    async getQuestionList() {
-      //
+
+    /**
+     * 获取问题列表
+     * @param {String} page 页码
+     * @return {*} 问题列表
+     */
+    async getQuestionList(page) {
+      try {
+        const res = await Question.find({}, 'userId nickName headImage title content images finishState answerCount').sort({
+          time: 'desc',
+        }).skip(page * PAGE_SIZE)
+          .limit(PAGE_SIZE)
+          .exec();
+        return res;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
     }
   }
   return QuestionService;
