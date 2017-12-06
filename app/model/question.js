@@ -7,6 +7,7 @@ module.exports = app => {
     nickName: String,
     headImage: String,
     content: String,
+    title: String,
     images: Array,
     tags: Array,
     time: {
@@ -31,7 +32,6 @@ module.exports = app => {
       nickName: String,
       headImage: String,
       certification: Boolean,
-      image: Array,
       time: {
         type: Date,
         default: Date.now,

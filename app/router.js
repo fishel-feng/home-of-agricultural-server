@@ -85,18 +85,20 @@ module.exports = app => {
   app.get('/circle/getLikeList/:circleId', app.controller.circle.getLikeList);
 
   // ----------问答模块------------
+  // 发起提问
+  app.post('/question/addQuestion', verifyAccount, app.controller.question.addQuestion);
+  // 删除问题
+  app.post('/question/deleteQuestion', verifyAccount, app.controller.question.deleteQuestion);
+  // 回答问题
+  app.post('/question/addAnswer', verifyAccount, app.controller.question.addAnswer);
+  // 删除回答
+  app.post('/question/deleteAnswer', verifyAccount, app.controller.question.deleteAnswer);
+  // 采纳答案
+  app.post('/question/acceptAnswer', verifyAccount, app.controller.question.acceptAnswer);
   // 获取专家列表
   app.get('/question/getExpertList', app.controller.question.getExpertList);
-  // 发起提问
-  app.post('/question/addQuestion', app.controller.question.addQuestion);
-  // 删除问题
-  app.post('/question/deleteQuestion', app.controller.question.deleteQuestion);
-  // 回答问题
-  app.post('/question/addAnswer', app.controller.question.addAnswer);
-  // 删除回答
-  app.post('/question/deleteAnswer', app.controller.question.deleteAnswer);
-  // 采纳答案
-  app.post('/question/acceptAnswer', app.controller.question.acceptAnswer);
+  // 查看问题列表
+  app.get('/question/getQuestionList', app.controller.question.getQuestionList);
 
   // socket.io接口
   // app.io.set('authorization', socketioJwt);
