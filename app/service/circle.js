@@ -70,6 +70,7 @@ module.exports = app => {
         await Circle.findByIdAndUpdate(circleId, {
           $inc: {
             count: 1,
+            commentCount: 1,
           },
           $push: {
             comments: {
@@ -101,6 +102,9 @@ module.exports = app => {
         const res = await Circle.update({
           _id: circleId,
         }, {
+          $inc: {
+            commentCount: -1,
+          },
           $pull: {
             comments: {
               _id: commentId,

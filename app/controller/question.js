@@ -8,6 +8,18 @@ class QuestionController extends Controller {
   async addQuestion() {
     //
   }
+  async deleteQuestion() {
+    //
+  }
+  async addAnswer() {
+    //
+  }
+  async deleteAnswer() {
+    //
+  }
+  async acceptAnswer() {
+    //
+  }
 }
 
 module.exports = QuestionController;

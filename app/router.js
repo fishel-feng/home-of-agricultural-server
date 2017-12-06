@@ -89,6 +89,14 @@ module.exports = app => {
   app.get('/question/getExpertList', app.controller.question.getExpertList);
   // 发起提问
   app.post('/question/addQuestion', app.controller.question.addQuestion);
+  // 删除问题
+  app.post('/question/deleteQuestion', app.controller.question.deleteQuestion);
+  // 回答问题
+  app.post('/question/addAnswer', app.controller.question.addAnswer);
+  // 删除回答
+  app.post('/question/deleteAnswer', app.controller.question.deleteAnswer);
+  // 采纳答案
+  app.post('/question/acceptAnswer', app.controller.question.acceptAnswer);
 
   // socket.io接口
   // app.io.set('authorization', socketioJwt);

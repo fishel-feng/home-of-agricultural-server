@@ -4,6 +4,9 @@ const Controller = require('egg').Controller;
 
 class CircleController extends Controller {
 
+  /**
+   * 发表动态
+   */
   async addCircle() {
     const parts = this.ctx.multipart({
       autoFields: true,
@@ -16,6 +19,9 @@ class CircleController extends Controller {
     this.ctx.body = circle;
   }
 
+  /**
+   * 删除动态
+   */
   async deleteCircle() {
     this.ctx.validate({
       circleId: 'string',
@@ -28,6 +34,9 @@ class CircleController extends Controller {
     this.ctx.body = status;
   }
 
+  /**
+   * 添加评论
+   */
   async addComment() {
     this.ctx.validate({
       circleId: 'string',
@@ -46,6 +55,9 @@ class CircleController extends Controller {
     this.ctx.body = comment;
   }
 
+  /**
+   * 删除评论
+   */
   async deleteComment() {
     this.ctx.validate({
       circleId: 'string',
@@ -61,6 +73,9 @@ class CircleController extends Controller {
     };
   }
 
+  /**
+   * 点赞
+   */
   async giveLike() {
     this.ctx.validate({
       circleId: 'string',
@@ -72,6 +87,9 @@ class CircleController extends Controller {
     this.ctx.body = status;
   }
 
+  /**
+   * 取消赞
+   */
   async cancelLike() {
     this.ctx.validate({
       circleId: 'string',
@@ -83,14 +101,23 @@ class CircleController extends Controller {
     this.ctx.body = status;
   }
 
+  /**
+   * 查看动态
+   */
   async getCircleList() {
     //
   }
 
+  /**
+   * 查看评论
+   */
   async getComment() {
     //
   }
 
+  /**
+   * 查看点赞列表
+   */
   async getLikeList() {
     const circleId = this.ctx.params.circleId;
     const result = await this.service.circle.getLikeList(circleId);
