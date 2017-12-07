@@ -104,8 +104,24 @@ module.exports = app => {
 
   // socket.io接口
   // app.io.set('authorization', socketioJwt);
-  app.io.route('chat', app.io.controllers.io.login);
+  // 登录
+  app.io.route('login', app.io.controllers.io.login);
+  // 聊天
   app.io.route('chat', app.io.controllers.io.chat);
+  // 点赞
+  app.io.route('like', app.io.controllers.io.like);
+  // 评论
+  app.io.route('comment', app.io.controllers.io.comment);
+  // 回答
+  app.io.route('answer', app.io.controllers.io.answer);
+  // 邀请回答
+  app.io.route('invitation', app.io.controllers.io.invitation);
+  // 关注用户
+  app.io.route('attention', app.io.controllers.io.attention);
+  // 采纳答案
+  app.io.route('accept', app.io.controllers.io.accept);
+  // 注销
+  app.io.route('exit', app.io.controllers.io.exit);
 
   // *************管理后台接口************
   // app.post('/admin/login', app.controller.admin.login);
