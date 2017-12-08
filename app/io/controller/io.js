@@ -8,19 +8,19 @@ class IOController extends Controller {
    * 登录
    */
   async login() {
-    const user = this.ctx.args[0];
-    socketMap[user] = this.ctx.socket.id;
+    const token = this.ctx.args[0];
+    // socketMap[user] = this.ctx.socket.id;
+    const socketId = await this.service.io.login(token);
+    console.log(socketId);
   }
 
   /**
    * 聊天
    */
   async chat() {
-    const from = this.ctx.args[0];
-    const to = this.ctx.args[1];
-    const message = this.ctx.args[2];
-    console.log(from + '发消息给' + to);
-    this.ctx.socket.nsp.sockets[socketMap[to]].emit('res', message);
+    const to = this.ctx.args[0];
+    const message = this.ctx.args[1];
+    await this.service.io.chat(to, message);
   }
 
   /**
