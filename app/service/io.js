@@ -17,8 +17,13 @@ module.exports = app => {
     async chat(to, message) {
       const userId = '5a16699d5e58179af45247d0';
       const targetSocketId = await app.redis.get(SOCKET + to);
-      console.log(targetSocketId);
-      this.ctx.socket.nsp.sockets[targetSocketId].emit('message', userId, message);
+      if (targetSocketId) {
+        this.ctx.socket.nsp.sockets[targetSocketId].emit('message', userId, message);
+      }
+    }
+
+    async like() {
+      //
     }
   }
   return IOService;

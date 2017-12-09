@@ -34,16 +34,17 @@ module.exports = appInfo => {
     csrf: {
       ignoreJSON: true,
     },
+    domainWhiteList: [ 'http://127.0.0.1:8080' ],
+  };
+
+  config.cors = {
+    // allowMethods: 'GET,POST,HEAD,PUT,DELETE,PATCH,OPTIONS',
+    // credentials: true,
+    origin: '*',
   };
 
   config.multipart = {
     fileSize: '50mb',
-  };
-
-  config.security = {
-    csrf: {
-      enable: false,
-    },
   };
 
   config.io = {
