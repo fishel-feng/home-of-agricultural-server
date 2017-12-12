@@ -29,6 +29,7 @@ module.exports = app => {
           navUrl,
         });
       });
+      navItem.splice(8, 1);
       $('.iscroll_li').each((index, element) => {
         const title = $(element).find('.banner_title').text()
           .trim();
