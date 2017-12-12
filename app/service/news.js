@@ -87,14 +87,35 @@ module.exports = app => {
         }
         content.push($(element).text().trim());
       });
+      const articleInfo = [];
+      let index = 0;
+      content.forEach(element => {
+        if (element !== '') {
+          articleInfo.push({
+            type: 'word',
+            content: element,
+          });
+        } else {
+          if (index < images.length) {
+            articleInfo.push({
+              type: 'image',
+              content: images[index++],
+            });
+          } else {
+            articleInfo.push({
+              type: 'word',
+              content: '',
+            });
+          }
+        }
+      });
       return {
         title,
         from,
         time,
         read,
         desc,
-        images,
-        content,
+        articleInfo,
       };
     }
 
