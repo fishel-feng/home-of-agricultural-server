@@ -232,7 +232,7 @@ module.exports = app => {
      */
     async getCircleList(page) {
       try {
-        const res = await Circle.find({}, 'userId nickName headImage content images commentCount').sort({
+        const res = await Circle.find({}, 'userId nickName time headImage content images likeCount commentCount').sort({
           time: 'desc',
         }).skip(page * PAGE_SIZE)
           .limit(PAGE_SIZE)

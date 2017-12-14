@@ -97,12 +97,16 @@ module.exports = app => {
      * @return {String} 成功状态
      */
     async sendVerifyCode(tel, reset = false) {
+      const user = await User.findOne({
+        tel,
+      });
       if (reset) {
-        const user = await User.findOne({
-          tel,
-        });
         if (!user) {
           throw new Error('NO_USER');
+        }
+      } else {
+        if (user) {
+          throw new Error('USER_EXIST');
         }
       }
       try {

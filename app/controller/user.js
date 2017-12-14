@@ -17,7 +17,9 @@ class UserController extends Controller {
       code,
     } = this.ctx.request.body;
     const token = await this.service.user.signUp(tel, password, code);
-    this.ctx.body = token;
+    this.ctx.body = {
+      token,
+    };
   }
 
   /**
