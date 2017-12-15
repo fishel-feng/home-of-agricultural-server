@@ -259,7 +259,7 @@ module.exports = app => {
      */
     async getUserIndex() {
       try {
-        const user = await User.findById(this.ctx.user._id, 'nickName headImage description collectionCount attentionCount followingCount followerCount questionCount answerCount circleCount');
+        const user = await User.findById(this.ctx.user._id);
         if (!user) {
           throw new Error('SOMETHING_ERROR');
         }
