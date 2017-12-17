@@ -20,11 +20,18 @@ module.exports = app => {
       const user = this.ctx.user;
       try {
         // todo 无图
+        let desc;
+        if (content.length > 30) {
+          desc = content.slice(0, 30);
+        } else {
+          desc = content;
+        }
         const question = await new Question({
           title,
           content,
           tags,
           images,
+          desc,
           userId: user._id,
           nickName: user.nickName,
           headImage: user.headImage,
@@ -163,7 +170,7 @@ module.exports = app => {
      */
     async getQuestionList(page) {
       try {
-        const res = await Question.find({}, 'userId nickName headImage title content images finishState answerCount').sort({
+        const res = await Question.find({}, '_id desc title content images finishState answerCount').sort({
           time: 'desc',
         }).skip(page * PAGE_SIZE)
           .limit(PAGE_SIZE)

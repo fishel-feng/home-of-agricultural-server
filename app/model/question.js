@@ -7,6 +7,7 @@ module.exports = app => {
     nickName: String,
     headImage: String,
     content: String,
+    desc: String,
     title: String,
     images: Array,
     tags: Array,
