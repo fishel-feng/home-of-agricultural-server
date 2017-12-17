@@ -6,6 +6,7 @@ module.exports = app => {
     userId: String,
     nickName: String,
     headImage: String,
+    location: String,
     content: String,
     desc: String,
     title: String,

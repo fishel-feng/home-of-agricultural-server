@@ -35,6 +35,7 @@ module.exports = app => {
           userId: user._id,
           nickName: user.nickName,
           headImage: user.headImage,
+          location: user.location,
         }).save();
         await User.findByIdAndUpdate(user._id, {
           $inc: {
@@ -175,6 +176,20 @@ module.exports = app => {
         }).skip(page * PAGE_SIZE)
           .limit(PAGE_SIZE)
           .exec();
+        return res;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    /**
+     * 获取问题详情
+     * @param {String} id 问题id
+     * @return {*} 问题列表
+     */
+    async getQuestion(id) {
+      try {
+        const res = await Question.findById(id);
         return res;
       } catch (e) {
         throw new Error('SOMETHING_ERROR');

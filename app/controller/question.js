@@ -102,6 +102,15 @@ class QuestionController extends Controller {
     const result = await this.service.question.getQuestionList(page);
     this.ctx.body = result;
   }
+
+  /**
+   * 查看问题详情
+   */
+  async getQuestion() {
+    const id = this.ctx.params.questionId;
+    const result = await this.service.question.getQuestion(id);
+    this.ctx.body = result;
+  }
 }
 
 module.exports = QuestionController;

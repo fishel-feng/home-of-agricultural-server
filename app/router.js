@@ -101,6 +101,8 @@ module.exports = app => {
   app.get('/question/getExpertList', app.controller.question.getExpertList);
   // 查看问题列表 从0开始
   app.get('/question/getQuestionList/:page', app.controller.question.getQuestionList);
+  // 查看问题详情
+  app.get('/question/getQuestion/:questionId', app.controller.question.getQuestion);
 
   // socket.io接口
   // app.io.set('authorization', socketioJwt);
