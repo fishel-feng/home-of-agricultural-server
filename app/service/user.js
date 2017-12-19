@@ -177,11 +177,17 @@ module.exports = app => {
     async giveFollow(targetId) {
       // todo 重复关注
       try {
+        const targetUser = await User.findById(targetId);
         await User.update({
           _id: this.ctx.user._id,
         }, {
           $push: {
-            followings: targetId,
+            followings: {
+              userId: targetId,
+              nickName: targetUser.nickName,
+              headImage: targetUser.headImage,
+              description: targetUser.description,
+            },
           },
           $inc: {
             followingCount: 1,
@@ -191,7 +197,12 @@ module.exports = app => {
           _id: targetId,
         }, {
           $push: {
-            followers: this.ctx.user._id,
+            followers: {
+              userId: this.ctx.user._id,
+              nickName: this.ctx.user.nickName,
+              headImage: this.ctx.user.headImage,
+              description: this.ctx.user.description,
+            },
           },
           $inc: {
             followerCount: 1,
@@ -214,7 +225,7 @@ module.exports = app => {
           _id: this.ctx.user._id,
         }, {
           $pull: {
-            followings: targetId,
+            'followings.userId': targetId,
           },
           $inc: {
             followingCount: -1,
@@ -224,7 +235,7 @@ module.exports = app => {
           _id: targetId,
         }, {
           $pull: {
-            followers: this.ctx.user._id,
+            'followers.userId': this.ctx.user._id,
           },
           $inc: {
             followerCount: -1,
