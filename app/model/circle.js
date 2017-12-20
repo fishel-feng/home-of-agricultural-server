@@ -41,6 +41,7 @@ module.exports = app => {
       userId: String,
       nickName: String,
       headImage: String,
+      description: String,
     }],
   });
 
