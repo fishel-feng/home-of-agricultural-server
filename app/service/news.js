@@ -174,6 +174,9 @@ module.exports = app => {
               title,
             },
           },
+          $inc: {
+            collectionCount: 1,
+          },
         });
         return 'success';
       } catch (e) {
@@ -195,6 +198,9 @@ module.exports = app => {
             collections: {
               articleId,
             },
+          },
+          $inc: {
+            collectionCount: -1,
           },
         });
         return 'success';
