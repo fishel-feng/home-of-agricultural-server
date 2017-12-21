@@ -43,7 +43,6 @@ module.exports = app => {
       type: Number,
       default: 0,
     },
-    questions: Array,
     answerCount: {
       type: Number,
       default: 0,
@@ -53,7 +52,6 @@ module.exports = app => {
       type: Number,
       default: 0,
     },
-    circles: Array,
     likes: [{
       circleId: String,
     }],

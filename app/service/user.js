@@ -8,6 +8,7 @@ module.exports = app => {
 
   const {
     User,
+    Circle,
   } = app.model;
 
   const NEW_VERIFY_CODE_PREFIX = 'NEW';
@@ -384,7 +385,11 @@ module.exports = app => {
      */
     async getCircles() {
       try {
-        const circles = await User.findById(this.ctx.user._id, 'circles');
+        const circles = await Circle.find({
+          userId: this.ctx.user._id,
+        }, 'time content images likeCount commentCount').sort({
+          time: 'desc',
+        });
         if (!circles) {
           throw new Error('SOMETHING_ERROR');
         }
