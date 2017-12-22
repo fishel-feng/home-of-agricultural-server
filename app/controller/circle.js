@@ -105,8 +105,8 @@ class CircleController extends Controller {
    * 查看关注的人动态
    */
   async getAttentionList() {
-    const page = this.ctx.params.page;
-    const result = await this.service.circle.getAttentionList(page);
+    const last = this.ctx.params.last;
+    const result = await this.service.circle.getAttentionList(last);
     this.ctx.body = {
       attentionList: result,
     };
@@ -116,8 +116,8 @@ class CircleController extends Controller {
    * 查看动态
    */
   async getCircleList() {
-    const page = this.ctx.params.page;
-    const result = await this.service.circle.getCircleList(page);
+    const last = this.ctx.params.last;
+    const result = await this.service.circle.getCircleList(last);
     this.ctx.body = {
       circleList: result,
     };

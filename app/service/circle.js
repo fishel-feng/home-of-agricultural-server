@@ -204,20 +204,20 @@ module.exports = app => {
 
     /**
      * 查看关注的人动态
-     * @param {Number} page 页码
+     * @param {Number} last 最后一位时间
      * @return {*} 关注的人动态
      */
-    async getAttentionList(page) {
+    async getAttentionList(last) {
       const user = this.ctx.user;
       try {
         const res = await Circle.find({
           userId: {
             $in: user.followings,
           },
+          time: { $lt: last },
         }, 'userId nickName headImage content images commentCount').sort({
           time: 'desc',
-        }).skip(page * PAGE_SIZE)
-          .limit(PAGE_SIZE)
+        }).limit(PAGE_SIZE)
           .exec();
         return res;
       } catch (e) {
@@ -227,15 +227,14 @@ module.exports = app => {
 
     /**
      * 查看动态
-     * @param {Number} page 页码
+     * @param {Number} last 最后一位时间
      * @return {*} 动态
      */
-    async getCircleList(page) {
+    async getCircleList(last) {
       try {
-        const res = await Circle.find({}, 'userId nickName time headImage content images likeCount commentCount').sort({
+        const res = await Circle.find({ time: { $lt: last } }, 'userId nickName time headImage content images likeCount commentCount').sort({
           time: 'desc',
-        }).skip(page * PAGE_SIZE)
-          .limit(PAGE_SIZE)
+        }).limit(PAGE_SIZE)
           .exec();
         return res;
       } catch (e) {

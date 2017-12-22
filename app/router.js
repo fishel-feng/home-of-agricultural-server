@@ -77,10 +77,10 @@ module.exports = app => {
   app.post('/circle/giveLike', verifyAccount, app.controller.circle.giveLike);
   // 取消赞
   app.post('/circle/cancelLike', verifyAccount, app.controller.circle.cancelLike);
-  // 查看关注的人动态 从0开始
-  app.get('/circle/getAttentionList/:page', verifyAccount, app.controller.circle.getAttentionList);
-  // 查看动态 从0开始
-  app.get('/circle/getCircleList/:page', app.controller.circle.getCircleList);
+  // 查看关注的人动态 传末尾时间
+  app.get('/circle/getAttentionList/:last', verifyAccount, app.controller.circle.getAttentionList);
+  // 查看动态 传末尾时间
+  app.get('/circle/getCircleList/:last', app.controller.circle.getCircleList);
   // 查看评论
   app.get('/circle/getComment/:circleId', app.controller.circle.getComment);
   // 查看点赞列表
