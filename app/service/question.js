@@ -12,11 +12,11 @@ module.exports = app => {
      * 新建问题
      * @param {String} title 标题
      * @param {String} content 内容
-     * @param {String} tags 分类标签
+     * @param {String} tag 分类标签
      * @param {String} images 图片地址
      * @return {*} 问题详情数据
      */
-    async addQuestion(title, content, tags, images) {
+    async addQuestion(title, content, tag, images) {
       const user = this.ctx.user;
       try {
         // todo 无图
@@ -29,7 +29,7 @@ module.exports = app => {
         const question = await new Question({
           title,
           content,
-          tags,
+          tag,
           images,
           desc,
           userId: user._id,
@@ -166,15 +166,18 @@ module.exports = app => {
 
     /**
      * 获取问题列表
-     * @param {String} page 页码
+     * @param {String} tag 标签
+     * @param {String} last 最后时间
      * @return {*} 问题列表
      */
-    async getQuestionList(page) {
+    async getQuestionList(tag, last) {
       try {
-        const res = await Question.find({}, '_id desc title content images finishState answerCount').sort({
+        const res = await Question.find({
+          tag,
+          time: { $lt: last },
+        }, '_id desc title content images finishState answerCount').sort({
           time: 'desc',
-        }).skip(page * PAGE_SIZE)
-          .limit(PAGE_SIZE)
+        }).limit(PAGE_SIZE)
           .exec();
         return res;
       } catch (e) {

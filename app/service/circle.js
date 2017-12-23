@@ -5,7 +5,7 @@ module.exports = app => {
     Circle,
     User,
   } = app.model;
-  const PAGE_SIZE = 20;
+  const PAGE_SIZE = 30;
   class CircleService extends app.Service {
 
     /**
@@ -209,16 +209,22 @@ module.exports = app => {
      */
     async getAttentionList(last) {
       const user = this.ctx.user;
+      const followings = user.followings;
+      const followingIds = [];
+      followings.forEach(e => {
+        followingIds.push(e.userId);
+      });
       try {
         const res = await Circle.find({
           userId: {
-            $in: user.followings,
+            $in: followingIds,
           },
           time: { $lt: last },
         }, 'userId nickName headImage content images commentCount').sort({
           time: 'desc',
         }).limit(PAGE_SIZE)
           .exec();
+        console.log(res);
         return res;
       } catch (e) {
         throw new Error('SOMETHING_ERROR');

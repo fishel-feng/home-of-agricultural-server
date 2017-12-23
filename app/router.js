@@ -98,9 +98,9 @@ module.exports = app => {
   // 采纳答案
   app.post('/question/acceptAnswer', verifyAccount, app.controller.question.acceptAnswer);
   // 获取专家列表
-  app.get('/question/getExpertList', app.controller.question.getExpertList);
-  // 查看问题列表 从0开始
-  app.get('/question/getQuestionList/:page', app.controller.question.getQuestionList);
+  app.get('/question/getExpertList/:tag', app.controller.question.getExpertList);
+  // 查看问题列表 传末尾时间
+  app.get('/question/getQuestionList/:tag/:last', app.controller.question.getQuestionList);
   // 查看问题详情
   app.get('/question/getQuestion/:questionId', app.controller.question.getQuestion);
 

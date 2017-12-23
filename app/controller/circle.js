@@ -108,7 +108,7 @@ class CircleController extends Controller {
     const last = this.ctx.params.last;
     const result = await this.service.circle.getAttentionList(last);
     this.ctx.body = {
-      attentionList: result,
+      circleList: result,
     };
   }
 

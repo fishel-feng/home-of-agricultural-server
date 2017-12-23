@@ -14,9 +14,9 @@ class QuestionController extends Controller {
     const {
       title,
       content,
-      tags,
+      tag,
     } = parts.field;
-    const question = await this.service.question.addQuestion(title, content, tags, images);
+    const question = await this.service.question.addQuestion(title, content, tag, images);
     this.ctx.body = question;
   }
 
@@ -98,8 +98,9 @@ class QuestionController extends Controller {
    * 获取问题列表
    */
   async getQuestionList() {
-    const page = this.ctx.params.page;
-    const result = await this.service.question.getQuestionList(page);
+    const tag = this.ctx.params.tag;
+    const last = this.ctx.params.last;
+    const result = await this.service.question.getQuestionList(tag, last);
     this.ctx.body = result;
   }
 

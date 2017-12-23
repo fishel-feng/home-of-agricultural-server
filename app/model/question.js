@@ -11,7 +11,7 @@ module.exports = app => {
     desc: String,
     title: String,
     images: Array,
-    tags: Array,
+    tag: String,
     time: {
       type: Date,
       default: Date.now,
