@@ -112,6 +112,14 @@ class QuestionController extends Controller {
     const result = await this.service.question.getQuestion(id);
     this.ctx.body = result;
   }
+
+  /**
+   * 获取问题标签
+   */
+  async getTags() {
+    const tags = await this.service.question.getTags();
+    this.ctx.body = tags;
+  }
 }
 
 module.exports = QuestionController;

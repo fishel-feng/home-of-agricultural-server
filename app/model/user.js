@@ -9,6 +9,7 @@ module.exports = app => {
       type: Boolean,
       default: false,
     },
+    tags: Array,
     nickName: String,
     headImage: String,
     gender: String,

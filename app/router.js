@@ -103,6 +103,8 @@ module.exports = app => {
   app.get('/question/getQuestionList/:tag/:last', app.controller.question.getQuestionList);
   // 查看问题详情
   app.get('/question/getQuestion/:questionId', app.controller.question.getQuestion);
+  // 获取标签
+  app.get('/questions/getTags', app.controller.question.getTags);
 
   // socket.io接口
   // app.io.set('authorization', socketioJwt);

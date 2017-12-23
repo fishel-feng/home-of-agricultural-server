@@ -4,6 +4,7 @@ module.exports = app => {
   const {
     Question,
     User,
+    Tag,
   } = app.model;
   const PAGE_SIZE = 20;
   class QuestionService extends app.Service {
@@ -193,6 +194,19 @@ module.exports = app => {
     async getQuestion(id) {
       try {
         const res = await Question.findById(id);
+        return res;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    /**
+     * 获取问题标签
+     * @return {*} 问题标签
+     */
+    async getTags() {
+      try {
+        const res = await Tag.find({});
         return res;
       } catch (e) {
         throw new Error('SOMETHING_ERROR');
