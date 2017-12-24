@@ -210,8 +210,11 @@ class UserController extends Controller {
    * 查看关注的问题列表
    */
   async getAttentions() {
-    const attentions = await this.service.user.getAttentions();
-    this.ctx.body = attentions;
+    const last = this.ctx.params.last;
+    const attentions = await this.service.user.getAttentions(last);
+    this.ctx.body = {
+      questions: attentions,
+    };
   }
 
   /**
@@ -238,24 +241,33 @@ class UserController extends Controller {
    * 查看我的提问记录
    */
   async getQuestions() {
-    const questions = await this.service.user.getQuestions();
-    this.ctx.body = questions;
+    const last = this.ctx.params.last;
+    const questions = await this.service.user.getQuestions(last);
+    this.ctx.body = {
+      questions,
+    };
   }
 
   /**
    * 查看我的回答记录
    */
   async getAnswers() {
-    const answers = await this.service.user.getAnswers();
-    this.ctx.body = answers;
+    const last = this.ctx.params.last;
+    const answers = await this.service.user.getAnswers(last);
+    this.ctx.body = {
+      questions: answers,
+    };
   }
 
   /**
    * 查看我发表的动态
    */
   async getCircles() {
-    const circles = await this.service.user.getCircles();
-    this.ctx.body = circles;
+    const last = this.ctx.params.last;
+    const circles = await this.service.user.getCircles(last);
+    this.ctx.body = {
+      circleList: circles,
+    };
   }
 }
 

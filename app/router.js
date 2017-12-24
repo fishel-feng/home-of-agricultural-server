@@ -37,17 +37,17 @@ module.exports = app => {
   // 查看收藏文章列表
   app.get('/user/getCollections', verifyAccount, app.controller.user.getCollections);
   // 查看关注问题列表
-  app.get('/user/getAttentions', verifyAccount, app.controller.user.getAttentions);
+  app.get('/user/getAttentions/:last', verifyAccount, app.controller.user.getAttentions);
   // 查看关注的人列表
   app.get('/user/getFollowings', verifyAccount, app.controller.user.getFollowings);
   // 查看关注我的人列表
   app.get('/user/getFollowers', verifyAccount, app.controller.user.getFollowers);
   // 查看提问的问题
-  app.get('/user/getQuestions', verifyAccount, app.controller.user.getQuestions);
+  app.get('/user/getQuestions/:last', verifyAccount, app.controller.user.getQuestions);
   // 查看回答的问题
-  app.get('/user/getAnswers', verifyAccount, app.controller.user.getAnswers);
+  app.get('/user/getAnswers/:last', verifyAccount, app.controller.user.getAnswers);
   // 查看我发表的动态
-  app.get('/user/getCircles', verifyAccount, app.controller.user.getCircles);
+  app.get('/user/getCircles/:last', verifyAccount, app.controller.user.getCircles);
 
   // ----------新闻模块-----------
   // 查看‘首页’
@@ -99,8 +99,10 @@ module.exports = app => {
   app.post('/question/acceptAnswer', verifyAccount, app.controller.question.acceptAnswer);
   // 获取专家列表
   app.get('/question/getExpertList/:tag', app.controller.question.getExpertList);
-  // 查看问题列表 传末尾时间
+  // 分类查看问题分类列表 传末尾时间
   app.get('/question/getQuestionList/:tag/:last', app.controller.question.getQuestionList);
+  // 查看全部问题列表 传末尾时间
+  app.get('/question/getAllQuestionList/:last', app.controller.question.getAllQuestionList);
   // 查看问题详情
   app.get('/question/getQuestion/:questionId', app.controller.question.getQuestion);
   // 获取标签

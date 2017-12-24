@@ -9,7 +9,9 @@ module.exports = app => {
   const {
     User,
     Circle,
+    Question,
   } = app.model;
+  const PAGE_SIZE = 30;
 
   const NEW_VERIFY_CODE_PREFIX = 'NEW';
   const RESET_VERIFY_CODE_PREFIX = 'RESET';
@@ -299,11 +301,20 @@ module.exports = app => {
 
     /**
      * 查看关注的问题列表
+     * @param {String} last 最后时间
      * @return {*} 关注的问题
      */
-    async getAttentions() {
+    async getAttentions(last) {
       try {
-        const attentions = await User.findById(this.ctx.user._id, 'attentions');
+        const attentions = await Question.find({
+          _id: {
+            $in: [ this.ctx.user.attentions ],
+          },
+          time: { $lt: last },
+        }, '_id desc title images finishState answerCount tag time').sort({
+          time: 'desc',
+        }).limit(PAGE_SIZE)
+          .exec();
         if (!attentions) {
           throw new Error('SOMETHING_ERROR');
         }
@@ -349,11 +360,18 @@ module.exports = app => {
 
     /**
      * 查看我的提问记录
+     * @param {String} last 最后时间
      * @return {*} 我的提问
      */
-    async getQuestions() {
+    async getQuestions(last) {
       try {
-        const questions = await User.findById(this.ctx.user._id, 'questions');
+        const questions = await Question.find({
+          userId: this.ctx.user._id,
+          time: { $lt: last },
+        }, '_id desc title images finishState answerCount tag time').sort({
+          time: 'desc',
+        }).limit(PAGE_SIZE)
+          .exec();
         if (!questions) {
           throw new Error('SOMETHING_ERROR');
         }
@@ -365,11 +383,20 @@ module.exports = app => {
 
     /**
      * 查看我的回答记录
+     * @param {String} last 最后时间
      * @return {*} 我的回答
      */
-    async getAnswers() {
+    async getAnswers(last) {
       try {
-        const answers = await User.findById(this.ctx.user._id, 'answers');
+        const answers = await Question.find({
+          _id: {
+            $in: [ this.ctx.user.answers ],
+          },
+          time: { $lt: last },
+        }, '_id desc title images finishState answerCount tag time').sort({
+          time: 'desc',
+        }).limit(PAGE_SIZE)
+          .exec();
         if (!answers) {
           throw new Error('SOMETHING_ERROR');
         }
@@ -381,13 +408,15 @@ module.exports = app => {
 
     /**
      * 查看我发表的动态
+     * @param {String} last 最后时间
      * @return {*} 我发表的动态
      */
-    async getCircles() {
+    async getCircles(last) {
       try {
         const circles = await Circle.find({
           userId: this.ctx.user._id,
-        }, 'time content images likeCount commentCount').sort({
+          time: { $lt: last },
+        }, 'userId nickName headImage likeCount content images commentCount time').sort({
           time: 'desc',
         });
         if (!circles) {

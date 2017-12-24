@@ -11,7 +11,10 @@ module.exports = app => {
     desc: String,
     title: String,
     images: Array,
-    tag: String,
+    tag: {
+      tagName: String,
+      tagId: String,
+    },
     time: {
       type: Date,
       default: Date.now,

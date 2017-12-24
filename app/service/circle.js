@@ -220,7 +220,7 @@ module.exports = app => {
             $in: followingIds,
           },
           time: { $lt: last },
-        }, 'userId nickName headImage content images commentCount').sort({
+        }, 'userId nickName headImage likeCount content images commentCount time').sort({
           time: 'desc',
         }).limit(PAGE_SIZE)
           .exec();

@@ -6,7 +6,7 @@ module.exports = app => {
     User,
     Tag,
   } = app.model;
-  const PAGE_SIZE = 20;
+  const PAGE_SIZE = 30;
   class QuestionService extends app.Service {
 
     /**
@@ -166,7 +166,7 @@ module.exports = app => {
     }
 
     /**
-     * 获取问题列表
+     * 分类获取问题列表
      * @param {String} tag 标签
      * @param {String} last 最后时间
      * @return {*} 问题列表
@@ -174,9 +174,28 @@ module.exports = app => {
     async getQuestionList(tag, last) {
       try {
         const res = await Question.find({
-          tag,
+          'tag.tagId': tag,
           time: { $lt: last },
-        }, '_id desc title content images finishState answerCount').sort({
+        }, '_id desc title images finishState answerCount tag time').sort({
+          time: 'desc',
+        }).limit(PAGE_SIZE)
+          .exec();
+        return res;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    /**
+     * 获取全部问题列表
+     * @param {String} last 最后时间
+     * @return {*} 问题列表
+     */
+    async getAllQuestionList(last) {
+      try {
+        const res = await Question.find({
+          time: { $lt: last },
+        }, '_id desc title images finishState answerCount tag time').sort({
           time: 'desc',
         }).limit(PAGE_SIZE)
           .exec();

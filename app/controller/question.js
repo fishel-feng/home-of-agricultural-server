@@ -95,13 +95,26 @@ class QuestionController extends Controller {
   }
 
   /**
-   * 获取问题列表
+   * 分类获取问题列表
    */
   async getQuestionList() {
     const tag = this.ctx.params.tag;
     const last = this.ctx.params.last;
-    const result = await this.service.question.getQuestionList(tag, last);
-    this.ctx.body = result;
+    const questions = await this.service.question.getQuestionList(tag, last);
+    this.ctx.body = {
+      questions,
+    };
+  }
+
+  /**
+   * 获取全部问题列表
+   */
+  async getAllQuestionList() {
+    const last = this.ctx.params.last;
+    const questions = await this.service.question.getAllQuestionList(last);
+    this.ctx.body = {
+      questions,
+    };
   }
 
   /**
