@@ -1,17 +1,17 @@
 'use strict';
 
-module.exports = appInfo => {
-  const config = exports = {};
+module.exports = function (appInfo) {
+  var config = exports = {};
 
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1511172666978_5691';
 
   // add your config here
-  config.middleware = [ 'errorHandler', 'bodyFormat' ];
+  config.middleware = ['errorHandler', 'bodyFormat'];
 
   config.mongoose = {
     url: 'mongodb://127.0.0.1:27017/home-of-agricultural',
-    options: {},
+    options: {}
   };
 
   config.redis = {
@@ -19,53 +19,54 @@ module.exports = appInfo => {
       port: 6379,
       host: '127.0.0.1',
       password: '',
-      db: 0,
-    },
+      db: 0
+    }
   };
 
   config.aliSms = {
     client: {
       accessKeyId: 'LTAIC2RTwc2egSTi',
-      secretAccessKey: '4UyjdFtn9ubES63V5MJtRW8A7e7QjV',
-    },
+      secretAccessKey: '4UyjdFtn9ubES63V5MJtRW8A7e7QjV'
+    }
   };
 
   config.security = {
     csrf: {
       ignoreJSON: true,
-      ignore: '/question/upload',
+      ignore: '/question/upload'
     },
-    domainWhiteList: [ 'http://127.0.0.1:8080' ],
+    domainWhiteList: ['http://127.0.0.1:8080']
   };
 
   config.cors = {
     // allowMethods: 'GET,POST,HEAD,PUT,DELETE,PATCH,OPTIONS',
     // credentials: true,
-    origin: '*',
+    origin: '*'
   };
 
   config.multipart = {
-    fileSize: '50mb',
+    fileSize: '50mb'
   };
 
   config.io = {
     init: {},
     namespace: {
       '/': {
-        connectionMiddleware: [ 'auth' ],
-        packetMiddleware: [],
-      },
+        connectionMiddleware: ['auth'],
+        packetMiddleware: []
+      }
     },
     redis: {
       host: '127.0.0.1',
-      port: 6379,
-    },
+      port: 6379
+    }
   };
 
   config.jwt = {
     secret: '123456',
-    enable: false,
+    enable: false
   };
 
   return config;
 };
+//# sourceMappingURL=config.default.js.map

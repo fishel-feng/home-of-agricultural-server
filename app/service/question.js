@@ -13,20 +13,23 @@ module.exports = app => {
      * 新建问题
      * @param {String} title 标题
      * @param {String} content 内容
-     * @param {String} tag 分类标签
+     * @param {String} tagName 分类标签名
      * @param {String} images 图片地址
      * @return {*} 问题详情数据
      */
-    async addQuestion(title, content, tag, images) {
+    async addQuestion(title, content, tagName, images) {
       const user = this.ctx.user;
       try {
-        // todo 无图
         let desc;
         if (content.length > 30) {
           desc = content.slice(0, 30);
         } else {
           desc = content;
         }
+        const tag = await Tag.findOne({
+          tagName,
+        });
+        console.log(tag);
         const question = await new Question({
           title,
           content,

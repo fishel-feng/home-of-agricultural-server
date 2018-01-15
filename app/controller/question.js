@@ -6,17 +6,28 @@ class QuestionController extends Controller {
    * 新建问题
    */
   async addQuestion() {
-    const parts = this.ctx.multipart({
-      autoFields: true,
+    this.ctx.validate({
+      title: 'string',
+      content: 'string',
+      tag: 'string',
+      images: 'string',
     });
-    const images = await this.service.upload.upload(parts, 'question');
     const {
       title,
       content,
       tag,
-    } = parts.field;
+      images,
+    } = this.ctx.request.body;
     const question = await this.service.question.addQuestion(title, content, tag, images);
     this.ctx.body = question;
+  }
+
+  async upload() {
+    const parts = this.ctx.multipart({
+      autoFields: true,
+    });
+    const images = await this.service.upload.upload(parts, 'question');
+    this.ctx.body = images;
   }
 
   /**

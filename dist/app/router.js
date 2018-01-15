@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = app => {
-  const verifyAccount = app.middlewares.verifyAccount({});
+module.exports = function (app) {
+  var verifyAccount = app.middlewares.verifyAccount({});
   // todo jwt配置
   // const socketioJwt = require('socketio-jwt').authorize({
   //   secret: 'jwtSecret',
@@ -134,3 +134,4 @@ module.exports = app => {
   // *************管理后台接口************
   // app.post('/admin/login', app.controller.admin.login);
 };
+//# sourceMappingURL=router.js.map
