@@ -62,9 +62,7 @@ module.exports = function (app) {
 
                 case 6:
                   tag = _context.sent;
-
-                  console.log(tag);
-                  _context.next = 10;
+                  _context.next = 9;
                   return new Question({
                     title: title,
                     content: content,
@@ -77,31 +75,31 @@ module.exports = function (app) {
                     location: user.location
                   }).save();
 
-                case 10:
+                case 9:
                   question = _context.sent;
-                  _context.next = 13;
+                  _context.next = 12;
                   return User.findByIdAndUpdate(user._id, {
                     $inc: {
                       questionCount: 1
                     }
                   });
 
-                case 13:
+                case 12:
                   return _context.abrupt('return', {
                     question: question
                   });
 
-                case 16:
-                  _context.prev = 16;
+                case 15:
+                  _context.prev = 15;
                   _context.t0 = _context['catch'](1);
                   throw new Error('SOMETHING_ERROR');
 
-                case 19:
+                case 18:
                 case 'end':
                   return _context.stop();
               }
             }
-          }, _callee, this, [[1, 16]]);
+          }, _callee, this, [[1, 15]]);
         }));
 
         function addQuestion(_x, _x2, _x3, _x4) {

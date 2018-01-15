@@ -10,7 +10,7 @@ class QuestionController extends Controller {
       title: 'string',
       content: 'string',
       tag: 'string',
-      images: 'string',
+      images: 'array',
     });
     const {
       title,

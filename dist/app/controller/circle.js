@@ -12,44 +12,42 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var Controller = require('egg').Controller;
 
-var QuestionController = function (_Controller) {
-  _inherits(QuestionController, _Controller);
+var CircleController = function (_Controller) {
+  _inherits(CircleController, _Controller);
 
-  function QuestionController() {
-    _classCallCheck(this, QuestionController);
+  function CircleController() {
+    _classCallCheck(this, CircleController);
 
-    return _possibleConstructorReturn(this, (QuestionController.__proto__ || Object.getPrototypeOf(QuestionController)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (CircleController.__proto__ || Object.getPrototypeOf(CircleController)).apply(this, arguments));
   }
 
-  _createClass(QuestionController, [{
-    key: 'addQuestion',
+  _createClass(CircleController, [{
+    key: 'addCircle',
 
 
     /**
-     * 新建问题
+     * 发表动态
      */
     value: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var _ctx$request$body, title, content, tag, images, question;
+        var _ctx$request$body, content, images, circle;
 
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 this.ctx.validate({
-                  title: 'string',
                   content: 'string',
-                  tag: 'string',
                   images: 'array'
                 });
-                _ctx$request$body = this.ctx.request.body, title = _ctx$request$body.title, content = _ctx$request$body.content, tag = _ctx$request$body.tag, images = _ctx$request$body.images;
+                _ctx$request$body = this.ctx.request.body, content = _ctx$request$body.content, images = _ctx$request$body.images;
                 _context.next = 4;
-                return this.service.question.addQuestion(title, content, tag, images);
+                return this.service.circle.addCircle(content, images);
 
               case 4:
-                question = _context.sent;
+                circle = _context.sent;
 
-                this.ctx.body = question;
+                this.ctx.body = circle;
 
               case 6:
               case 'end':
@@ -59,34 +57,34 @@ var QuestionController = function (_Controller) {
         }, _callee, this);
       }));
 
-      function addQuestion() {
+      function addCircle() {
         return _ref.apply(this, arguments);
       }
 
-      return addQuestion;
+      return addCircle;
     }()
 
     /**
-     * 删除问题
+     * 删除动态
      */
 
   }, {
-    key: 'deleteQuestion',
+    key: 'deleteCircle',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-        var questionId, status;
+        var circleId, status;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 this.ctx.validate({
-                  questionId: 'string'
+                  circleId: 'string'
                 });
-                questionId = this.ctx.request.body.questionId;
+                circleId = this.ctx.request.body.circleId;
                 // TODO 删除图片
 
                 _context2.next = 4;
-                return this.service.question.deleteQuestion(questionId);
+                return this.service.circle.deleteCircle(circleId);
 
               case 4:
                 status = _context2.sent;
@@ -101,45 +99,45 @@ var QuestionController = function (_Controller) {
         }, _callee2, this);
       }));
 
-      function deleteQuestion() {
+      function deleteCircle() {
         return _ref2.apply(this, arguments);
       }
 
-      return deleteQuestion;
+      return deleteCircle;
     }()
 
     /**
-     * 添加回答
+     * 添加评论
      */
 
   }, {
-    key: 'addAnswer',
+    key: 'addComment',
     value: function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-        var parts, images, _parts$field, questionId, content, answer;
+        var _ctx$request$body2, circleId, content, targetId, comment;
 
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                parts = this.ctx.multipart({
-                  autoFields: true
+                this.ctx.validate({
+                  circleId: 'string',
+                  content: 'string',
+                  targetId: {
+                    type: 'string',
+                    required: false
+                  }
                 });
-                _context3.next = 3;
-                return this.service.upload.upload(parts, 'answer');
+                _ctx$request$body2 = this.ctx.request.body, circleId = _ctx$request$body2.circleId, content = _ctx$request$body2.content, targetId = _ctx$request$body2.targetId;
+                _context3.next = 4;
+                return this.service.circle.addComment(circleId, content, targetId);
 
-              case 3:
-                images = _context3.sent;
-                _parts$field = parts.field, questionId = _parts$field.questionId, content = _parts$field.content;
-                _context3.next = 7;
-                return this.service.question.addAnswer(questionId, content, images);
+              case 4:
+                comment = _context3.sent;
 
-              case 7:
-                answer = _context3.sent;
+                this.ctx.body = comment;
 
-                this.ctx.body = answer;
-
-              case 9:
+              case 6:
               case 'end':
                 return _context3.stop();
             }
@@ -147,34 +145,34 @@ var QuestionController = function (_Controller) {
         }, _callee3, this);
       }));
 
-      function addAnswer() {
+      function addComment() {
         return _ref3.apply(this, arguments);
       }
 
-      return addAnswer;
+      return addComment;
     }()
 
     /**
-     * 删除回答
+     * 删除评论
      */
 
   }, {
-    key: 'deleteAnswer',
+    key: 'deleteComment',
     value: function () {
       var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
-        var _ctx$request$body2, questionId, answerId, status;
+        var _ctx$request$body3, circleId, commentId, status;
 
         return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 this.ctx.validate({
-                  questionId: 'string',
-                  answerId: 'integer'
+                  circleId: 'string',
+                  commentId: 'integer'
                 });
-                _ctx$request$body2 = this.ctx.request.body, questionId = _ctx$request$body2.questionId, answerId = _ctx$request$body2.answerId;
+                _ctx$request$body3 = this.ctx.request.body, circleId = _ctx$request$body3.circleId, commentId = _ctx$request$body3.commentId;
                 _context4.next = 4;
-                return this.service.question.deleteAnswer(questionId, answerId);
+                return this.service.circle.deleteComment(circleId, commentId);
 
               case 4:
                 status = _context4.sent;
@@ -191,41 +189,37 @@ var QuestionController = function (_Controller) {
         }, _callee4, this);
       }));
 
-      function deleteAnswer() {
+      function deleteComment() {
         return _ref4.apply(this, arguments);
       }
 
-      return deleteAnswer;
+      return deleteComment;
     }()
 
     /**
-     * 采纳答案
+     * 点赞
      */
 
   }, {
-    key: 'acceptAnswer',
+    key: 'giveLike',
     value: function () {
       var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
-        var _ctx$request$body3, questionId, answerId, status;
-
+        var circleId, status;
         return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
                 this.ctx.validate({
-                  questionId: 'string',
-                  answerId: 'integer'
+                  circleId: 'string'
                 });
-                _ctx$request$body3 = this.ctx.request.body, questionId = _ctx$request$body3.questionId, answerId = _ctx$request$body3.answerId;
+                circleId = this.ctx.request.body.circleId;
                 _context5.next = 4;
-                return this.service.question.acceptAnswer(questionId, answerId);
+                return this.service.circle.giveLike(circleId);
 
               case 4:
                 status = _context5.sent;
 
-                this.ctx.body = {
-                  status: status
-                };
+                this.ctx.body = status;
 
               case 6:
               case 'end':
@@ -235,25 +229,39 @@ var QuestionController = function (_Controller) {
         }, _callee5, this);
       }));
 
-      function acceptAnswer() {
+      function giveLike() {
         return _ref5.apply(this, arguments);
       }
 
-      return acceptAnswer;
+      return giveLike;
     }()
 
     /**
-     * 获取专家列表
+     * 取消赞
      */
 
   }, {
-    key: 'getExpertList',
+    key: 'cancelLike',
     value: function () {
       var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
+        var circleId, status;
         return regeneratorRuntime.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
+                this.ctx.validate({
+                  circleId: 'string'
+                });
+                circleId = this.ctx.request.body.circleId;
+                _context6.next = 4;
+                return this.service.circle.cancelLike(circleId);
+
+              case 4:
+                status = _context6.sent;
+
+                this.ctx.body = status;
+
+              case 6:
               case 'end':
                 return _context6.stop();
             }
@@ -261,39 +269,38 @@ var QuestionController = function (_Controller) {
         }, _callee6, this);
       }));
 
-      function getExpertList() {
+      function cancelLike() {
         return _ref6.apply(this, arguments);
       }
 
-      return getExpertList;
+      return cancelLike;
     }()
-  }, {
-    key: 'getQuestionList',
-
 
     /**
-     * 分类获取问题列表
+     * 查看关注的人动态
      */
+
+  }, {
+    key: 'getAttentionList',
     value: function () {
       var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
-        var tag, last, questions;
+        var last, result;
         return regeneratorRuntime.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                tag = this.ctx.params.tag;
                 last = this.ctx.params.last;
-                _context7.next = 4;
-                return this.service.question.getQuestionList(tag, last);
+                _context7.next = 3;
+                return this.service.circle.getAttentionList(last);
 
-              case 4:
-                questions = _context7.sent;
+              case 3:
+                result = _context7.sent;
 
                 this.ctx.body = {
-                  questions: questions
+                  circleList: result
                 };
 
-              case 6:
+              case 5:
               case 'end':
                 return _context7.stop();
             }
@@ -301,35 +308,35 @@ var QuestionController = function (_Controller) {
         }, _callee7, this);
       }));
 
-      function getQuestionList() {
+      function getAttentionList() {
         return _ref7.apply(this, arguments);
       }
 
-      return getQuestionList;
+      return getAttentionList;
     }()
 
     /**
-     * 获取全部问题列表
+     * 查看动态
      */
 
   }, {
-    key: 'getAllQuestionList',
+    key: 'getCircleList',
     value: function () {
       var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
-        var last, questions;
+        var last, result;
         return regeneratorRuntime.wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
                 last = this.ctx.params.last;
                 _context8.next = 3;
-                return this.service.question.getAllQuestionList(last);
+                return this.service.circle.getCircleList(last);
 
               case 3:
-                questions = _context8.sent;
+                result = _context8.sent;
 
                 this.ctx.body = {
-                  questions: questions
+                  circleList: result
                 };
 
               case 5:
@@ -340,29 +347,29 @@ var QuestionController = function (_Controller) {
         }, _callee8, this);
       }));
 
-      function getAllQuestionList() {
+      function getCircleList() {
         return _ref8.apply(this, arguments);
       }
 
-      return getAllQuestionList;
+      return getCircleList;
     }()
 
     /**
-     * 查看问题详情
+     * 查看评论
      */
 
   }, {
-    key: 'getQuestion',
+    key: 'getComment',
     value: function () {
       var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
-        var id, result;
+        var circleId, result;
         return regeneratorRuntime.wrap(function _callee9$(_context9) {
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
-                id = this.ctx.params.questionId;
+                circleId = this.ctx.params.circleId;
                 _context9.next = 3;
-                return this.service.question.getQuestion(id);
+                return this.service.circle.getComment(circleId);
 
               case 3:
                 result = _context9.sent;
@@ -377,35 +384,36 @@ var QuestionController = function (_Controller) {
         }, _callee9, this);
       }));
 
-      function getQuestion() {
+      function getComment() {
         return _ref9.apply(this, arguments);
       }
 
-      return getQuestion;
+      return getComment;
     }()
 
     /**
-     * 获取问题标签
+     * 查看点赞列表
      */
 
   }, {
-    key: 'getTags',
+    key: 'getLikeList',
     value: function () {
       var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
-        var tags;
+        var circleId, result;
         return regeneratorRuntime.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
-                _context10.next = 2;
-                return this.service.question.getTags();
+                circleId = this.ctx.params.circleId;
+                _context10.next = 3;
+                return this.service.circle.getLikeList(circleId);
 
-              case 2:
-                tags = _context10.sent;
+              case 3:
+                result = _context10.sent;
 
-                this.ctx.body = tags;
+                this.ctx.body = result;
 
-              case 4:
+              case 5:
               case 'end':
                 return _context10.stop();
             }
@@ -413,16 +421,16 @@ var QuestionController = function (_Controller) {
         }, _callee10, this);
       }));
 
-      function getTags() {
+      function getLikeList() {
         return _ref10.apply(this, arguments);
       }
 
-      return getTags;
+      return getLikeList;
     }()
   }]);
 
-  return QuestionController;
+  return CircleController;
 }(Controller);
 
-module.exports = QuestionController;
-//# sourceMappingURL=question.js.map
+module.exports = CircleController;
+//# sourceMappingURL=circle.js.map

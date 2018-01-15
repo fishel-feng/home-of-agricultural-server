@@ -8,13 +8,14 @@ class CircleController extends Controller {
    * 发表动态
    */
   async addCircle() {
-    const parts = this.ctx.multipart({
-      autoFields: true,
+    this.ctx.validate({
+      content: 'string',
+      images: 'array',
     });
-    const images = await this.service.upload.upload(parts, 'circle');
     const {
       content,
-    } = parts.field;
+      images,
+    } = this.ctx.request.body;
     const circle = await this.service.circle.addCircle(content, images);
     this.ctx.body = circle;
   }

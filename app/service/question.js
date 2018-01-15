@@ -29,7 +29,6 @@ module.exports = app => {
         const tag = await Tag.findOne({
           tagName,
         });
-        console.log(tag);
         const question = await new Question({
           title,
           content,
