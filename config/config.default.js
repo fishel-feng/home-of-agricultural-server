@@ -33,7 +33,7 @@ module.exports = appInfo => {
   config.security = {
     csrf: {
       ignoreJSON: true,
-      ignore: '/question/upload',
+      ignore: '/upload/:type',
     },
     domainWhiteList: [ 'http://127.0.0.1:8080' ],
   };

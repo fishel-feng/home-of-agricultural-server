@@ -12,6 +12,9 @@ module.exports = function (app) {
   // app.get('/test/index', app.jwt, app.controller.test.index);
   app.post('/test/index', verifyAccount, app.controller.test.index);
 
+  // 上传图片
+  app.post('/upload/:type', verifyAccount, app.controller.upload.upload);
+
   // ************用户app接口*************
   // ----------用户模块-----------
   // 用户注册
@@ -89,8 +92,6 @@ module.exports = function (app) {
   // ----------问答模块------------
   // 发起提问
   app.post('/question/addQuestion', verifyAccount, app.controller.question.addQuestion);
-  // 上传图片
-  app.post('/question/upload', verifyAccount, app.controller.question.upload);
   // 删除问题
   app.post('/question/deleteQuestion', verifyAccount, app.controller.question.deleteQuestion);
   // 回答问题

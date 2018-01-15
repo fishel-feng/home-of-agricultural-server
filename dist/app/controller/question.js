@@ -65,40 +65,6 @@ var QuestionController = function (_Controller) {
 
       return addQuestion;
     }()
-  }, {
-    key: 'upload',
-    value: function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-        var parts, images;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                parts = this.ctx.multipart({
-                  autoFields: true
-                });
-                _context2.next = 3;
-                return this.service.upload.upload(parts, 'question');
-
-              case 3:
-                images = _context2.sent;
-
-                this.ctx.body = images;
-
-              case 5:
-              case 'end':
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function upload() {
-        return _ref2.apply(this, arguments);
-      }
-
-      return upload;
-    }()
 
     /**
      * 删除问题
@@ -107,11 +73,11 @@ var QuestionController = function (_Controller) {
   }, {
     key: 'deleteQuestion',
     value: function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
         var questionId, status;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 this.ctx.validate({
                   questionId: 'string'
@@ -119,24 +85,24 @@ var QuestionController = function (_Controller) {
                 questionId = this.ctx.request.body.questionId;
                 // TODO 删除图片
 
-                _context3.next = 4;
+                _context2.next = 4;
                 return this.service.question.deleteQuestion(questionId);
 
               case 4:
-                status = _context3.sent;
+                status = _context2.sent;
 
                 this.ctx.body = status;
 
               case 6:
               case 'end':
-                return _context3.stop();
+                return _context2.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee2, this);
       }));
 
       function deleteQuestion() {
-        return _ref3.apply(this, arguments);
+        return _ref2.apply(this, arguments);
       }
 
       return deleteQuestion;
@@ -149,40 +115,40 @@ var QuestionController = function (_Controller) {
   }, {
     key: 'addAnswer',
     value: function () {
-      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
         var parts, images, _parts$field, questionId, content, answer;
 
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 parts = this.ctx.multipart({
                   autoFields: true
                 });
-                _context4.next = 3;
+                _context3.next = 3;
                 return this.service.upload.upload(parts, 'answer');
 
               case 3:
-                images = _context4.sent;
+                images = _context3.sent;
                 _parts$field = parts.field, questionId = _parts$field.questionId, content = _parts$field.content;
-                _context4.next = 7;
+                _context3.next = 7;
                 return this.service.question.addAnswer(questionId, content, images);
 
               case 7:
-                answer = _context4.sent;
+                answer = _context3.sent;
 
                 this.ctx.body = answer;
 
               case 9:
               case 'end':
-                return _context4.stop();
+                return _context3.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee3, this);
       }));
 
       function addAnswer() {
-        return _ref4.apply(this, arguments);
+        return _ref3.apply(this, arguments);
       }
 
       return addAnswer;
@@ -195,8 +161,52 @@ var QuestionController = function (_Controller) {
   }, {
     key: 'deleteAnswer',
     value: function () {
-      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
         var _ctx$request$body2, questionId, answerId, status;
+
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                this.ctx.validate({
+                  questionId: 'string',
+                  answerId: 'integer'
+                });
+                _ctx$request$body2 = this.ctx.request.body, questionId = _ctx$request$body2.questionId, answerId = _ctx$request$body2.answerId;
+                _context4.next = 4;
+                return this.service.question.deleteAnswer(questionId, answerId);
+
+              case 4:
+                status = _context4.sent;
+
+                this.ctx.body = {
+                  status: status
+                };
+
+              case 6:
+              case 'end':
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function deleteAnswer() {
+        return _ref4.apply(this, arguments);
+      }
+
+      return deleteAnswer;
+    }()
+
+    /**
+     * 采纳答案
+     */
+
+  }, {
+    key: 'acceptAnswer',
+    value: function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+        var _ctx$request$body3, questionId, answerId, status;
 
         return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
@@ -206,9 +216,9 @@ var QuestionController = function (_Controller) {
                   questionId: 'string',
                   answerId: 'integer'
                 });
-                _ctx$request$body2 = this.ctx.request.body, questionId = _ctx$request$body2.questionId, answerId = _ctx$request$body2.answerId;
+                _ctx$request$body3 = this.ctx.request.body, questionId = _ctx$request$body3.questionId, answerId = _ctx$request$body3.answerId;
                 _context5.next = 4;
-                return this.service.question.deleteAnswer(questionId, answerId);
+                return this.service.question.acceptAnswer(questionId, answerId);
 
               case 4:
                 status = _context5.sent;
@@ -225,52 +235,8 @@ var QuestionController = function (_Controller) {
         }, _callee5, this);
       }));
 
-      function deleteAnswer() {
-        return _ref5.apply(this, arguments);
-      }
-
-      return deleteAnswer;
-    }()
-
-    /**
-     * 采纳答案
-     */
-
-  }, {
-    key: 'acceptAnswer',
-    value: function () {
-      var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
-        var _ctx$request$body3, questionId, answerId, status;
-
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                this.ctx.validate({
-                  questionId: 'string',
-                  answerId: 'integer'
-                });
-                _ctx$request$body3 = this.ctx.request.body, questionId = _ctx$request$body3.questionId, answerId = _ctx$request$body3.answerId;
-                _context6.next = 4;
-                return this.service.question.acceptAnswer(questionId, answerId);
-
-              case 4:
-                status = _context6.sent;
-
-                this.ctx.body = {
-                  status: status
-                };
-
-              case 6:
-              case 'end':
-                return _context6.stop();
-            }
-          }
-        }, _callee6, this);
-      }));
-
       function acceptAnswer() {
-        return _ref6.apply(this, arguments);
+        return _ref5.apply(this, arguments);
       }
 
       return acceptAnswer;
@@ -283,20 +249,20 @@ var QuestionController = function (_Controller) {
   }, {
     key: 'getExpertList',
     value: function () {
-      var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
-        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+      var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
+        return regeneratorRuntime.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
               case 'end':
-                return _context7.stop();
+                return _context6.stop();
             }
           }
-        }, _callee7, this);
+        }, _callee6, this);
       }));
 
       function getExpertList() {
-        return _ref7.apply(this, arguments);
+        return _ref6.apply(this, arguments);
       }
 
       return getExpertList;
@@ -309,19 +275,19 @@ var QuestionController = function (_Controller) {
      * 分类获取问题列表
      */
     value: function () {
-      var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
+      var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
         var tag, last, questions;
-        return regeneratorRuntime.wrap(function _callee8$(_context8) {
+        return regeneratorRuntime.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
                 tag = this.ctx.params.tag;
                 last = this.ctx.params.last;
-                _context8.next = 4;
+                _context7.next = 4;
                 return this.service.question.getQuestionList(tag, last);
 
               case 4:
-                questions = _context8.sent;
+                questions = _context7.sent;
 
                 this.ctx.body = {
                   questions: questions
@@ -329,14 +295,14 @@ var QuestionController = function (_Controller) {
 
               case 6:
               case 'end':
-                return _context8.stop();
+                return _context7.stop();
             }
           }
-        }, _callee8, this);
+        }, _callee7, this);
       }));
 
       function getQuestionList() {
-        return _ref8.apply(this, arguments);
+        return _ref7.apply(this, arguments);
       }
 
       return getQuestionList;
@@ -349,18 +315,18 @@ var QuestionController = function (_Controller) {
   }, {
     key: 'getAllQuestionList',
     value: function () {
-      var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
+      var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
         var last, questions;
-        return regeneratorRuntime.wrap(function _callee9$(_context9) {
+        return regeneratorRuntime.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
                 last = this.ctx.params.last;
-                _context9.next = 3;
+                _context8.next = 3;
                 return this.service.question.getAllQuestionList(last);
 
               case 3:
-                questions = _context9.sent;
+                questions = _context8.sent;
 
                 this.ctx.body = {
                   questions: questions
@@ -368,14 +334,14 @@ var QuestionController = function (_Controller) {
 
               case 5:
               case 'end':
-                return _context9.stop();
+                return _context8.stop();
             }
           }
-        }, _callee9, this);
+        }, _callee8, this);
       }));
 
       function getAllQuestionList() {
-        return _ref9.apply(this, arguments);
+        return _ref8.apply(this, arguments);
       }
 
       return getAllQuestionList;
@@ -388,31 +354,31 @@ var QuestionController = function (_Controller) {
   }, {
     key: 'getQuestion',
     value: function () {
-      var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+      var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
         var id, result;
-        return regeneratorRuntime.wrap(function _callee10$(_context10) {
+        return regeneratorRuntime.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context10.prev = _context10.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
                 id = this.ctx.params.questionId;
-                _context10.next = 3;
+                _context9.next = 3;
                 return this.service.question.getQuestion(id);
 
               case 3:
-                result = _context10.sent;
+                result = _context9.sent;
 
                 this.ctx.body = result;
 
               case 5:
               case 'end':
-                return _context10.stop();
+                return _context9.stop();
             }
           }
-        }, _callee10, this);
+        }, _callee9, this);
       }));
 
       function getQuestion() {
-        return _ref10.apply(this, arguments);
+        return _ref9.apply(this, arguments);
       }
 
       return getQuestion;
@@ -425,30 +391,30 @@ var QuestionController = function (_Controller) {
   }, {
     key: 'getTags',
     value: function () {
-      var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
+      var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
         var tags;
-        return regeneratorRuntime.wrap(function _callee11$(_context11) {
+        return regeneratorRuntime.wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context11.prev = _context11.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
-                _context11.next = 2;
+                _context10.next = 2;
                 return this.service.question.getTags();
 
               case 2:
-                tags = _context11.sent;
+                tags = _context10.sent;
 
                 this.ctx.body = tags;
 
               case 4:
               case 'end':
-                return _context11.stop();
+                return _context10.stop();
             }
           }
-        }, _callee11, this);
+        }, _callee10, this);
       }));
 
       function getTags() {
-        return _ref11.apply(this, arguments);
+        return _ref10.apply(this, arguments);
       }
 
       return getTags;

@@ -22,14 +22,6 @@ class QuestionController extends Controller {
     this.ctx.body = question;
   }
 
-  async upload() {
-    const parts = this.ctx.multipart({
-      autoFields: true,
-    });
-    const images = await this.service.upload.upload(parts, 'question');
-    this.ctx.body = images;
-  }
-
   /**
    * 删除问题
    */
