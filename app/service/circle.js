@@ -138,9 +138,7 @@ module.exports = app => {
           _id: user._id,
         }, {
           $push: {
-            likes: {
-              circleId,
-            },
+            likes: circleId,
           },
         });
         await Circle.update({
@@ -176,9 +174,7 @@ module.exports = app => {
           'likes.userId': user._id,
         }, {
           $pull: {
-            likes: {
-              userId: user._id,
-            },
+            likes: user._id,
           },
           $inc: {
             likeCount: -1,

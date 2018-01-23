@@ -3,10 +3,12 @@
 module.exports = app => {
   const SOCKET = 'SOCKET';
   class IOService extends app.Service {
-    // * login() {
-    //   // console.log(this.ctx.socket.nsp.sockets);
-    //   return 'Helle Man!';
-    // }
+
+    /**
+     * 登录
+     * @param {String} token token
+     * @return {Promise<void>} id
+     */
     async login(token) {
       const userId = this.ctx.app.jwt.verify(token, '123456').userId;
       const socketId = this.ctx.socket.id;

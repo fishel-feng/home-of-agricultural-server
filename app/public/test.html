@@ -29,11 +29,11 @@
     var socket = io('ws://127.0.0.1:7001');
     socket.on('connect', () => {
       console.log('connect!');
-      socket.emit('chat', '5a240cb38cdba712692ccee3', 'hello this is a message');
+      // socket.emit('chat', '5a240cb38cdba712692ccee3', 'hello this is a message');
     });
-    // socket.on('res', msg => {
-    //   console.log(msg);
-    // });
+    socket.on('success', msg => {
+      console.log(msg);
+    });
   </script>
 </body>
 

@@ -1,6 +1,5 @@
 'use strict';
 const Controller = require('egg').Controller;
-const socketMap = {};
 
 class IOController extends Controller {
 
@@ -9,7 +8,6 @@ class IOController extends Controller {
    */
   async login() {
     const token = this.ctx.args[0];
-    // socketMap[user] = this.ctx.socket.id;
     const socketId = await this.service.io.login(token);
     console.log(socketId);
   }
