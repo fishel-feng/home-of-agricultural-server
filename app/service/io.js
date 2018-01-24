@@ -2,6 +2,9 @@
 
 module.exports = app => {
   const SOCKET = 'SOCKET';
+  const {
+    User,
+  } = app.model;
   class IOService extends app.Service {
 
     /**
@@ -24,8 +27,14 @@ module.exports = app => {
       }
     }
 
-    async like() {
-      //
+    async like(userToken, targetId) {
+      const userId = this.ctx.app.jwt.verify(userToken, '123456').userId;
+      const userInfo = await User.findById(userId);
+      // todo
+      const targetSocketId = await app.redis.get(SOCKET + targetId);
+      if (targetSocketId) {
+        this.ctx.socket.nsp.sockets[targetSocketId].emit('like', userInfo);
+      }
     }
   }
   return IOService;

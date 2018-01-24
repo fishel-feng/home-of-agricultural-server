@@ -100,10 +100,17 @@ var IOController = function (_Controller) {
     key: 'like',
     value: function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+        var userToken, targetId;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                userToken = this.ctx.args[0];
+                targetId = this.ctx.args[1];
+                _context3.next = 4;
+                return this.service.io.like(userToken, targetId);
+
+              case 4:
               case 'end':
                 return _context3.stop();
             }
@@ -117,13 +124,13 @@ var IOController = function (_Controller) {
 
       return like;
     }()
-  }, {
-    key: 'comment',
-
 
     /**
      * 评论
      */
+
+  }, {
+    key: 'comment',
     value: function () {
       var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
         return regeneratorRuntime.wrap(function _callee4$(_context4) {

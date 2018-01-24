@@ -187,9 +187,7 @@ module.exports = app => {
           _id: user._id,
         }, {
           $pull: {
-            likes: {
-              circleId,
-            },
+            likes: circleId,
           },
         });
         return 'success';

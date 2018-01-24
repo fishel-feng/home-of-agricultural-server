@@ -404,9 +404,7 @@ module.exports = function (app) {
                     _id: user._id
                   }, {
                     $pull: {
-                      likes: {
-                        circleId: circleId
-                      }
+                      likes: circleId
                     }
                   });
 

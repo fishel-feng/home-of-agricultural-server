@@ -12,6 +12,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 module.exports = function (app) {
   var SOCKET = 'SOCKET';
+  var User = app.model.User;
 
   var IOService = function (_app$Service) {
     _inherits(IOService, _app$Service);
@@ -97,11 +98,29 @@ module.exports = function (app) {
     }, {
       key: 'like',
       value: function () {
-        var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+        var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(userToken, targetId) {
+          var userId, userInfo, targetSocketId;
           return regeneratorRuntime.wrap(function _callee3$(_context3) {
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
+                  userId = this.ctx.app.jwt.verify(userToken, '123456').userId;
+                  _context3.next = 3;
+                  return User.findById(userId);
+
+                case 3:
+                  userInfo = _context3.sent;
+                  _context3.next = 6;
+                  return app.redis.get(SOCKET + targetId);
+
+                case 6:
+                  targetSocketId = _context3.sent;
+
+                  if (targetSocketId) {
+                    this.ctx.socket.nsp.sockets[targetSocketId].emit('like', userInfo);
+                  }
+
+                case 8:
                 case 'end':
                   return _context3.stop();
               }
@@ -109,7 +128,7 @@ module.exports = function (app) {
           }, _callee3, this);
         }));
 
-        function like() {
+        function like(_x4, _x5) {
           return _ref3.apply(this, arguments);
         }
 
