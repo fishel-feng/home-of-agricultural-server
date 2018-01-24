@@ -45,6 +45,7 @@ class CircleController extends Controller {
       targetId: {
         type: 'string',
         required: false,
+        allowEmpty: true,
       },
     });
     const {

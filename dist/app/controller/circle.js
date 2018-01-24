@@ -125,7 +125,8 @@ var CircleController = function (_Controller) {
                   content: 'string',
                   targetId: {
                     type: 'string',
-                    required: false
+                    required: false,
+                    allowEmpty: true
                   }
                 });
                 _ctx$request$body2 = this.ctx.request.body, circleId = _ctx$request$body2.circleId, content = _ctx$request$body2.content, targetId = _ctx$request$body2.targetId;
