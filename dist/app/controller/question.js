@@ -238,13 +238,8 @@ var QuestionController = function (_Controller) {
 
       return acceptAnswer;
     }()
-
-    /**
-     * 获取专家列表
-     */
-
   }, {
-    key: 'getExpertList',
+    key: 'attentionQuestion',
     value: function () {
       var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
         return regeneratorRuntime.wrap(function _callee6$(_context6) {
@@ -258,8 +253,34 @@ var QuestionController = function (_Controller) {
         }, _callee6, this);
       }));
 
-      function getExpertList() {
+      function attentionQuestion() {
         return _ref6.apply(this, arguments);
+      }
+
+      return attentionQuestion;
+    }()
+  }, {
+    key: 'getExpertList',
+
+
+    /**
+     * 获取专家列表
+     */
+    value: function () {
+      var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
+        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+              case 'end':
+                return _context7.stop();
+            }
+          }
+        }, _callee7, this);
+      }));
+
+      function getExpertList() {
+        return _ref7.apply(this, arguments);
       }
 
       return getExpertList;
@@ -272,19 +293,19 @@ var QuestionController = function (_Controller) {
      * 分类获取问题列表
      */
     value: function () {
-      var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
+      var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
         var tag, last, questions;
-        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+        return regeneratorRuntime.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
                 tag = this.ctx.params.tag;
                 last = this.ctx.params.last;
-                _context7.next = 4;
+                _context8.next = 4;
                 return this.service.question.getQuestionList(tag, last);
 
               case 4:
-                questions = _context7.sent;
+                questions = _context8.sent;
 
                 this.ctx.body = {
                   questions: questions
@@ -292,14 +313,14 @@ var QuestionController = function (_Controller) {
 
               case 6:
               case 'end':
-                return _context7.stop();
+                return _context8.stop();
             }
           }
-        }, _callee7, this);
+        }, _callee8, this);
       }));
 
       function getQuestionList() {
-        return _ref7.apply(this, arguments);
+        return _ref8.apply(this, arguments);
       }
 
       return getQuestionList;
@@ -312,18 +333,18 @@ var QuestionController = function (_Controller) {
   }, {
     key: 'getAllQuestionList',
     value: function () {
-      var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
+      var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
         var last, questions;
-        return regeneratorRuntime.wrap(function _callee8$(_context8) {
+        return regeneratorRuntime.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
                 last = this.ctx.params.last;
-                _context8.next = 3;
+                _context9.next = 3;
                 return this.service.question.getAllQuestionList(last);
 
               case 3:
-                questions = _context8.sent;
+                questions = _context9.sent;
 
                 this.ctx.body = {
                   questions: questions
@@ -331,14 +352,14 @@ var QuestionController = function (_Controller) {
 
               case 5:
               case 'end':
-                return _context8.stop();
+                return _context9.stop();
             }
           }
-        }, _callee8, this);
+        }, _callee9, this);
       }));
 
       function getAllQuestionList() {
-        return _ref8.apply(this, arguments);
+        return _ref9.apply(this, arguments);
       }
 
       return getAllQuestionList;
@@ -351,31 +372,31 @@ var QuestionController = function (_Controller) {
   }, {
     key: 'getQuestion',
     value: function () {
-      var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
+      var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
         var id, result;
-        return regeneratorRuntime.wrap(function _callee9$(_context9) {
+        return regeneratorRuntime.wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
                 id = this.ctx.params.questionId;
-                _context9.next = 3;
+                _context10.next = 3;
                 return this.service.question.getQuestion(id);
 
               case 3:
-                result = _context9.sent;
+                result = _context10.sent;
 
                 this.ctx.body = result;
 
               case 5:
               case 'end':
-                return _context9.stop();
+                return _context10.stop();
             }
           }
-        }, _callee9, this);
+        }, _callee10, this);
       }));
 
       function getQuestion() {
-        return _ref9.apply(this, arguments);
+        return _ref10.apply(this, arguments);
       }
 
       return getQuestion;
@@ -388,30 +409,30 @@ var QuestionController = function (_Controller) {
   }, {
     key: 'getTags',
     value: function () {
-      var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+      var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
         var tags;
-        return regeneratorRuntime.wrap(function _callee10$(_context10) {
+        return regeneratorRuntime.wrap(function _callee11$(_context11) {
           while (1) {
-            switch (_context10.prev = _context10.next) {
+            switch (_context11.prev = _context11.next) {
               case 0:
-                _context10.next = 2;
+                _context11.next = 2;
                 return this.service.question.getTags();
 
               case 2:
-                tags = _context10.sent;
+                tags = _context11.sent;
 
                 this.ctx.body = tags;
 
               case 4:
               case 'end':
-                return _context10.stop();
+                return _context11.stop();
             }
           }
-        }, _callee10, this);
+        }, _callee11, this);
       }));
 
       function getTags() {
-        return _ref10.apply(this, arguments);
+        return _ref11.apply(this, arguments);
       }
 
       return getTags;

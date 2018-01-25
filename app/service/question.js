@@ -163,6 +163,10 @@ module.exports = app => {
       }
     }
 
+    async attentionQuestion() {
+      //
+    }
+
     async getExpertList() {
       //
     }

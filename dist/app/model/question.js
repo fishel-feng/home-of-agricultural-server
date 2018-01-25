@@ -1,8 +1,8 @@
 'use strict';
 
-module.exports = app => {
-  const mongoose = app.mongoose;
-  const QuestionSchema = new mongoose.Schema({
+module.exports = function (app) {
+  var mongoose = app.mongoose;
+  var QuestionSchema = new mongoose.Schema({
     userId: String,
     nickName: String,
     headImage: String,
@@ -13,23 +13,23 @@ module.exports = app => {
     images: Array,
     tag: {
       tagName: String,
-      tagId: String,
+      tagId: String
     },
     time: {
       type: Date,
-      default: Date.now,
+      default: Date.now
     },
     finishState: {
       type: Boolean,
-      default: false,
+      default: false
     },
     count: {
       type: Number,
-      default: 0,
+      default: 0
     },
     answerCount: {
       type: Number,
-      default: 0,
+      default: 0
     },
     answers: [{
       _id: Number,
@@ -40,12 +40,13 @@ module.exports = app => {
       images: Array,
       time: {
         type: Date,
-        default: Date.now,
+        default: Date.now
       },
-      content: String,
+      content: String
     }],
-    attentions: Array,
+    attentions: Array
   });
 
   return mongoose.model('Question', QuestionSchema);
 };
+//# sourceMappingURL=question.js.map

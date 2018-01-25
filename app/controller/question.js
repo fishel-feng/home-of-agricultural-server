@@ -91,6 +91,10 @@ class QuestionController extends Controller {
     };
   }
 
+  async attentionQuestion() {
+    //
+  }
+
   /**
    * 获取专家列表
    */
