@@ -116,30 +116,27 @@ var QuestionController = function (_Controller) {
     key: 'addAnswer',
     value: function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-        var parts, images, _parts$field, questionId, content, answer;
+        var _ctx$request$body2, questionId, content, images, answer;
 
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                parts = this.ctx.multipart({
-                  autoFields: true
+                this.ctx.validate({
+                  questionId: 'string',
+                  content: 'string',
+                  images: 'array'
                 });
-                _context3.next = 3;
-                return this.service.upload.upload(parts, 'answer');
-
-              case 3:
-                images = _context3.sent;
-                _parts$field = parts.field, questionId = _parts$field.questionId, content = _parts$field.content;
-                _context3.next = 7;
+                _ctx$request$body2 = this.ctx.request.body, questionId = _ctx$request$body2.questionId, content = _ctx$request$body2.content, images = _ctx$request$body2.images;
+                _context3.next = 4;
                 return this.service.question.addAnswer(questionId, content, images);
 
-              case 7:
+              case 4:
                 answer = _context3.sent;
 
                 this.ctx.body = answer;
 
-              case 9:
+              case 6:
               case 'end':
                 return _context3.stop();
             }
@@ -162,7 +159,7 @@ var QuestionController = function (_Controller) {
     key: 'deleteAnswer',
     value: function () {
       var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
-        var _ctx$request$body2, questionId, answerId, status;
+        var _ctx$request$body3, questionId, answerId, status;
 
         return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
@@ -172,7 +169,7 @@ var QuestionController = function (_Controller) {
                   questionId: 'string',
                   answerId: 'integer'
                 });
-                _ctx$request$body2 = this.ctx.request.body, questionId = _ctx$request$body2.questionId, answerId = _ctx$request$body2.answerId;
+                _ctx$request$body3 = this.ctx.request.body, questionId = _ctx$request$body3.questionId, answerId = _ctx$request$body3.answerId;
                 _context4.next = 4;
                 return this.service.question.deleteAnswer(questionId, answerId);
 
@@ -206,7 +203,7 @@ var QuestionController = function (_Controller) {
     key: 'acceptAnswer',
     value: function () {
       var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
-        var _ctx$request$body3, questionId, answerId, status;
+        var _ctx$request$body4, questionId, answerId, status;
 
         return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
@@ -216,7 +213,7 @@ var QuestionController = function (_Controller) {
                   questionId: 'string',
                   answerId: 'integer'
                 });
-                _ctx$request$body3 = this.ctx.request.body, questionId = _ctx$request$body3.questionId, answerId = _ctx$request$body3.answerId;
+                _ctx$request$body4 = this.ctx.request.body, questionId = _ctx$request$body4.questionId, answerId = _ctx$request$body4.answerId;
                 _context5.next = 4;
                 return this.service.question.acceptAnswer(questionId, answerId);
 
