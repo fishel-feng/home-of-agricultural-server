@@ -133,10 +133,18 @@ var IOController = function (_Controller) {
     key: 'comment',
     value: function () {
       var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+        var userToken, circleId, targetId;
         return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
+                userToken = this.ctx.args[0];
+                circleId = this.ctx.args[1];
+                targetId = this.ctx.args[2];
+                _context4.next = 5;
+                return this.service.io.comment(userToken, circleId, targetId);
+
+              case 5:
               case 'end':
                 return _context4.stop();
             }
@@ -150,13 +158,13 @@ var IOController = function (_Controller) {
 
       return comment;
     }()
-  }, {
-    key: 'answer',
-
 
     /**
      * 回答
      */
+
+  }, {
+    key: 'answer',
     value: function () {
       var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
         return regeneratorRuntime.wrap(function _callee5$(_context5) {

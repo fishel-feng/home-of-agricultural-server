@@ -36,6 +36,10 @@ module.exports = app => {
         this.ctx.socket.nsp.sockets[targetSocketId].emit('like', userInfo);
       }
     }
+
+    async comment(userToken, circleId, targetId) {
+      // todo
+    }
   }
   return IOService;
 };

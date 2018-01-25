@@ -402,7 +402,7 @@ module.exports = function (app) {
                   return Question.find({
                     'tag.tagId': tag,
                     time: { $lt: last }
-                  }, '_id desc title images finishState answerCount tag time').sort({
+                  }, '_id desc title images finishState answerCount tag time userId').sort({
                     time: 'desc'
                   }).limit(PAGE_SIZE).exec();
 
@@ -449,7 +449,7 @@ module.exports = function (app) {
                   _context8.next = 3;
                   return Question.find({
                     time: { $lt: last }
-                  }, '_id desc title images finishState answerCount tag time').sort({
+                  }, '_id desc title images finishState answerCount tag time userId').sort({
                     time: 'desc'
                   }).limit(PAGE_SIZE).exec();
 

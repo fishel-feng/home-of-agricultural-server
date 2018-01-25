@@ -134,6 +134,27 @@ module.exports = function (app) {
 
         return like;
       }()
+    }, {
+      key: 'comment',
+      value: function () {
+        var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(userToken, circleId, targetId) {
+          return regeneratorRuntime.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                case 'end':
+                  return _context4.stop();
+              }
+            }
+          }, _callee4, this);
+        }));
+
+        function comment(_x6, _x7, _x8) {
+          return _ref4.apply(this, arguments);
+        }
+
+        return comment;
+      }()
     }]);
 
     return IOService;

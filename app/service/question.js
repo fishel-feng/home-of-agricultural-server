@@ -178,7 +178,7 @@ module.exports = app => {
         const res = await Question.find({
           'tag.tagId': tag,
           time: { $lt: last },
-        }, '_id desc title images finishState answerCount tag time').sort({
+        }, '_id desc title images finishState answerCount tag time userId').sort({
           time: 'desc',
         }).limit(PAGE_SIZE)
           .exec();
@@ -197,7 +197,7 @@ module.exports = app => {
       try {
         const res = await Question.find({
           time: { $lt: last },
-        }, '_id desc title images finishState answerCount tag time').sort({
+        }, '_id desc title images finishState answerCount tag time userId').sort({
           time: 'desc',
         }).limit(PAGE_SIZE)
           .exec();

@@ -34,7 +34,10 @@ class IOController extends Controller {
    * 评论
    */
   async comment() {
-    //
+    const userToken = this.ctx.args[0];
+    const circleId = this.ctx.args[1];
+    const targetId = this.ctx.args[2];
+    await this.service.io.comment(userToken, circleId, targetId);
   }
 
   /**
