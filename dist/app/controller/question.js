@@ -194,14 +194,35 @@ var QuestionController = function (_Controller) {
 
       return deleteAnswer;
     }()
+
+    /**
+     * 关注问题
+     */
+
   }, {
     key: 'attentionQuestion',
     value: function () {
       var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+        var questionId, status;
         return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
+                this.ctx.validate({
+                  questionId: 'string'
+                });
+                questionId = this.ctx.request.body.questionId;
+                _context5.next = 4;
+                return this.service.question.deleteAnswer(questionId);
+
+              case 4:
+                status = _context5.sent;
+
+                this.ctx.body = {
+                  status: status
+                };
+
+              case 6:
               case 'end':
                 return _context5.stop();
             }
@@ -215,13 +236,13 @@ var QuestionController = function (_Controller) {
 
       return attentionQuestion;
     }()
-  }, {
-    key: 'getExpertList',
-
 
     /**
      * 获取专家列表
      */
+
+  }, {
+    key: 'getExpertList',
     value: function () {
       var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
         return regeneratorRuntime.wrap(function _callee6$(_context6) {

@@ -209,23 +209,31 @@ module.exports = function (app) {
 
                 case 7:
                   _context3.next = 9;
-                  return Question.findById(questionId, 'answers');
+                  return User.findByIdAndUpdate(this.ctx.user._id, {
+                    $push: {
+                      answers: questionId
+                    }
+                  });
 
                 case 9:
+                  _context3.next = 11;
+                  return Question.findById(questionId, 'answers');
+
+                case 11:
                   result = _context3.sent;
                   return _context3.abrupt('return', result.answers.id(question.count + 1));
 
-                case 13:
-                  _context3.prev = 13;
+                case 15:
+                  _context3.prev = 15;
                   _context3.t0 = _context3['catch'](1);
                   throw new Error('SOMETHING_ERROR');
 
-                case 16:
+                case 18:
                 case 'end':
                   return _context3.stop();
               }
             }
-          }, _callee3, this, [[1, 13]]);
+          }, _callee3, this, [[1, 15]]);
         }));
 
         function addAnswer(_x6, _x7, _x8) {
@@ -298,22 +306,54 @@ module.exports = function (app) {
 
         return deleteAnswer;
       }()
+
+      /**
+       * 关注问题
+       * @param {String} questionId 问题id
+       * @return {*} 成功状态
+       */
+
     }, {
       key: 'attentionQuestion',
       value: function () {
-        var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+        var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(questionId) {
           return regeneratorRuntime.wrap(function _callee5$(_context5) {
             while (1) {
               switch (_context5.prev = _context5.next) {
                 case 0:
+                  _context5.prev = 0;
+                  _context5.next = 3;
+                  return Question.findByIdAndUpdate(questionId, {
+                    $push: {
+                      attentions: this.ctx.user._id
+                    }
+                  });
+
+                case 3:
+                  _context5.next = 5;
+                  return User.findByIdAndUpdate(this.ctx.user._id, {
+                    $push: {
+                      attentions: questionId
+                    }
+                  });
+
+                case 5:
+                  return _context5.abrupt('return', 'success');
+
+                case 8:
+                  _context5.prev = 8;
+                  _context5.t0 = _context5['catch'](0);
+                  throw new Error('SOMETHING_ERROR');
+
+                case 11:
                 case 'end':
                   return _context5.stop();
               }
             }
-          }, _callee5, this);
+          }, _callee5, this, [[0, 8]]);
         }));
 
-        function attentionQuestion() {
+        function attentionQuestion(_x11) {
           return _ref5.apply(this, arguments);
         }
 
@@ -383,7 +423,7 @@ module.exports = function (app) {
           }, _callee7, this, [[0, 7]]);
         }));
 
-        function getQuestionList(_x11, _x12) {
+        function getQuestionList(_x12, _x13) {
           return _ref7.apply(this, arguments);
         }
 
@@ -430,7 +470,7 @@ module.exports = function (app) {
           }, _callee8, this, [[0, 7]]);
         }));
 
-        function getAllQuestionList(_x13) {
+        function getAllQuestionList(_x14) {
           return _ref8.apply(this, arguments);
         }
 
@@ -473,7 +513,7 @@ module.exports = function (app) {
           }, _callee9, this, [[0, 7]]);
         }));
 
-        function getQuestion(_x14) {
+        function getQuestion(_x15) {
           return _ref9.apply(this, arguments);
         }
 

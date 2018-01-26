@@ -73,8 +73,20 @@ class QuestionController extends Controller {
     };
   }
 
+  /**
+   * 关注问题
+   */
   async attentionQuestion() {
-    //
+    this.ctx.validate({
+      questionId: 'string',
+    });
+    const {
+      questionId,
+    } = this.ctx.request.body;
+    const status = await this.service.question.deleteAnswer(questionId);
+    this.ctx.body = {
+      status,
+    };
   }
 
   /**

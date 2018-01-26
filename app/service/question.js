@@ -101,6 +101,11 @@ module.exports = app => {
             },
           },
         });
+        await User.findByIdAndUpdate(this.ctx.user._id, {
+          $push: {
+            answers: questionId,
+          },
+        });
         const result = await Question.findById(questionId, 'answers');
         return result.answers.id(question.count + 1);
       } catch (e) {
@@ -137,8 +142,27 @@ module.exports = app => {
       }
     }
 
-    async attentionQuestion() {
-      //
+    /**
+     * 关注问题
+     * @param {String} questionId 问题id
+     * @return {*} 成功状态
+     */
+    async attentionQuestion(questionId) {
+      try {
+        await Question.findByIdAndUpdate(questionId, {
+          $push: {
+            attentions: this.ctx.user._id,
+          },
+        });
+        await User.findByIdAndUpdate(this.ctx.user._id, {
+          $push: {
+            attentions: questionId,
+          },
+        });
+        return 'success';
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
     }
 
     async getExpertList() {

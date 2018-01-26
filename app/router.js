@@ -23,6 +23,8 @@ module.exports = app => {
   app.post('/user/signIn', app.controller.user.signIn);
   // 重置密码
   app.post('/user/resetPassword', app.controller.user.resetPassword);
+  // 查看用户信息
+  app.get('/user/getUserInfo/:userId', app.controller.user.getUserInfo);
   // 发送验证码
   app.post('/user/sendVerifyCode', app.controller.user.sendVerifyCode);
   // 修改用户资料
@@ -33,8 +35,6 @@ module.exports = app => {
   app.post('/user/giveFollow', verifyAccount, app.controller.user.giveFollow);
   // 取消关注用户
   app.post('/user/cancelFollow', verifyAccount, app.controller.user.cancelFollow);
-  // 查看用户信息
-  app.get('/user/getUserInfo/:userId', verifyAccount, app.controller.user.getUserInfo);
   // 查看‘我的’
   app.get('/user/getUserIndex', verifyAccount, app.controller.user.getUserIndex);
   // 查看收藏文章列表
