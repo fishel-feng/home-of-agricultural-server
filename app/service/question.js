@@ -137,32 +137,6 @@ module.exports = app => {
       }
     }
 
-    /**
-     * 采纳答案
-     * @param {String} questionId 问题id
-     * @param {Number} answerId 回答id
-     * @return {*} 成功状态
-     */
-    async acceptAnswer(questionId, answerId) {
-      try {
-        const res = await Question.update({
-          _id: questionId,
-          'answers._id': answerId,
-        }, {
-          $set: {
-            'answers.$._id': 0,
-          },
-        });
-        if (res.nModified !== 1) {
-          throw new Error();
-        }
-        console.log(res);
-        return 'success';
-      } catch (e) {
-        throw new Error('SOMETHING_ERROR');
-      }
-    }
-
     async attentionQuestion() {
       //
     }

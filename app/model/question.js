@@ -19,10 +19,6 @@ module.exports = app => {
       type: Date,
       default: Date.now,
     },
-    finishState: {
-      type: Boolean,
-      default: false,
-    },
     count: {
       type: Number,
       default: 0,

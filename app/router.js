@@ -98,8 +98,6 @@ module.exports = app => {
   app.post('/question/addAnswer', verifyAccount, app.controller.question.addAnswer);
   // 删除回答
   app.post('/question/deleteAnswer', verifyAccount, app.controller.question.deleteAnswer);
-  // 采纳答案
-  app.post('/question/acceptAnswer', verifyAccount, app.controller.question.acceptAnswer);
   // 关注问题
   app.post('/question/attentionQuestion', verifyAccount, app.controller.question.attentionQuestion);
   // 获取专家列表
