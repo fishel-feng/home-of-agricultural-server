@@ -245,10 +245,23 @@ var QuestionController = function (_Controller) {
     key: 'getExpertList',
     value: function () {
       var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
+        var tag, experts;
         return regeneratorRuntime.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
+                tag = this.ctx.params.tag;
+                _context6.next = 3;
+                return this.service.question.getExpertList(tag);
+
+              case 3:
+                experts = _context6.sent;
+
+                this.ctx.body = {
+                  experts: experts
+                };
+
+              case 5:
               case 'end':
                 return _context6.stop();
             }
@@ -262,13 +275,13 @@ var QuestionController = function (_Controller) {
 
       return getExpertList;
     }()
-  }, {
-    key: 'getQuestionList',
-
 
     /**
      * 分类获取问题列表
      */
+
+  }, {
+    key: 'getQuestionList',
     value: function () {
       var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
         var tag, last, questions;

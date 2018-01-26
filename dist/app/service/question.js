@@ -359,30 +359,51 @@ module.exports = function (app) {
 
         return attentionQuestion;
       }()
+
+      /**
+       * 获取专家列表
+       * @param {String} tag 标签
+       * @return {*} 专家列表
+       */
+
     }, {
       key: 'getExpertList',
       value: function () {
-        var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
+        var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(tag) {
+          var experts;
           return regeneratorRuntime.wrap(function _callee6$(_context6) {
             while (1) {
               switch (_context6.prev = _context6.next) {
                 case 0:
+                  _context6.prev = 0;
+                  _context6.next = 3;
+                  return User.find({
+                    certification: tag
+                  }, '_id nickName headImage');
+
+                case 3:
+                  experts = _context6.sent;
+                  return _context6.abrupt('return', experts);
+
+                case 7:
+                  _context6.prev = 7;
+                  _context6.t0 = _context6['catch'](0);
+                  throw new Error('SOMETHING_ERROR');
+
+                case 10:
                 case 'end':
                   return _context6.stop();
               }
             }
-          }, _callee6, this);
+          }, _callee6, this, [[0, 7]]);
         }));
 
-        function getExpertList() {
+        function getExpertList(_x12) {
           return _ref6.apply(this, arguments);
         }
 
         return getExpertList;
       }()
-    }, {
-      key: 'getQuestionList',
-
 
       /**
        * 分类获取问题列表
@@ -390,6 +411,9 @@ module.exports = function (app) {
        * @param {String} last 最后时间
        * @return {*} 问题列表
        */
+
+    }, {
+      key: 'getQuestionList',
       value: function () {
         var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(tag, last) {
           var res;
@@ -423,7 +447,7 @@ module.exports = function (app) {
           }, _callee7, this, [[0, 7]]);
         }));
 
-        function getQuestionList(_x12, _x13) {
+        function getQuestionList(_x13, _x14) {
           return _ref7.apply(this, arguments);
         }
 
@@ -470,7 +494,7 @@ module.exports = function (app) {
           }, _callee8, this, [[0, 7]]);
         }));
 
-        function getAllQuestionList(_x14) {
+        function getAllQuestionList(_x15) {
           return _ref8.apply(this, arguments);
         }
 
@@ -513,7 +537,7 @@ module.exports = function (app) {
           }, _callee9, this, [[0, 7]]);
         }));
 
-        function getQuestion(_x15) {
+        function getQuestion(_x16) {
           return _ref9.apply(this, arguments);
         }
 

@@ -165,8 +165,21 @@ module.exports = app => {
       }
     }
 
-    async getExpertList() {
-      //
+    /**
+     * 获取专家列表
+     * @param {String} tag 标签
+     * @return {*} 专家列表
+     */
+    async getExpertList(tag) {
+      try {
+        const experts = await User.find({
+          certification: tag,
+        }, '_id nickName headImage');
+        // todo
+        return experts;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
     }
 
     /**

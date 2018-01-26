@@ -6,8 +6,8 @@ module.exports = app => {
     tel: String,
     password: String,
     certification: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: '',
     },
     tags: Array,
     nickName: String,

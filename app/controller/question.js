@@ -93,7 +93,11 @@ class QuestionController extends Controller {
    * 获取专家列表
    */
   async getExpertList() {
-    //
+    const tag = this.ctx.params.tag;
+    const experts = await this.service.question.getExpertList(tag);
+    this.ctx.body = {
+      experts,
+    };
   }
 
   /**
