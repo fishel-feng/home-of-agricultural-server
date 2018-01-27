@@ -167,10 +167,16 @@ var IOController = function (_Controller) {
     key: 'answer',
     value: function () {
       var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+        var questionId;
         return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
+                questionId = this.ctx.args[0];
+                _context5.next = 3;
+                return this.service.io.answer(questionId);
+
+              case 3:
               case 'end':
                 return _context5.stop();
             }
@@ -184,13 +190,13 @@ var IOController = function (_Controller) {
 
       return answer;
     }()
-  }, {
-    key: 'invitation',
-
 
     /**
      * 邀请回答
      */
+
+  }, {
+    key: 'invitation',
     value: function () {
       var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
         return regeneratorRuntime.wrap(function _callee6$(_context6) {

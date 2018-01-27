@@ -40,6 +40,10 @@ module.exports = app => {
     async comment(userToken, circleId, targetId) {
       // todo
     }
+
+    async answer(questionId) {
+      // todo
+    }
   }
   return IOService;
 };

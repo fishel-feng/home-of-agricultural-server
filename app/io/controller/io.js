@@ -44,7 +44,8 @@ class IOController extends Controller {
    * 回答
    */
   async answer() {
-    //
+    const questionId = this.ctx.args[0];
+    await this.service.io.answer(questionId);
   }
 
   /**

@@ -155,6 +155,27 @@ module.exports = function (app) {
 
         return comment;
       }()
+    }, {
+      key: 'answer',
+      value: function () {
+        var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(questionId) {
+          return regeneratorRuntime.wrap(function _callee5$(_context5) {
+            while (1) {
+              switch (_context5.prev = _context5.next) {
+                case 0:
+                case 'end':
+                  return _context5.stop();
+              }
+            }
+          }, _callee5, this);
+        }));
+
+        function answer(_x9) {
+          return _ref5.apply(this, arguments);
+        }
+
+        return answer;
+      }()
     }]);
 
     return IOService;
