@@ -44,6 +44,10 @@ module.exports = app => {
     async answer(questionId) {
       // todo
     }
+
+    async invitation(userToken, expertId, questionId) {
+      // todo
+    }
   }
   return IOService;
 };

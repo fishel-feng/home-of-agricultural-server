@@ -176,6 +176,27 @@ module.exports = function (app) {
 
         return answer;
       }()
+    }, {
+      key: 'invitation',
+      value: function () {
+        var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(userToken, expertId, questionId) {
+          return regeneratorRuntime.wrap(function _callee6$(_context6) {
+            while (1) {
+              switch (_context6.prev = _context6.next) {
+                case 0:
+                case 'end':
+                  return _context6.stop();
+              }
+            }
+          }, _callee6, this);
+        }));
+
+        function invitation(_x10, _x11, _x12) {
+          return _ref6.apply(this, arguments);
+        }
+
+        return invitation;
+      }()
     }]);
 
     return IOService;
