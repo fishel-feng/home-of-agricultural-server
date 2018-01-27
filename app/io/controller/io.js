@@ -55,16 +55,16 @@ class IOController extends Controller {
   }
 
   /**
-   * 关注用户
+   * 关注问题有回答
    */
   async attention() {
     //
   }
 
   /**
-   * 采纳答案
+   * 关注用户
    */
-  async accept() {
+  async follow() {
     //
   }
 

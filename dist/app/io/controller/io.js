@@ -215,7 +215,7 @@ var IOController = function (_Controller) {
 
 
     /**
-     * 关注用户
+     * 关注问题有回答
      */
     value: function () {
       var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
@@ -237,11 +237,11 @@ var IOController = function (_Controller) {
       return attention;
     }()
   }, {
-    key: 'accept',
+    key: 'follow',
 
 
     /**
-     * 采纳答案
+     * 关注用户
      */
     value: function () {
       var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
@@ -256,11 +256,11 @@ var IOController = function (_Controller) {
         }, _callee8, this);
       }));
 
-      function accept() {
+      function follow() {
         return _ref8.apply(this, arguments);
       }
 
-      return accept;
+      return follow;
     }()
   }, {
     key: 'exit',

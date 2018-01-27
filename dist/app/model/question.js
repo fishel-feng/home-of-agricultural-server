@@ -32,7 +32,7 @@ module.exports = function (app) {
       userId: String,
       nickName: String,
       headImage: String,
-      certification: Boolean,
+      certification: String,
       images: Array,
       time: {
         type: Date,

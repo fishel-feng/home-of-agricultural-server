@@ -125,10 +125,10 @@ module.exports = app => {
   app.io.route('answer', app.io.controllers.io.answer);
   // 邀请回答
   app.io.route('invitation', app.io.controllers.io.invitation);
-  // 关注用户
+  // 关注问题有回答
   app.io.route('attention', app.io.controllers.io.attention);
-  // 采纳答案
-  app.io.route('accept', app.io.controllers.io.accept);
+  // 关注用户
+  app.io.route('follow', app.io.controllers.io.follow);
   // 注销
   app.io.route('exit', app.io.controllers.io.exit);
 
