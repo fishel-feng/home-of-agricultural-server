@@ -379,7 +379,7 @@ module.exports = function (app) {
                   _context6.next = 3;
                   return User.find({
                     certification: tag
-                  }, '_id nickName headImage');
+                  }, '_id nickName headImage description');
 
                 case 3:
                   experts = _context6.sent;

@@ -174,7 +174,7 @@ module.exports = app => {
       try {
         const experts = await User.find({
           certification: tag,
-        }, '_id nickName headImage');
+        }, '_id nickName headImage description');
         // todo
         return experts;
       } catch (e) {
