@@ -48,6 +48,10 @@ module.exports = app => {
     async invitation(userToken, expertId, questionId) {
       // todo
     }
+
+    async follow(userToken, targetId) {
+      // todo
+    }
   }
   return IOService;
 };

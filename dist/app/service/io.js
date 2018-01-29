@@ -197,6 +197,27 @@ module.exports = function (app) {
 
         return invitation;
       }()
+    }, {
+      key: 'follow',
+      value: function () {
+        var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(userToken, targetId) {
+          return regeneratorRuntime.wrap(function _callee7$(_context7) {
+            while (1) {
+              switch (_context7.prev = _context7.next) {
+                case 0:
+                case 'end':
+                  return _context7.stop();
+              }
+            }
+          }, _callee7, this);
+        }));
+
+        function follow(_x13, _x14) {
+          return _ref7.apply(this, arguments);
+        }
+
+        return follow;
+      }()
     }]);
 
     return IOService;

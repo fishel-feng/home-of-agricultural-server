@@ -69,7 +69,9 @@ class IOController extends Controller {
    * 关注用户
    */
   async follow() {
-    //
+    const userToken = this.ctx.args[0];
+    const targetId = this.ctx.args[1];
+    await this.service.io.follow(userToken, targetId);
   }
 
   /**

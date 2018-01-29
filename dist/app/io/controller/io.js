@@ -259,10 +259,17 @@ var IOController = function (_Controller) {
      */
     value: function () {
       var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
+        var userToken, targetId;
         return regeneratorRuntime.wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
+                userToken = this.ctx.args[0];
+                targetId = this.ctx.args[1];
+                _context8.next = 4;
+                return this.service.io.follow(userToken, targetId);
+
+              case 4:
               case 'end':
                 return _context8.stop();
             }
@@ -276,13 +283,13 @@ var IOController = function (_Controller) {
 
       return follow;
     }()
-  }, {
-    key: 'exit',
-
 
     /**
      * 注销
      */
+
+  }, {
+    key: 'exit',
     value: function () {
       var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
         return regeneratorRuntime.wrap(function _callee9$(_context9) {
