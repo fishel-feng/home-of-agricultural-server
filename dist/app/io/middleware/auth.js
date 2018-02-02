@@ -9,6 +9,20 @@ module.exports = function () {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              console.log(1);
+              // // const userToken = ctx.args[0];
+              // // console.log(userToken);
+              console.log(ctx.socket.id);
+              // // const say = yield this.service.io.login();
+              // // this.socket.emit('res', 'auth!' + say);
+              _context.next = 4;
+              return next();
+
+            case 4:
+              // // console.log('disconnect!');
+              console.log(2);
+
+            case 5:
             case 'end':
               return _context.stop();
           }

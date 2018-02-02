@@ -2,11 +2,6 @@
 
 module.exports = function (app) {
   var verifyAccount = app.middlewares.verifyAccount({});
-  // todo jwt配置
-  // const socketioJwt = require('socketio-jwt').authorize({
-  //   secret: 'jwtSecret',
-  //   handshake: true,
-  // });
 
   app.post('/test/upload', app.controller.test.upload);
   // app.get('/test/index', app.jwt, app.controller.test.index);
@@ -132,6 +127,7 @@ module.exports = function (app) {
   // 注销
   app.io.route('exit', app.io.controller.io.exit);
   app.io.route('click', app.io.controller.io.click);
+  app.io.route('disconnecting', app.io.controller.io.disconnecting);
 
   // *************管理后台接口************
   // app.post('/admin/login', app.controller.admin.login);

@@ -313,18 +313,17 @@ var IOController = function (_Controller) {
     key: 'click',
     value: function () {
       var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
-        var userToken, targetId;
         return regeneratorRuntime.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
-                userToken = this.ctx.args[0];
-                targetId = this.ctx.args[1];
+                // const userToken = this.ctx.args[0];
+                // const targetId = this.ctx.args[1];
+                // console.log(userToken);
+                // console.log(targetId);
+                console.log(this.ctx.socket.id);
 
-                console.log(userToken);
-                console.log(targetId);
-
-              case 4:
+              case 1:
               case 'end':
                 return _context10.stop();
             }
@@ -337,6 +336,30 @@ var IOController = function (_Controller) {
       }
 
       return click;
+    }()
+  }, {
+    key: 'disconnecting',
+    value: function () {
+      var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
+        return regeneratorRuntime.wrap(function _callee11$(_context11) {
+          while (1) {
+            switch (_context11.prev = _context11.next) {
+              case 0:
+                console.log('close');
+
+              case 1:
+              case 'end':
+                return _context11.stop();
+            }
+          }
+        }, _callee11, this);
+      }));
+
+      function disconnecting() {
+        return _ref11.apply(this, arguments);
+      }
+
+      return disconnecting;
     }()
   }]);
 

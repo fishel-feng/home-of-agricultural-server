@@ -82,10 +82,15 @@ class IOController extends Controller {
   }
 
   async click() {
-    const userToken = this.ctx.args[0];
-    const targetId = this.ctx.args[1];
-    console.log(userToken);
-    console.log(targetId);
+    // const userToken = this.ctx.args[0];
+    // const targetId = this.ctx.args[1];
+    // console.log(userToken);
+    // console.log(targetId);
+    console.log(this.ctx.socket.id);
+  }
+
+  async disconnecting() {
+    console.log('close');
   }
 }
 
