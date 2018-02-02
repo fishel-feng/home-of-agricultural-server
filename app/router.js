@@ -114,23 +114,24 @@ module.exports = app => {
   // socket.io接口
   // app.io.set('authorization', socketioJwt);
   // 登录
-  app.io.route('login', app.io.controllers.io.login);
+  app.io.route('login', app.io.controller.io.login);
   // 聊天
-  app.io.route('chat', app.io.controllers.io.chat);
+  app.io.route('chat', app.io.controller.io.chat);
   // 点赞
-  app.io.route('like', app.io.controllers.io.like);
+  app.io.route('like', app.io.controller.io.like);
   // 评论
-  app.io.route('comment', app.io.controllers.io.comment);
+  app.io.route('comment', app.io.controller.io.comment);
   // 回答
-  app.io.route('answer', app.io.controllers.io.answer);
+  app.io.route('answer', app.io.controller.io.answer);
   // 邀请回答
-  app.io.route('invitation', app.io.controllers.io.invitation);
+  app.io.route('invitation', app.io.controller.io.invitation);
   // 关注问题有回答
-  app.io.route('attention', app.io.controllers.io.attention);
+  app.io.route('attention', app.io.controller.io.attention);
   // 关注用户
-  app.io.route('follow', app.io.controllers.io.follow);
+  app.io.route('follow', app.io.controller.io.follow);
   // 注销
-  app.io.route('exit', app.io.controllers.io.exit);
+  app.io.route('exit', app.io.controller.io.exit);
+  app.io.route('click', app.io.controller.io.click);
 
   // *************管理后台接口************
   // app.post('/admin/login', app.controller.admin.login);

@@ -80,6 +80,13 @@ class IOController extends Controller {
   async exit() {
     //
   }
+
+  async click() {
+    const userToken = this.ctx.args[0];
+    const targetId = this.ctx.args[1];
+    console.log(userToken);
+    console.log(targetId);
+  }
 }
 
 module.exports = IOController;

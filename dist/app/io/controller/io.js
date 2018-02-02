@@ -309,6 +309,35 @@ var IOController = function (_Controller) {
 
       return exit;
     }()
+  }, {
+    key: 'click',
+    value: function () {
+      var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+        var userToken, targetId;
+        return regeneratorRuntime.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                userToken = this.ctx.args[0];
+                targetId = this.ctx.args[1];
+
+                console.log(userToken);
+                console.log(targetId);
+
+              case 4:
+              case 'end':
+                return _context10.stop();
+            }
+          }
+        }, _callee10, this);
+      }));
+
+      function click() {
+        return _ref10.apply(this, arguments);
+      }
+
+      return click;
+    }()
   }]);
 
   return IOController;
