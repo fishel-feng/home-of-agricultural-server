@@ -83,7 +83,23 @@ class QuestionController extends Controller {
     const {
       questionId,
     } = this.ctx.request.body;
-    const status = await this.service.question.deleteAnswer(questionId);
+    const status = await this.service.question.attentionQuestion(questionId);
+    this.ctx.body = {
+      status,
+    };
+  }
+
+  /**
+   * 取消关注问题
+   */
+  async removeAttentionQuestion() {
+    this.ctx.validate({
+      questionId: 'string',
+    });
+    const {
+      questionId,
+    } = this.ctx.request.body;
+    const status = await this.service.question.removeAttentionQuestion(questionId);
     this.ctx.body = {
       status,
     };

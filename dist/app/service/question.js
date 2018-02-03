@@ -361,6 +361,59 @@ module.exports = function (app) {
       }()
 
       /**
+       * 取消关注问题
+       * @param {String} questionId 问题id
+       * @return {*} 成功状态
+       */
+
+    }, {
+      key: 'removeAttentionQuestion',
+      value: function () {
+        var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(questionId) {
+          return regeneratorRuntime.wrap(function _callee6$(_context6) {
+            while (1) {
+              switch (_context6.prev = _context6.next) {
+                case 0:
+                  _context6.prev = 0;
+                  _context6.next = 3;
+                  return Question.findByIdAndUpdate(questionId, {
+                    $pull: {
+                      attentions: this.ctx.user._id
+                    }
+                  });
+
+                case 3:
+                  _context6.next = 5;
+                  return User.findByIdAndUpdate(this.ctx.user._id, {
+                    $pull: {
+                      attentions: questionId
+                    }
+                  });
+
+                case 5:
+                  return _context6.abrupt('return', 'success');
+
+                case 8:
+                  _context6.prev = 8;
+                  _context6.t0 = _context6['catch'](0);
+                  throw new Error('SOMETHING_ERROR');
+
+                case 11:
+                case 'end':
+                  return _context6.stop();
+              }
+            }
+          }, _callee6, this, [[0, 8]]);
+        }));
+
+        function removeAttentionQuestion(_x12) {
+          return _ref6.apply(this, arguments);
+        }
+
+        return removeAttentionQuestion;
+      }()
+
+      /**
        * 获取专家列表
        * @param {String} tag 标签
        * @return {*} 专家列表
@@ -369,37 +422,37 @@ module.exports = function (app) {
     }, {
       key: 'getExpertList',
       value: function () {
-        var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(tag) {
+        var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(tag) {
           var experts;
-          return regeneratorRuntime.wrap(function _callee6$(_context6) {
+          return regeneratorRuntime.wrap(function _callee7$(_context7) {
             while (1) {
-              switch (_context6.prev = _context6.next) {
+              switch (_context7.prev = _context7.next) {
                 case 0:
-                  _context6.prev = 0;
-                  _context6.next = 3;
+                  _context7.prev = 0;
+                  _context7.next = 3;
                   return User.find({
                     certification: tag
                   }, '_id nickName headImage description');
 
                 case 3:
-                  experts = _context6.sent;
-                  return _context6.abrupt('return', experts);
+                  experts = _context7.sent;
+                  return _context7.abrupt('return', experts);
 
                 case 7:
-                  _context6.prev = 7;
-                  _context6.t0 = _context6['catch'](0);
+                  _context7.prev = 7;
+                  _context7.t0 = _context7['catch'](0);
                   throw new Error('SOMETHING_ERROR');
 
                 case 10:
                 case 'end':
-                  return _context6.stop();
+                  return _context7.stop();
               }
             }
-          }, _callee6, this, [[0, 7]]);
+          }, _callee7, this, [[0, 7]]);
         }));
 
-        function getExpertList(_x12) {
-          return _ref6.apply(this, arguments);
+        function getExpertList(_x13) {
+          return _ref7.apply(this, arguments);
         }
 
         return getExpertList;
@@ -415,55 +468,7 @@ module.exports = function (app) {
     }, {
       key: 'getQuestionList',
       value: function () {
-        var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(tag, last) {
-          var res;
-          return regeneratorRuntime.wrap(function _callee7$(_context7) {
-            while (1) {
-              switch (_context7.prev = _context7.next) {
-                case 0:
-                  _context7.prev = 0;
-                  _context7.next = 3;
-                  return Question.find({
-                    'tag.tagId': tag,
-                    time: { $lt: last }
-                  }, '_id desc title images finishState answerCount tag time userId').sort({
-                    time: 'desc'
-                  }).limit(PAGE_SIZE).exec();
-
-                case 3:
-                  res = _context7.sent;
-                  return _context7.abrupt('return', res);
-
-                case 7:
-                  _context7.prev = 7;
-                  _context7.t0 = _context7['catch'](0);
-                  throw new Error('SOMETHING_ERROR');
-
-                case 10:
-                case 'end':
-                  return _context7.stop();
-              }
-            }
-          }, _callee7, this, [[0, 7]]);
-        }));
-
-        function getQuestionList(_x13, _x14) {
-          return _ref7.apply(this, arguments);
-        }
-
-        return getQuestionList;
-      }()
-
-      /**
-       * 获取全部问题列表
-       * @param {String} last 最后时间
-       * @return {*} 问题列表
-       */
-
-    }, {
-      key: 'getAllQuestionList',
-      value: function () {
-        var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(last) {
+        var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(tag, last) {
           var res;
           return regeneratorRuntime.wrap(function _callee8$(_context8) {
             while (1) {
@@ -472,6 +477,7 @@ module.exports = function (app) {
                   _context8.prev = 0;
                   _context8.next = 3;
                   return Question.find({
+                    'tag.tagId': tag,
                     time: { $lt: last }
                   }, '_id desc title images finishState answerCount tag time userId').sort({
                     time: 'desc'
@@ -494,23 +500,23 @@ module.exports = function (app) {
           }, _callee8, this, [[0, 7]]);
         }));
 
-        function getAllQuestionList(_x15) {
+        function getQuestionList(_x14, _x15) {
           return _ref8.apply(this, arguments);
         }
 
-        return getAllQuestionList;
+        return getQuestionList;
       }()
 
       /**
-       * 获取问题详情
-       * @param {String} id 问题id
+       * 获取全部问题列表
+       * @param {String} last 最后时间
        * @return {*} 问题列表
        */
 
     }, {
-      key: 'getQuestion',
+      key: 'getAllQuestionList',
       value: function () {
-        var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(id) {
+        var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(last) {
           var res;
           return regeneratorRuntime.wrap(function _callee9$(_context9) {
             while (1) {
@@ -518,7 +524,11 @@ module.exports = function (app) {
                 case 0:
                   _context9.prev = 0;
                   _context9.next = 3;
-                  return Question.findById(id);
+                  return Question.find({
+                    time: { $lt: last }
+                  }, '_id desc title images finishState answerCount tag time userId').sort({
+                    time: 'desc'
+                  }).limit(PAGE_SIZE).exec();
 
                 case 3:
                   res = _context9.sent;
@@ -537,22 +547,23 @@ module.exports = function (app) {
           }, _callee9, this, [[0, 7]]);
         }));
 
-        function getQuestion(_x16) {
+        function getAllQuestionList(_x16) {
           return _ref9.apply(this, arguments);
         }
 
-        return getQuestion;
+        return getAllQuestionList;
       }()
 
       /**
-       * 获取问题标签
-       * @return {*} 问题标签
+       * 获取问题详情
+       * @param {String} id 问题id
+       * @return {*} 问题列表
        */
 
     }, {
-      key: 'getTags',
+      key: 'getQuestion',
       value: function () {
-        var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+        var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(id) {
           var res;
           return regeneratorRuntime.wrap(function _callee10$(_context10) {
             while (1) {
@@ -560,7 +571,7 @@ module.exports = function (app) {
                 case 0:
                   _context10.prev = 0;
                   _context10.next = 3;
-                  return Tag.find({});
+                  return Question.findById(id);
 
                 case 3:
                   res = _context10.sent;
@@ -579,8 +590,50 @@ module.exports = function (app) {
           }, _callee10, this, [[0, 7]]);
         }));
 
-        function getTags() {
+        function getQuestion(_x17) {
           return _ref10.apply(this, arguments);
+        }
+
+        return getQuestion;
+      }()
+
+      /**
+       * 获取问题标签
+       * @return {*} 问题标签
+       */
+
+    }, {
+      key: 'getTags',
+      value: function () {
+        var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
+          var res;
+          return regeneratorRuntime.wrap(function _callee11$(_context11) {
+            while (1) {
+              switch (_context11.prev = _context11.next) {
+                case 0:
+                  _context11.prev = 0;
+                  _context11.next = 3;
+                  return Tag.find({});
+
+                case 3:
+                  res = _context11.sent;
+                  return _context11.abrupt('return', res);
+
+                case 7:
+                  _context11.prev = 7;
+                  _context11.t0 = _context11['catch'](0);
+                  throw new Error('SOMETHING_ERROR');
+
+                case 10:
+                case 'end':
+                  return _context11.stop();
+              }
+            }
+          }, _callee11, this, [[0, 7]]);
+        }));
+
+        function getTags() {
+          return _ref11.apply(this, arguments);
         }
 
         return getTags;

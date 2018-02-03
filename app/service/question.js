@@ -166,6 +166,29 @@ module.exports = app => {
     }
 
     /**
+     * 取消关注问题
+     * @param {String} questionId 问题id
+     * @return {*} 成功状态
+     */
+    async removeAttentionQuestion(questionId) {
+      try {
+        await Question.findByIdAndUpdate(questionId, {
+          $pull: {
+            attentions: this.ctx.user._id,
+          },
+        });
+        await User.findByIdAndUpdate(this.ctx.user._id, {
+          $pull: {
+            attentions: questionId,
+          },
+        });
+        return 'success';
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    /**
      * 获取专家列表
      * @param {String} tag 标签
      * @return {*} 专家列表

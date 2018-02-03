@@ -95,6 +95,8 @@ module.exports = app => {
   app.post('/question/deleteAnswer', verifyAccount, app.controller.question.deleteAnswer);
   // 关注问题
   app.post('/question/attentionQuestion', verifyAccount, app.controller.question.attentionQuestion);
+  //  取消关注问题
+  app.post('/question/removeAttentionQuestion', verifyAccount, app.controller.question.removeAttentionQuestion);
   // 获取专家列表
   app.get('/question/getExpertList/:tag', app.controller.question.getExpertList);
   // 分类查看问题分类列表 传末尾时间
