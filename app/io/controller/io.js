@@ -51,11 +51,11 @@ class IOController extends Controller {
   /**
    * 邀请回答
    */
-  async invitation() {
+  async invite() {
     const userToken = this.ctx.args[0];
     const expertId = this.ctx.args[1];
     const questionId = this.ctx.args[2];
-    await this.service.io.invitation(userToken, expertId, questionId);
+    await this.service.io.invite(userToken, expertId, questionId);
   }
 
   /**

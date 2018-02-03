@@ -45,7 +45,7 @@ module.exports = app => {
       // todo
     }
 
-    async invitation(userToken, expertId, questionId) {
+    async invite(userToken, expertId, questionId) {
       // todo
     }
 

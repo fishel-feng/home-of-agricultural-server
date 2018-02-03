@@ -196,7 +196,7 @@ var IOController = function (_Controller) {
      */
 
   }, {
-    key: 'invitation',
+    key: 'invite',
     value: function () {
       var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
         var userToken, expertId, questionId;
@@ -208,7 +208,7 @@ var IOController = function (_Controller) {
                 expertId = this.ctx.args[1];
                 questionId = this.ctx.args[2];
                 _context6.next = 5;
-                return this.service.io.invitation(userToken, expertId, questionId);
+                return this.service.io.invite(userToken, expertId, questionId);
 
               case 5:
               case 'end':
@@ -218,11 +218,11 @@ var IOController = function (_Controller) {
         }, _callee6, this);
       }));
 
-      function invitation() {
+      function invite() {
         return _ref6.apply(this, arguments);
       }
 
-      return invitation;
+      return invite;
     }()
 
     /**

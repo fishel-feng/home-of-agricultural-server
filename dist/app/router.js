@@ -121,7 +121,7 @@ module.exports = function (app) {
   // 回答
   app.io.route('answer', app.io.controller.io.answer);
   // 邀请回答
-  app.io.route('invitation', app.io.controller.io.invitation);
+  app.io.route('invite', app.io.controller.io.invite);
   // 关注问题有回答
   app.io.route('attention', app.io.controller.io.attention);
   // 关注用户
