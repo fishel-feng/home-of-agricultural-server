@@ -12,7 +12,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 module.exports = function (app) {
   var SOCKET = 'SOCKET';
-  var User = app.model.User;
+  var MESSAGE = 'MESSAGE';
+  var _app$model = app.model,
+      User = _app$model.User,
+      Question = _app$model.Question;
 
   var IOService = function (_app$Service) {
     _inherits(IOService, _app$Service);
@@ -39,7 +42,7 @@ module.exports = function (app) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  userId = this.ctx.app.jwt.verify(token, '123456').userId;
+                  userId = this.getUserId(token);
                   socketId = this.ctx.socket.id;
                   _context.next = 4;
                   return app.redis.set(SOCKET + userId, socketId);
@@ -100,28 +103,38 @@ module.exports = function (app) {
       key: 'like',
       value: function () {
         var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(userToken, targetId) {
-          var userId, userInfo, targetSocketId;
+          var userId, user, content, targetSocketId;
           return regeneratorRuntime.wrap(function _callee3$(_context3) {
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
-                  userId = this.ctx.app.jwt.verify(userToken, '123456').userId;
+                  userId = this.getUserId(userToken);
                   _context3.next = 3;
                   return User.findById(userId);
 
                 case 3:
-                  userInfo = _context3.sent;
-                  _context3.next = 6;
+                  user = _context3.sent;
+                  content = { userId: userId, nickName: user.nickName, time: Date.now() };
+                  _context3.next = 7;
                   return app.redis.get(SOCKET + targetId);
 
-                case 6:
+                case 7:
                   targetSocketId = _context3.sent;
 
-                  if (targetSocketId) {
-                    this.ctx.socket.nsp.sockets[targetSocketId].emit('like', userInfo);
+                  if (!targetSocketId) {
+                    _context3.next = 12;
+                    break;
                   }
 
-                case 8:
+                  this.ctx.socket.nsp.sockets[targetSocketId].emit('like', content);
+                  _context3.next = 14;
+                  break;
+
+                case 12:
+                  _context3.next = 14;
+                  return app.redis.rpush(MESSAGE + targetId, JSON.stringify({ type: 'like', content: content }));
+
+                case 14:
                 case 'end':
                   return _context3.stop();
               }
@@ -139,10 +152,15 @@ module.exports = function (app) {
       key: 'comment',
       value: function () {
         var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(userToken, circleId, targetId) {
+          var userId;
           return regeneratorRuntime.wrap(function _callee4$(_context4) {
             while (1) {
               switch (_context4.prev = _context4.next) {
                 case 0:
+                  userId = this.getUserId(userToken);
+                  // todo
+
+                case 1:
                 case 'end':
                   return _context4.stop();
               }
@@ -159,16 +177,87 @@ module.exports = function (app) {
     }, {
       key: 'answer',
       value: function () {
-        var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(questionId) {
-          return regeneratorRuntime.wrap(function _callee5$(_context5) {
+        var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(questionId) {
+          var _this2 = this;
+
+          var question, attentions, content, userId, authorSocketId;
+          return regeneratorRuntime.wrap(function _callee6$(_context6) {
             while (1) {
-              switch (_context5.prev = _context5.next) {
+              switch (_context6.prev = _context6.next) {
                 case 0:
+                  _context6.next = 2;
+                  return Question.findById(questionId);
+
+                case 2:
+                  question = _context6.sent;
+                  attentions = question.attentions;
+                  content = { questionId: question._id, title: question.title, time: Date.now() };
+                  userId = question.userId;
+                  _context6.next = 8;
+                  return app.redis.get(SOCKET + userId);
+
+                case 8:
+                  authorSocketId = _context6.sent;
+
+                  if (!authorSocketId) {
+                    _context6.next = 13;
+                    break;
+                  }
+
+                  this.ctx.socket.nsp.sockets[authorSocketId].emit('answer', content);
+                  _context6.next = 15;
+                  break;
+
+                case 13:
+                  _context6.next = 15;
+                  return app.redis.rpush(MESSAGE + userId, JSON.stringify({ type: 'answer', content: content }));
+
+                case 15:
+                  attentions.forEach(function () {
+                    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(id) {
+                      var socketId;
+                      return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                        while (1) {
+                          switch (_context5.prev = _context5.next) {
+                            case 0:
+                              _context5.next = 2;
+                              return app.redis.get(SOCKET + id);
+
+                            case 2:
+                              socketId = _context5.sent;
+
+                              if (!socketId) {
+                                _context5.next = 7;
+                                break;
+                              }
+
+                              _this2.ctx.socket.nsp.sockets[socketId].emit('attention', content);
+                              _context5.next = 9;
+                              break;
+
+                            case 7:
+                              _context5.next = 9;
+                              return app.redis.rpush(MESSAGE + id, JSON.stringify({ type: 'attention', content: content }));
+
+                            case 9:
+                            case 'end':
+                              return _context5.stop();
+                          }
+                        }
+                      }, _callee5, _this2);
+                    }));
+
+                    return function (_x10) {
+                      return _ref6.apply(this, arguments);
+                    };
+                  }());
+
+                case 16:
                 case 'end':
-                  return _context5.stop();
+                  return _context6.stop();
               }
             }
-          }, _callee5, this);
+          }, _callee6, this);
         }));
 
         function answer(_x9) {
@@ -180,32 +269,44 @@ module.exports = function (app) {
     }, {
       key: 'invite',
       value: function () {
-        var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(userToken, expertId, questionId) {
-          return regeneratorRuntime.wrap(function _callee6$(_context6) {
-            while (1) {
-              switch (_context6.prev = _context6.next) {
-                case 0:
-                case 'end':
-                  return _context6.stop();
-              }
-            }
-          }, _callee6, this);
-        }));
-
-        function invite(_x10, _x11, _x12) {
-          return _ref6.apply(this, arguments);
-        }
-
-        return invite;
-      }()
-    }, {
-      key: 'follow',
-      value: function () {
-        var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(userToken, targetId) {
+        var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(userToken, expertId, questionId) {
+          var userId, user, question, content, expertSocketId;
           return regeneratorRuntime.wrap(function _callee7$(_context7) {
             while (1) {
               switch (_context7.prev = _context7.next) {
                 case 0:
+                  userId = this.getUserId(userToken);
+                  _context7.next = 3;
+                  return User.findById(userId);
+
+                case 3:
+                  user = _context7.sent;
+                  _context7.next = 6;
+                  return Question.findById(questionId);
+
+                case 6:
+                  question = _context7.sent;
+                  content = { userId: userId, nickName: user.nickName, questionId: question._id, title: question.title, time: Date.now() };
+                  _context7.next = 10;
+                  return app.redis.get(SOCKET + expertId);
+
+                case 10:
+                  expertSocketId = _context7.sent;
+
+                  if (!expertSocketId) {
+                    _context7.next = 15;
+                    break;
+                  }
+
+                  this.ctx.socket.nsp.sockets[expertSocketId].emit('invite', content);
+                  _context7.next = 17;
+                  break;
+
+                case 15:
+                  _context7.next = 17;
+                  return app.redis.rpush(MESSAGE + expertId, JSON.stringify({ type: 'invite', content: content }));
+
+                case 17:
                 case 'end':
                   return _context7.stop();
               }
@@ -213,12 +314,43 @@ module.exports = function (app) {
           }, _callee7, this);
         }));
 
-        function follow(_x13, _x14) {
+        function invite(_x11, _x12, _x13) {
           return _ref7.apply(this, arguments);
+        }
+
+        return invite;
+      }()
+    }, {
+      key: 'follow',
+      value: function () {
+        var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(userToken, targetId) {
+          var userId;
+          return regeneratorRuntime.wrap(function _callee8$(_context8) {
+            while (1) {
+              switch (_context8.prev = _context8.next) {
+                case 0:
+                  userId = this.getUserId(userToken);
+                  // todo
+
+                case 1:
+                case 'end':
+                  return _context8.stop();
+              }
+            }
+          }, _callee8, this);
+        }));
+
+        function follow(_x14, _x15) {
+          return _ref8.apply(this, arguments);
         }
 
         return follow;
       }()
+    }, {
+      key: 'getUserId',
+      value: function getUserId(token) {
+        return this.ctx.app.jwt.verify(token, '123456').userId;
+      }
     }]);
 
     return IOService;
