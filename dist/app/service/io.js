@@ -70,6 +70,7 @@ module.exports = function (app) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
+                  // todo
                   userId = '5a16699d5e58179af45247d0';
                   _context2.next = 3;
                   return app.redis.get(SOCKET + to);

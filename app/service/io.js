@@ -20,6 +20,7 @@ module.exports = app => {
     }
 
     async chat(to, message) {
+      // todo
       const userId = '5a16699d5e58179af45247d0';
       const targetSocketId = await app.redis.get(SOCKET + to);
       if (targetSocketId) {
@@ -42,11 +43,11 @@ module.exports = app => {
     }
 
     async answer(questionId) {
-      // todo
+      // todo 通知关注者和作者
     }
 
     async invite(userToken, expertId, questionId) {
-      // todo
+      // todo 通知专家
     }
 
     async follow(userToken, targetId) {

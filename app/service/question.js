@@ -64,6 +64,11 @@ module.exports = app => {
           _id: questionId,
           userId: this.ctx.user._id,
         });
+        await User.findByIdAndUpdate(this.ctx.user._id, {
+          $inc: {
+            questionCount: -1,
+          },
+        });
         if (res.result.n !== 1) {
           throw new Error();
         }
@@ -105,6 +110,9 @@ module.exports = app => {
           $push: {
             answers: questionId,
           },
+          $inc: {
+            answerCount: 1,
+          },
         });
         const result = await Question.findById(questionId, 'answers');
         return result.answers.id(question.count + 1);
@@ -133,6 +141,11 @@ module.exports = app => {
             },
           },
         });
+        await User.findByIdAndUpdate(this.ctx.user._id, {
+          $inc: {
+            answerCount: -1,
+          },
+        });
         if (res.nModified !== 1) {
           throw new Error();
         }
@@ -158,6 +171,9 @@ module.exports = app => {
           $push: {
             attentions: questionId,
           },
+          $inc: {
+            attentionCount: 1,
+          },
         });
         return 'success';
       } catch (e) {
@@ -180,6 +196,9 @@ module.exports = app => {
         await User.findByIdAndUpdate(this.ctx.user._id, {
           $pull: {
             attentions: questionId,
+          },
+          $inc: {
+            attentionCount: -1,
           },
         });
         return 'success';

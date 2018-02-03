@@ -308,7 +308,7 @@ module.exports = app => {
       try {
         const attentions = await Question.find({
           _id: {
-            $in: [ this.ctx.user.attentions ],
+            $in: this.ctx.user.attentions,
           },
           time: { $lt: last },
         }, '_id desc title images finishState answerCount tag time').sort({
@@ -390,7 +390,7 @@ module.exports = app => {
       try {
         const answers = await Question.find({
           _id: {
-            $in: [ this.ctx.user.answers ],
+            $in: this.ctx.user.answers,
           },
           time: { $lt: last },
         }, '_id desc title images finishState answerCount tag time').sort({

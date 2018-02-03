@@ -59,13 +59,6 @@ class IOController extends Controller {
   }
 
   /**
-   * 关注问题有回答
-   */
-  async attention() {
-    //
-  }
-
-  /**
    * 关注用户
    */
   async follow() {
@@ -75,20 +68,8 @@ class IOController extends Controller {
   }
 
   /**
-   * 注销
+   * 离开
    */
-  async exit() {
-    //
-  }
-
-  async click() {
-    // const userToken = this.ctx.args[0];
-    // const targetId = this.ctx.args[1];
-    // console.log(userToken);
-    // console.log(targetId);
-    console.log(this.ctx.socket.id);
-  }
-
   async disconnecting() {
     console.log('close');
   }

@@ -226,17 +226,24 @@ var IOController = function (_Controller) {
     }()
 
     /**
-     * 关注问题有回答
+     * 关注用户
      */
 
   }, {
-    key: 'attention',
+    key: 'follow',
     value: function () {
       var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
+        var userToken, targetId;
         return regeneratorRuntime.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
+                userToken = this.ctx.args[0];
+                targetId = this.ctx.args[1];
+                _context7.next = 4;
+                return this.service.io.follow(userToken, targetId);
+
+              case 4:
               case 'end':
                 return _context7.stop();
             }
@@ -244,32 +251,28 @@ var IOController = function (_Controller) {
         }, _callee7, this);
       }));
 
-      function attention() {
+      function follow() {
         return _ref7.apply(this, arguments);
       }
 
-      return attention;
+      return follow;
     }()
-  }, {
-    key: 'follow',
-
 
     /**
-     * 关注用户
+     * 离开
      */
+
+  }, {
+    key: 'disconnecting',
     value: function () {
       var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
-        var userToken, targetId;
         return regeneratorRuntime.wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                userToken = this.ctx.args[0];
-                targetId = this.ctx.args[1];
-                _context8.next = 4;
-                return this.service.io.follow(userToken, targetId);
+                console.log('close');
 
-              case 4:
+              case 1:
               case 'end':
                 return _context8.stop();
             }
@@ -277,86 +280,8 @@ var IOController = function (_Controller) {
         }, _callee8, this);
       }));
 
-      function follow() {
-        return _ref8.apply(this, arguments);
-      }
-
-      return follow;
-    }()
-
-    /**
-     * 注销
-     */
-
-  }, {
-    key: 'exit',
-    value: function () {
-      var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
-        return regeneratorRuntime.wrap(function _callee9$(_context9) {
-          while (1) {
-            switch (_context9.prev = _context9.next) {
-              case 0:
-              case 'end':
-                return _context9.stop();
-            }
-          }
-        }, _callee9, this);
-      }));
-
-      function exit() {
-        return _ref9.apply(this, arguments);
-      }
-
-      return exit;
-    }()
-  }, {
-    key: 'click',
-    value: function () {
-      var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
-        return regeneratorRuntime.wrap(function _callee10$(_context10) {
-          while (1) {
-            switch (_context10.prev = _context10.next) {
-              case 0:
-                // const userToken = this.ctx.args[0];
-                // const targetId = this.ctx.args[1];
-                // console.log(userToken);
-                // console.log(targetId);
-                console.log(this.ctx.socket.id);
-
-              case 1:
-              case 'end':
-                return _context10.stop();
-            }
-          }
-        }, _callee10, this);
-      }));
-
-      function click() {
-        return _ref10.apply(this, arguments);
-      }
-
-      return click;
-    }()
-  }, {
-    key: 'disconnecting',
-    value: function () {
-      var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
-        return regeneratorRuntime.wrap(function _callee11$(_context11) {
-          while (1) {
-            switch (_context11.prev = _context11.next) {
-              case 0:
-                console.log('close');
-
-              case 1:
-              case 'end':
-                return _context11.stop();
-            }
-          }
-        }, _callee11, this);
-      }));
-
       function disconnecting() {
-        return _ref11.apply(this, arguments);
+        return _ref8.apply(this, arguments);
       }
 
       return disconnecting;

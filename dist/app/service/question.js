@@ -133,28 +133,35 @@ module.exports = function (app) {
 
                 case 3:
                   res = _context2.sent;
+                  _context2.next = 6;
+                  return User.findByIdAndUpdate(this.ctx.user._id, {
+                    $inc: {
+                      questionCount: -1
+                    }
+                  });
 
+                case 6:
                   if (!(res.result.n !== 1)) {
-                    _context2.next = 6;
+                    _context2.next = 8;
                     break;
                   }
 
                   throw new Error();
 
-                case 6:
+                case 8:
                   return _context2.abrupt('return', 'success');
 
-                case 9:
-                  _context2.prev = 9;
+                case 11:
+                  _context2.prev = 11;
                   _context2.t0 = _context2['catch'](0);
                   throw new Error('SOMETHING_ERROR');
 
-                case 12:
+                case 14:
                 case 'end':
                   return _context2.stop();
               }
             }
-          }, _callee2, this, [[0, 9]]);
+          }, _callee2, this, [[0, 11]]);
         }));
 
         function deleteQuestion(_x5) {
@@ -212,6 +219,9 @@ module.exports = function (app) {
                   return User.findByIdAndUpdate(this.ctx.user._id, {
                     $push: {
                       answers: questionId
+                    },
+                    $inc: {
+                      answerCount: 1
                     }
                   });
 
@@ -276,28 +286,35 @@ module.exports = function (app) {
 
                 case 3:
                   res = _context4.sent;
+                  _context4.next = 6;
+                  return User.findByIdAndUpdate(this.ctx.user._id, {
+                    $inc: {
+                      answerCount: -1
+                    }
+                  });
 
+                case 6:
                   if (!(res.nModified !== 1)) {
-                    _context4.next = 6;
+                    _context4.next = 8;
                     break;
                   }
 
                   throw new Error();
 
-                case 6:
+                case 8:
                   return _context4.abrupt('return', 'success');
 
-                case 9:
-                  _context4.prev = 9;
+                case 11:
+                  _context4.prev = 11;
                   _context4.t0 = _context4['catch'](0);
                   throw new Error('DELETE_ERROR');
 
-                case 12:
+                case 14:
                 case 'end':
                   return _context4.stop();
               }
             }
-          }, _callee4, this, [[0, 9]]);
+          }, _callee4, this, [[0, 11]]);
         }));
 
         function deleteAnswer(_x9, _x10) {
@@ -334,6 +351,9 @@ module.exports = function (app) {
                   return User.findByIdAndUpdate(this.ctx.user._id, {
                     $push: {
                       attentions: questionId
+                    },
+                    $inc: {
+                      attentionCount: 1
                     }
                   });
 
@@ -387,6 +407,9 @@ module.exports = function (app) {
                   return User.findByIdAndUpdate(this.ctx.user._id, {
                     $pull: {
                       attentions: questionId
+                    },
+                    $inc: {
+                      attentionCount: -1
                     }
                   });
 

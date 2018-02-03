@@ -122,13 +122,9 @@ module.exports = app => {
   app.io.route('answer', app.io.controller.io.answer);
   // 邀请回答
   app.io.route('invite', app.io.controller.io.invite);
-  // 关注问题有回答
-  app.io.route('attention', app.io.controller.io.attention);
   // 关注用户
   app.io.route('follow', app.io.controller.io.follow);
-  // 注销
-  app.io.route('exit', app.io.controller.io.exit);
-  app.io.route('click', app.io.controller.io.click);
+  // 离开
   app.io.route('disconnecting', app.io.controller.io.disconnecting);
 
   // *************管理后台接口************
