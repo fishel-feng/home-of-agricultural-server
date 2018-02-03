@@ -100,17 +100,18 @@ var IOController = function (_Controller) {
     key: 'like',
     value: function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-        var userToken, targetId;
+        var userToken, targetId, circleId;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 userToken = this.ctx.args[0];
                 targetId = this.ctx.args[1];
-                _context3.next = 4;
-                return this.service.io.like(userToken, targetId);
+                circleId = this.ctx.args[2];
+                _context3.next = 5;
+                return this.service.io.like(userToken, targetId, circleId);
 
-              case 4:
+              case 5:
               case 'end':
                 return _context3.stop();
             }

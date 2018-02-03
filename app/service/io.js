@@ -6,6 +6,7 @@ module.exports = app => {
   const {
     User,
     Question,
+    Circle,
   } = app.model;
   class IOService extends app.Service {
 
@@ -30,10 +31,10 @@ module.exports = app => {
       }
     }
 
-    async like(userToken, targetId) {
+    async like(userToken, targetId, circleId) {
       const userId = this.getUserId(userToken);
       const user = await User.findById(userId);
-      const content = { userId, nickName: user.nickName, time: Date.now() };
+      const content = { userId, nickName: user.nickName, circleId, time: Date.now() };
       const targetSocketId = await app.redis.get(SOCKET + targetId);
       if (targetSocketId) {
         this.ctx.socket.nsp.sockets[targetSocketId].emit('like', content);
@@ -44,7 +45,24 @@ module.exports = app => {
 
     async comment(userToken, circleId, targetId) {
       const userId = this.getUserId(userToken);
-      // todo
+      const user = await User.findById(userId);
+      const content = { userId, nickName: user.nickName, circleId, time: Date.now() };
+      const circle = await Circle.findById(circleId);
+      const authorId = circle.userId;
+      const authorSocketId = await app.redis.get(SOCKET + authorId);
+      if (authorSocketId) {
+        this.ctx.socket.nsp.sockets[authorSocketId].emit('comment', content);
+      } else {
+        await app.redis.rpush(MESSAGE + authorId, JSON.stringify({ type: 'comment', content }));
+      }
+      if (targetId) {
+        const targetSocketId = await app.redis.get(SOCKET + targetId);
+        if (targetSocketId) {
+          this.ctx.socket.nsp.sockets[targetSocketId].emit('reply', content);
+        } else {
+          await app.redis.rpush(MESSAGE + targetId, JSON.stringify({ type: 'reply', content }));
+        }
+      }
     }
 
     async answer(questionId) {
@@ -83,7 +101,14 @@ module.exports = app => {
 
     async follow(userToken, targetId) {
       const userId = this.getUserId(userToken);
-      // todo
+      const user = await User.findById(userId);
+      const content = { userId, nickName: user.nickName, time: Date.now() };
+      const targetSocketId = await app.redis.get(SOCKET + targetId);
+      if (targetSocketId) {
+        this.ctx.socket.nsp.sockets[targetSocketId].emit('follow', content);
+      } else {
+        await app.redis.rpush(MESSAGE + targetId, JSON.stringify({ type: 'follow', content }));
+      }
     }
 
     getUserId(token) {

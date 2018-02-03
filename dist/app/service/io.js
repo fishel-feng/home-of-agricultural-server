@@ -15,7 +15,8 @@ module.exports = function (app) {
   var MESSAGE = 'MESSAGE';
   var _app$model = app.model,
       User = _app$model.User,
-      Question = _app$model.Question;
+      Question = _app$model.Question,
+      Circle = _app$model.Circle;
 
   var IOService = function (_app$Service) {
     _inherits(IOService, _app$Service);
@@ -102,7 +103,7 @@ module.exports = function (app) {
     }, {
       key: 'like',
       value: function () {
-        var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(userToken, targetId) {
+        var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(userToken, targetId, circleId) {
           var userId, user, content, targetSocketId;
           return regeneratorRuntime.wrap(function _callee3$(_context3) {
             while (1) {
@@ -114,7 +115,7 @@ module.exports = function (app) {
 
                 case 3:
                   user = _context3.sent;
-                  content = { userId: userId, nickName: user.nickName, time: Date.now() };
+                  content = { userId: userId, nickName: user.nickName, circleId: circleId, time: Date.now() };
                   _context3.next = 7;
                   return app.redis.get(SOCKET + targetId);
 
@@ -142,7 +143,7 @@ module.exports = function (app) {
           }, _callee3, this);
         }));
 
-        function like(_x4, _x5) {
+        function like(_x4, _x5, _x6) {
           return _ref3.apply(this, arguments);
         }
 
@@ -152,15 +153,69 @@ module.exports = function (app) {
       key: 'comment',
       value: function () {
         var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(userToken, circleId, targetId) {
-          var userId;
+          var userId, user, content, circle, authorId, authorSocketId, targetSocketId;
           return regeneratorRuntime.wrap(function _callee4$(_context4) {
             while (1) {
               switch (_context4.prev = _context4.next) {
                 case 0:
                   userId = this.getUserId(userToken);
-                  // todo
+                  _context4.next = 3;
+                  return User.findById(userId);
 
-                case 1:
+                case 3:
+                  user = _context4.sent;
+                  content = { userId: userId, nickName: user.nickName, circleId: circleId, time: Date.now() };
+                  _context4.next = 7;
+                  return Circle.findById(circleId);
+
+                case 7:
+                  circle = _context4.sent;
+                  authorId = circle.userId;
+                  _context4.next = 11;
+                  return app.redis.get(SOCKET + authorId);
+
+                case 11:
+                  authorSocketId = _context4.sent;
+
+                  if (!authorSocketId) {
+                    _context4.next = 16;
+                    break;
+                  }
+
+                  this.ctx.socket.nsp.sockets[authorSocketId].emit('comment', content);
+                  _context4.next = 18;
+                  break;
+
+                case 16:
+                  _context4.next = 18;
+                  return app.redis.rpush(MESSAGE + authorId, JSON.stringify({ type: 'comment', content: content }));
+
+                case 18:
+                  if (!targetId) {
+                    _context4.next = 28;
+                    break;
+                  }
+
+                  _context4.next = 21;
+                  return app.redis.get(SOCKET + targetId);
+
+                case 21:
+                  targetSocketId = _context4.sent;
+
+                  if (!targetSocketId) {
+                    _context4.next = 26;
+                    break;
+                  }
+
+                  this.ctx.socket.nsp.sockets[targetSocketId].emit('reply', content);
+                  _context4.next = 28;
+                  break;
+
+                case 26:
+                  _context4.next = 28;
+                  return app.redis.rpush(MESSAGE + targetId, JSON.stringify({ type: 'reply', content: content }));
+
+                case 28:
                 case 'end':
                   return _context4.stop();
               }
@@ -168,7 +223,7 @@ module.exports = function (app) {
           }, _callee4, this);
         }));
 
-        function comment(_x6, _x7, _x8) {
+        function comment(_x7, _x8, _x9) {
           return _ref4.apply(this, arguments);
         }
 
@@ -247,7 +302,7 @@ module.exports = function (app) {
                       }, _callee5, _this2);
                     }));
 
-                    return function (_x10) {
+                    return function (_x11) {
                       return _ref6.apply(this, arguments);
                     };
                   }());
@@ -260,7 +315,7 @@ module.exports = function (app) {
           }, _callee6, this);
         }));
 
-        function answer(_x9) {
+        function answer(_x10) {
           return _ref5.apply(this, arguments);
         }
 
@@ -314,7 +369,7 @@ module.exports = function (app) {
           }, _callee7, this);
         }));
 
-        function invite(_x11, _x12, _x13) {
+        function invite(_x12, _x13, _x14) {
           return _ref7.apply(this, arguments);
         }
 
@@ -324,15 +379,38 @@ module.exports = function (app) {
       key: 'follow',
       value: function () {
         var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(userToken, targetId) {
-          var userId;
+          var userId, user, content, targetSocketId;
           return regeneratorRuntime.wrap(function _callee8$(_context8) {
             while (1) {
               switch (_context8.prev = _context8.next) {
                 case 0:
                   userId = this.getUserId(userToken);
-                  // todo
+                  _context8.next = 3;
+                  return User.findById(userId);
 
-                case 1:
+                case 3:
+                  user = _context8.sent;
+                  content = { userId: userId, nickName: user.nickName, time: Date.now() };
+                  _context8.next = 7;
+                  return app.redis.get(SOCKET + targetId);
+
+                case 7:
+                  targetSocketId = _context8.sent;
+
+                  if (!targetSocketId) {
+                    _context8.next = 12;
+                    break;
+                  }
+
+                  this.ctx.socket.nsp.sockets[targetSocketId].emit('follow', content);
+                  _context8.next = 14;
+                  break;
+
+                case 12:
+                  _context8.next = 14;
+                  return app.redis.rpush(MESSAGE + targetId, JSON.stringify({ type: 'follow', content: content }));
+
+                case 14:
                 case 'end':
                   return _context8.stop();
               }
@@ -340,7 +418,7 @@ module.exports = function (app) {
           }, _callee8, this);
         }));
 
-        function follow(_x14, _x15) {
+        function follow(_x15, _x16) {
           return _ref8.apply(this, arguments);
         }
 

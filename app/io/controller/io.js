@@ -27,7 +27,8 @@ class IOController extends Controller {
   async like() {
     const userToken = this.ctx.args[0];
     const targetId = this.ctx.args[1];
-    await this.service.io.like(userToken, targetId);
+    const circleId = this.ctx.args[2];
+    await this.service.io.like(userToken, targetId, circleId);
   }
 
   /**
