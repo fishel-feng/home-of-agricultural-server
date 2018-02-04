@@ -31,6 +31,12 @@ module.exports = app => {
       }
     }
 
+    /**
+     * 点赞
+     * @param {String} userToken token
+     * @param {String} targetId 被赞的人id
+     * @param {String} circleId 动态id
+     */
     async like(userToken, targetId, circleId) {
       const userId = this.getUserId(userToken);
       const user = await User.findById(userId);
@@ -43,6 +49,12 @@ module.exports = app => {
       }
     }
 
+    /**
+     * 评论
+     * @param {String} userToken token
+     * @param {String} circleId 动态id
+     * @param {String} targetId 被评论的人id
+     */
     async comment(userToken, circleId, targetId) {
       const userId = this.getUserId(userToken);
       const user = await User.findById(userId);
@@ -65,16 +77,23 @@ module.exports = app => {
       }
     }
 
-    async answer(questionId) {
+    /**
+     * 回答
+     * @param {String} userToken token
+     * @param {String} questionId 问题id
+     */
+    async answer(userToken, questionId) {
+      const userId = this.getUserId(userToken);
+      const user = await User.findById(userId);
       const question = await Question.findById(questionId);
       const attentions = question.attentions;
-      const content = { questionId: question._id, title: question.title, time: Date.now() };
-      const userId = question.userId;
-      const authorSocketId = await app.redis.get(SOCKET + userId);
+      const content = { userId, nickName: user.nickName, questionId: question._id, title: question.title, time: Date.now() };
+      const authorId = question.userId;
+      const authorSocketId = await app.redis.get(SOCKET + authorId);
       if (authorSocketId) {
         this.ctx.socket.nsp.sockets[authorSocketId].emit('answer', content);
       } else {
-        await app.redis.rpush(MESSAGE + userId, JSON.stringify({ type: 'answer', content }));
+        await app.redis.rpush(MESSAGE + authorId, JSON.stringify({ type: 'answer', content }));
       }
       attentions.forEach(async id => {
         const socketId = await app.redis.get(SOCKET + id);
@@ -86,6 +105,12 @@ module.exports = app => {
       });
     }
 
+    /**
+     * 邀请回答
+     * @param {String} userToken token
+     * @param {String} expertId 专家id
+     * @param {String} questionId 问题id
+     */
     async invite(userToken, expertId, questionId) {
       const userId = this.getUserId(userToken);
       const user = await User.findById(userId);
@@ -99,6 +124,11 @@ module.exports = app => {
       }
     }
 
+    /**
+     * 关注用户
+     * @param {String} userToken token
+     * @param {String} targetId 被关注的人id
+     */
     async follow(userToken, targetId) {
       const userId = this.getUserId(userToken);
       const user = await User.findById(userId);
@@ -111,6 +141,11 @@ module.exports = app => {
       }
     }
 
+    /**
+     * 从token中获取id
+     * @param {String} token token
+     * @return {String} userId 用户id
+     */
     getUserId(token) {
       return this.ctx.app.jwt.verify(token, '123456').userId;
     }

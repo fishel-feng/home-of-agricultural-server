@@ -168,16 +168,17 @@ var IOController = function (_Controller) {
     key: 'answer',
     value: function () {
       var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
-        var questionId;
+        var userToken, questionId;
         return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                questionId = this.ctx.args[0];
-                _context5.next = 3;
-                return this.service.io.answer(questionId);
+                userToken = this.ctx.args[0];
+                questionId = this.ctx.args[1];
+                _context5.next = 4;
+                return this.service.io.answer(userToken, questionId);
 
-              case 3:
+              case 4:
               case 'end':
                 return _context5.stop();
             }

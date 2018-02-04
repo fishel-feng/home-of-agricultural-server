@@ -100,6 +100,14 @@ module.exports = function (app) {
 
         return chat;
       }()
+
+      /**
+       * 点赞
+       * @param {String} userToken token
+       * @param {String} targetId 被赞的人id
+       * @param {String} circleId 动态id
+       */
+
     }, {
       key: 'like',
       value: function () {
@@ -149,6 +157,14 @@ module.exports = function (app) {
 
         return like;
       }()
+
+      /**
+       * 评论
+       * @param {String} userToken token
+       * @param {String} circleId 动态id
+       * @param {String} targetId 被评论的人id
+       */
+
     }, {
       key: 'comment',
       value: function () {
@@ -229,45 +245,58 @@ module.exports = function (app) {
 
         return comment;
       }()
+
+      /**
+       * 回答
+       * @param {String} userToken token
+       * @param {String} questionId 问题id
+       */
+
     }, {
       key: 'answer',
       value: function () {
-        var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(questionId) {
+        var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(userToken, questionId) {
           var _this2 = this;
 
-          var question, attentions, content, userId, authorSocketId;
+          var userId, user, question, attentions, content, authorId, authorSocketId;
           return regeneratorRuntime.wrap(function _callee6$(_context6) {
             while (1) {
               switch (_context6.prev = _context6.next) {
                 case 0:
-                  _context6.next = 2;
+                  userId = this.getUserId(userToken);
+                  _context6.next = 3;
+                  return User.findById(userId);
+
+                case 3:
+                  user = _context6.sent;
+                  _context6.next = 6;
                   return Question.findById(questionId);
 
-                case 2:
+                case 6:
                   question = _context6.sent;
                   attentions = question.attentions;
-                  content = { questionId: question._id, title: question.title, time: Date.now() };
-                  userId = question.userId;
-                  _context6.next = 8;
-                  return app.redis.get(SOCKET + userId);
+                  content = { userId: userId, nickName: user.nickName, questionId: question._id, title: question.title, time: Date.now() };
+                  authorId = question.userId;
+                  _context6.next = 12;
+                  return app.redis.get(SOCKET + authorId);
 
-                case 8:
+                case 12:
                   authorSocketId = _context6.sent;
 
                   if (!authorSocketId) {
-                    _context6.next = 13;
+                    _context6.next = 17;
                     break;
                   }
 
                   this.ctx.socket.nsp.sockets[authorSocketId].emit('answer', content);
-                  _context6.next = 15;
+                  _context6.next = 19;
                   break;
 
-                case 13:
-                  _context6.next = 15;
-                  return app.redis.rpush(MESSAGE + userId, JSON.stringify({ type: 'answer', content: content }));
+                case 17:
+                  _context6.next = 19;
+                  return app.redis.rpush(MESSAGE + authorId, JSON.stringify({ type: 'answer', content: content }));
 
-                case 15:
+                case 19:
                   attentions.forEach(function () {
                     var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(id) {
                       var socketId;
@@ -302,12 +331,12 @@ module.exports = function (app) {
                       }, _callee5, _this2);
                     }));
 
-                    return function (_x11) {
+                    return function (_x12) {
                       return _ref6.apply(this, arguments);
                     };
                   }());
 
-                case 16:
+                case 20:
                 case 'end':
                   return _context6.stop();
               }
@@ -315,12 +344,20 @@ module.exports = function (app) {
           }, _callee6, this);
         }));
 
-        function answer(_x10) {
+        function answer(_x10, _x11) {
           return _ref5.apply(this, arguments);
         }
 
         return answer;
       }()
+
+      /**
+       * 邀请回答
+       * @param {String} userToken token
+       * @param {String} expertId 专家id
+       * @param {String} questionId 问题id
+       */
+
     }, {
       key: 'invite',
       value: function () {
@@ -369,12 +406,19 @@ module.exports = function (app) {
           }, _callee7, this);
         }));
 
-        function invite(_x12, _x13, _x14) {
+        function invite(_x13, _x14, _x15) {
           return _ref7.apply(this, arguments);
         }
 
         return invite;
       }()
+
+      /**
+       * 关注用户
+       * @param {String} userToken token
+       * @param {String} targetId 被关注的人id
+       */
+
     }, {
       key: 'follow',
       value: function () {
@@ -418,12 +462,19 @@ module.exports = function (app) {
           }, _callee8, this);
         }));
 
-        function follow(_x15, _x16) {
+        function follow(_x16, _x17) {
           return _ref8.apply(this, arguments);
         }
 
         return follow;
       }()
+
+      /**
+       * 从token中获取id
+       * @param {String} token token
+       * @return {String} userId 用户id
+       */
+
     }, {
       key: 'getUserId',
       value: function getUserId(token) {
