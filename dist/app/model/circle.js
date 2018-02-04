@@ -1,24 +1,24 @@
 'use strict';
 
-module.exports = app => {
-  const mongoose = app.mongoose;
-  const CircleSchema = new mongoose.Schema({
+module.exports = function (app) {
+  var mongoose = app.mongoose;
+  var CircleSchema = new mongoose.Schema({
     userId: String,
     nickName: String,
     headImage: String,
     time: {
       type: Date,
-      default: Date.now,
+      default: Date.now
     },
     content: String,
     images: Array,
     count: {
       type: Number,
-      default: 0,
+      default: 0
     },
     commentCount: {
       type: Number,
-      default: 0,
+      default: 0
     },
     comments: [{
       _id: Number,
@@ -27,15 +27,15 @@ module.exports = app => {
       headImage: String,
       time: {
         type: Date,
-        default: Date.now,
+        default: Date.now
       },
       content: String,
       targetId: String,
-      targetName: String,
+      targetName: String
     }],
     likeCount: {
       type: Number,
-      default: 0,
+      default: 0
     },
     likes: [{
       userId: String,
@@ -44,14 +44,15 @@ module.exports = app => {
       description: String,
       time: {
         type: Date,
-        default: Date.now,
+        default: Date.now
       },
       certification: {
         type: String,
-        default: '',
-      },
-    }],
+        default: ''
+      }
+    }]
   });
 
   return mongoose.model('Circle', CircleSchema);
 };
+//# sourceMappingURL=circle.js.map

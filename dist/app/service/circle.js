@@ -327,7 +327,9 @@ module.exports = function (app) {
                       likes: {
                         userId: user._id,
                         nickName: user.nickName,
-                        headImage: user.headImage
+                        headImage: user.headImage,
+                        description: user.description,
+                        certification: user.certification
                       }
                     },
                     $inc: {
@@ -373,6 +375,7 @@ module.exports = function (app) {
             while (1) {
               switch (_context6.prev = _context6.next) {
                 case 0:
+                  // todo 取消赞逻辑
                   user = this.ctx.user;
                   _context6.prev = 1;
                   _context6.next = 4;
@@ -597,7 +600,9 @@ module.exports = function (app) {
                 case 0:
                   _context10.prev = 0;
                   _context10.next = 3;
-                  return Circle.findById(circleId, 'likes');
+                  return Circle.findById(circleId, 'likes').sort({
+                    'likes.time': 'desc'
+                  });
 
                 case 3:
                   likeList = _context10.sent;

@@ -178,7 +178,6 @@ module.exports = app => {
      * @return {String} 成功状态
      */
     async giveFollow(targetId) {
-      // todo 重复关注
       try {
         const targetUser = await User.findById(targetId);
         await User.update({
@@ -205,6 +204,7 @@ module.exports = app => {
               nickName: this.ctx.user.nickName,
               headImage: this.ctx.user.headImage,
               description: this.ctx.user.description,
+              certification: this.ctx.user.certification,
             },
           },
           $inc: {

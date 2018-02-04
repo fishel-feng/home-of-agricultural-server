@@ -81,8 +81,6 @@ var CircleController = function (_Controller) {
                   circleId: 'string'
                 });
                 circleId = this.ctx.request.body.circleId;
-                // TODO 删除图片
-
                 _context2.next = 4;
                 return this.service.circle.deleteCircle(circleId);
 

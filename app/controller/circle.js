@@ -30,7 +30,6 @@ class CircleController extends Controller {
     const {
       circleId,
     } = this.ctx.request.body;
-    // TODO 删除图片
     const status = await this.service.circle.deleteCircle(circleId);
     this.ctx.body = status;
   }

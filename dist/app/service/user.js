@@ -469,7 +469,8 @@ module.exports = function (app) {
                         userId: this.ctx.user._id,
                         nickName: this.ctx.user.nickName,
                         headImage: this.ctx.user.headImage,
-                        description: this.ctx.user.description
+                        description: this.ctx.user.description,
+                        certification: this.ctx.user.certification
                       }
                     },
                     $inc: {

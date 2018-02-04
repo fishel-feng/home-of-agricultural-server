@@ -83,8 +83,6 @@ var QuestionController = function (_Controller) {
                   questionId: 'string'
                 });
                 questionId = this.ctx.request.body.questionId;
-                // TODO 删除图片
-
                 _context2.next = 4;
                 return this.service.question.deleteQuestion(questionId);
 

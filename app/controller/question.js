@@ -32,7 +32,6 @@ class QuestionController extends Controller {
     const {
       questionId,
     } = this.ctx.request.body;
-    // TODO 删除图片
     const status = await this.service.question.deleteQuestion(questionId);
     this.ctx.body = status;
   }

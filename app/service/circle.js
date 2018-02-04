@@ -149,6 +149,8 @@ module.exports = app => {
               userId: user._id,
               nickName: user.nickName,
               headImage: user.headImage,
+              description: user.description,
+              certification: user.certification,
             },
           },
           $inc: {
@@ -167,6 +169,7 @@ module.exports = app => {
      * @return {*} 成功状态
      */
     async cancelLike(circleId) {
+      // todo 取消赞逻辑
       const user = this.ctx.user;
       try {
         const res = await Circle.update({
@@ -265,7 +268,9 @@ module.exports = app => {
      */
     async getLikeList(circleId) {
       try {
-        const likeList = await Circle.findById(circleId, 'likes');
+        const likeList = await Circle.findById(circleId, 'likes').sort({
+          'likes.time': 'desc',
+        });
         return likeList;
       } catch (e) {
         throw new Error('GET_LIKE_LIST_ERROR');
