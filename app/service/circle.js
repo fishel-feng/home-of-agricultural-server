@@ -169,7 +169,6 @@ module.exports = app => {
      * @return {*} 成功状态
      */
     async cancelLike(circleId) {
-      // todo 取消赞逻辑
       const user = this.ctx.user;
       try {
         const res = await Circle.update({
@@ -177,7 +176,9 @@ module.exports = app => {
           'likes.userId': user._id,
         }, {
           $pull: {
-            likes: user._id,
+            likes: {
+              userId: user._id,
+            },
           },
           $inc: {
             likeCount: -1,
@@ -221,7 +222,6 @@ module.exports = app => {
           time: 'desc',
         }).limit(PAGE_SIZE)
           .exec();
-        console.log(res);
         return res;
       } catch (e) {
         throw new Error('SOMETHING_ERROR');

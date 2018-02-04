@@ -375,7 +375,6 @@ module.exports = function (app) {
             while (1) {
               switch (_context6.prev = _context6.next) {
                 case 0:
-                  // todo 取消赞逻辑
                   user = this.ctx.user;
                   _context6.prev = 1;
                   _context6.next = 4;
@@ -384,7 +383,9 @@ module.exports = function (app) {
                     'likes.userId': user._id
                   }, {
                     $pull: {
-                      likes: user._id
+                      likes: {
+                        userId: user._id
+                      }
                     },
                     $inc: {
                       likeCount: -1
@@ -469,21 +470,19 @@ module.exports = function (app) {
 
                 case 7:
                   res = _context7.sent;
-
-                  console.log(res);
                   return _context7.abrupt('return', res);
 
-                case 12:
-                  _context7.prev = 12;
+                case 11:
+                  _context7.prev = 11;
                   _context7.t0 = _context7['catch'](4);
                   throw new Error('SOMETHING_ERROR');
 
-                case 15:
+                case 14:
                 case 'end':
                   return _context7.stop();
               }
             }
-          }, _callee7, this, [[4, 12]]);
+          }, _callee7, this, [[4, 11]]);
         }));
 
         function getAttentionList(_x11) {
