@@ -581,7 +581,7 @@ module.exports = function (app) {
                 case 0:
                   _context9.prev = 0;
                   _context9.next = 3;
-                  return User.findById(userId, 'nickName headImage description gender age job location circles followerCount followingCount');
+                  return User.findById(userId, 'certification nickName headImage description gender age questionCount answerCount job location followerCount followingCount');
 
                 case 3:
                   user = _context9.sent;
