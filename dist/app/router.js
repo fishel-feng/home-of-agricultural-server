@@ -3,10 +3,6 @@
 module.exports = function (app) {
   var verifyAccount = app.middlewares.verifyAccount({});
 
-  app.post('/test/upload', app.controller.test.upload);
-  // app.get('/test/index', app.jwt, app.controller.test.index);
-  app.post('/test/index', verifyAccount, app.controller.test.index);
-
   // 上传图片
   app.post('/upload/:type', verifyAccount, app.controller.upload.upload);
 
@@ -109,7 +105,6 @@ module.exports = function (app) {
   app.get('/questions/getTags', app.controller.question.getTags);
 
   // socket.io接口
-  // app.io.set('authorization', socketioJwt);
   // 登录
   app.io.route('login', app.io.controller.io.login);
   // 聊天

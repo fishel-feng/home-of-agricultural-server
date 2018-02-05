@@ -24,6 +24,13 @@ module.exports = app => {
           nickName: user.nickName,
           headImage: user.headImage,
         }).save();
+        await User.update({
+          _id: user._id,
+        }, {
+          $inc: {
+            circleCount: 1,
+          },
+        });
         return {
           circle,
         };
@@ -43,9 +50,16 @@ module.exports = app => {
           _id: circleId,
           userId: this.ctx.user._id,
         });
-        if (res.result.n !== 1) {
+        if (res.result.n !== '1') {
           throw new Error();
         }
+        await User.update({
+          _id: this.ctx.user._id,
+        }, {
+          $inc: {
+            circleCount: -1,
+          },
+        });
         return 'success';
       } catch (e) {
         throw new Error('DELETE_CIRCLE_ERROR');

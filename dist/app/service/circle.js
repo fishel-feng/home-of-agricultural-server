@@ -56,21 +56,31 @@ module.exports = function (app) {
 
                 case 4:
                   circle = _context.sent;
+                  _context.next = 7;
+                  return User.update({
+                    _id: user._id
+                  }, {
+                    $inc: {
+                      circleCount: 1
+                    }
+                  });
+
+                case 7:
                   return _context.abrupt('return', {
                     circle: circle
                   });
 
-                case 8:
-                  _context.prev = 8;
+                case 10:
+                  _context.prev = 10;
                   _context.t0 = _context['catch'](1);
                   throw new Error('ADD_CIRCLE_ERROR');
 
-                case 11:
+                case 13:
                 case 'end':
                   return _context.stop();
               }
             }
-          }, _callee, this, [[1, 8]]);
+          }, _callee, this, [[1, 10]]);
         }));
 
         function addCircle(_x, _x2) {
@@ -105,7 +115,7 @@ module.exports = function (app) {
                 case 3:
                   res = _context2.sent;
 
-                  if (!(res.result.n !== 1)) {
+                  if (!(res.result.n !== '1')) {
                     _context2.next = 6;
                     break;
                   }
@@ -113,19 +123,29 @@ module.exports = function (app) {
                   throw new Error();
 
                 case 6:
+                  _context2.next = 8;
+                  return User.update({
+                    _id: this.ctx.user._id
+                  }, {
+                    $inc: {
+                      circleCount: -1
+                    }
+                  });
+
+                case 8:
                   return _context2.abrupt('return', 'success');
 
-                case 9:
-                  _context2.prev = 9;
+                case 11:
+                  _context2.prev = 11;
                   _context2.t0 = _context2['catch'](0);
                   throw new Error('DELETE_CIRCLE_ERROR');
 
-                case 12:
+                case 14:
                 case 'end':
                   return _context2.stop();
               }
             }
-          }, _callee2, this, [[0, 9]]);
+          }, _callee2, this, [[0, 11]]);
         }));
 
         function deleteCircle(_x3) {

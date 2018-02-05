@@ -257,7 +257,7 @@ module.exports = app => {
      */
     async getUserInfo(userId) {
       try {
-        const user = await User.findById(userId, 'certification nickName headImage description gender age questionCount answerCount job location followerCount followingCount');
+        const user = await User.findById(userId, 'certification nickName headImage description gender age questionCount answerCount circleCount job location followerCount followingCount');
         if (!user) {
           throw new Error('NOT_FOUND');
         }
