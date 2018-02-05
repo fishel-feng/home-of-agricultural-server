@@ -16,7 +16,10 @@ module.exports = function (app) {
     age: Number,
     job: String,
     location: String,
-    description: String,
+    description: {
+      type: String,
+      default: '这个人很懒，什么都没有留下。'
+    },
     collectionCount: {
       type: Number,
       default: 0
