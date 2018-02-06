@@ -9,6 +9,7 @@ class IOController extends Controller {
   async login() {
     const token = this.ctx.args[0];
     const socketId = await this.service.io.login(token);
+    // todo 开发测试使用，记得删除
     console.log(socketId);
   }
 
@@ -16,9 +17,11 @@ class IOController extends Controller {
    * 聊天
    */
   async chat() {
-    const to = this.ctx.args[0];
-    const message = this.ctx.args[1];
-    await this.service.io.chat(to, message);
+    const userToken = this.ctx.args[0];
+    const targetId = this.ctx.args[1];
+    const content = this.ctx.args[2];
+    const type = this.ctx.args[3];
+    await this.service.io.chat(userToken, targetId, content, type);
   }
 
   /**
@@ -73,6 +76,7 @@ class IOController extends Controller {
    * 离开
    */
   async disconnecting() {
+    // todo
     console.log('close');
   }
 }

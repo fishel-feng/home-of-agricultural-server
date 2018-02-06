@@ -3,11 +3,13 @@
 module.exports = app => {
   const SOCKET = 'SOCKET';
   const MESSAGE = 'MESSAGE';
+  const CHAT = 'CHAT';
   const {
     User,
     Question,
     Circle,
     Message,
+    Chat,
   } = app.model;
 
   class IOService extends app.Service {
@@ -24,12 +26,32 @@ module.exports = app => {
       return socketId;
     }
 
-    async chat(to, message) {
-      // todo
-      const userId = '5a16699d5e58179af45247d0';
-      const targetSocketId = await app.redis.get(SOCKET + to);
+    /**
+     * 聊天消息
+     * @param {String} userToken token
+     * @param {String} targetId 发往id
+     * @param {String} content 消息内容
+     * @param {String} type 消息类型
+     */
+    async chat(userToken, targetId, content, type) {
+      const userId = this.getUserId(userToken);
+      const chatId = targetId < userId ? targetId + userId : userId + targetId;
+      await new Chat({
+        chatId,
+        type,
+        content,
+        sender: userId,
+      }).save();
+      const targetSocketId = await app.redis.get(SOCKET + targetId);
       if (targetSocketId) {
-        this.ctx.socket.nsp.sockets[targetSocketId].emit('message', userId, message);
+        this.ctx.socket.nsp.sockets[targetSocketId].emit('chat', {
+          chatId,
+          type,
+          content,
+          sender: userId,
+        });
+      } else {
+        await app.redis.sadd(CHAT + targetId, 'chatId');
       }
     }
 
@@ -188,7 +210,13 @@ module.exports = app => {
       }).save();
       const expertSocketId = await app.redis.get(SOCKET + expertId);
       if (expertSocketId) {
-        this.ctx.socket.nsp.sockets[expertSocketId].emit('message');
+        this.ctx.socket.nsp.sockets[expertSocketId].emit('message', {
+          type: 'invite',
+          userId,
+          nickName: user.nickName,
+          questionId: question._id,
+          title: question.title,
+        });
       } else {
         await app.redis.set(MESSAGE + expertId, '1');
       }

@@ -13,11 +13,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 module.exports = function (app) {
   var SOCKET = 'SOCKET';
   var MESSAGE = 'MESSAGE';
+  var CHAT = 'CHAT';
   var _app$model = app.model,
       User = _app$model.User,
       Question = _app$model.Question,
       Circle = _app$model.Circle,
-      Message = _app$model.Message;
+      Message = _app$model.Message,
+      Chat = _app$model.Chat;
 
   var IOService = function (_app$Service) {
     _inherits(IOService, _app$Service);
@@ -66,28 +68,60 @@ module.exports = function (app) {
 
         return login;
       }()
+
+      /**
+       * 聊天消息
+       * @param {String} userToken token
+       * @param {String} targetId 发往id
+       * @param {String} content 消息内容
+       * @param {String} type 消息类型
+       */
+
     }, {
       key: 'chat',
       value: function () {
-        var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(to, message) {
-          var userId, targetSocketId;
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(userToken, targetId, content, type) {
+          var userId, chatId, targetSocketId;
           return regeneratorRuntime.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  // todo
-                  userId = '5a16699d5e58179af45247d0';
-                  _context2.next = 3;
-                  return app.redis.get(SOCKET + to);
+                  userId = this.getUserId(userToken);
+                  chatId = targetId < userId ? targetId + userId : userId + targetId;
+                  _context2.next = 4;
+                  return new Chat({
+                    chatId: chatId,
+                    type: type,
+                    content: content,
+                    sender: userId
+                  }).save();
 
-                case 3:
+                case 4:
+                  _context2.next = 6;
+                  return app.redis.get(SOCKET + targetId);
+
+                case 6:
                   targetSocketId = _context2.sent;
 
-                  if (targetSocketId) {
-                    this.ctx.socket.nsp.sockets[targetSocketId].emit('message', userId, message);
+                  if (!targetSocketId) {
+                    _context2.next = 11;
+                    break;
                   }
 
-                case 5:
+                  this.ctx.socket.nsp.sockets[targetSocketId].emit('chat', {
+                    chatId: chatId,
+                    type: type,
+                    content: content,
+                    sender: userId
+                  });
+                  _context2.next = 13;
+                  break;
+
+                case 11:
+                  _context2.next = 13;
+                  return app.redis.sadd(CHAT + targetId, 'chatId');
+
+                case 13:
                 case 'end':
                   return _context2.stop();
               }
@@ -95,7 +129,7 @@ module.exports = function (app) {
           }, _callee2, this);
         }));
 
-        function chat(_x2, _x3) {
+        function chat(_x2, _x3, _x4, _x5) {
           return _ref2.apply(this, arguments);
         }
 
@@ -166,7 +200,7 @@ module.exports = function (app) {
           }, _callee3, this);
         }));
 
-        function like(_x4, _x5, _x6) {
+        function like(_x6, _x7, _x8) {
           return _ref3.apply(this, arguments);
         }
 
@@ -283,7 +317,7 @@ module.exports = function (app) {
           }, _callee4, this);
         }));
 
-        function comment(_x7, _x8, _x9) {
+        function comment(_x9, _x10, _x11) {
           return _ref4.apply(this, arguments);
         }
 
@@ -408,7 +442,7 @@ module.exports = function (app) {
                       }, _callee5, _this2);
                     }));
 
-                    return function (_x12) {
+                    return function (_x14) {
                       return _ref6.apply(this, arguments);
                     };
                   }());
@@ -421,7 +455,7 @@ module.exports = function (app) {
           }, _callee6, this);
         }));
 
-        function answer(_x10, _x11) {
+        function answer(_x12, _x13) {
           return _ref5.apply(this, arguments);
         }
 
@@ -477,7 +511,13 @@ module.exports = function (app) {
                     break;
                   }
 
-                  this.ctx.socket.nsp.sockets[expertSocketId].emit('message');
+                  this.ctx.socket.nsp.sockets[expertSocketId].emit('message', {
+                    type: 'invite',
+                    userId: userId,
+                    nickName: user.nickName,
+                    questionId: question._id,
+                    title: question.title
+                  });
                   _context7.next = 18;
                   break;
 
@@ -493,7 +533,7 @@ module.exports = function (app) {
           }, _callee7, this);
         }));
 
-        function invite(_x13, _x14, _x15) {
+        function invite(_x15, _x16, _x17) {
           return _ref7.apply(this, arguments);
         }
 
@@ -561,7 +601,7 @@ module.exports = function (app) {
           }, _callee8, this);
         }));
 
-        function follow(_x16, _x17) {
+        function follow(_x18, _x19) {
           return _ref8.apply(this, arguments);
         }
 

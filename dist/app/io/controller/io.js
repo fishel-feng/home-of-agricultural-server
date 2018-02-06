@@ -42,6 +42,7 @@ var IOController = function (_Controller) {
               case 3:
                 socketId = _context.sent;
 
+                // todo 开发测试使用，记得删除
                 console.log(socketId);
 
               case 5:
@@ -67,17 +68,19 @@ var IOController = function (_Controller) {
     key: 'chat',
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-        var to, message;
+        var userToken, targetId, content, type;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                to = this.ctx.args[0];
-                message = this.ctx.args[1];
-                _context2.next = 4;
-                return this.service.io.chat(to, message);
+                userToken = this.ctx.args[0];
+                targetId = this.ctx.args[1];
+                content = this.ctx.args[2];
+                type = this.ctx.args[3];
+                _context2.next = 6;
+                return this.service.io.chat(userToken, targetId, content, type);
 
-              case 4:
+              case 6:
               case 'end':
                 return _context2.stop();
             }
@@ -272,6 +275,7 @@ var IOController = function (_Controller) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
+                // todo
                 console.log('close');
 
               case 1:
