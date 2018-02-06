@@ -5,6 +5,7 @@ module.exports = app => {
     Question,
     User,
     Tag,
+    Chat,
   } = app.model;
   const PAGE_SIZE = 30;
   class QuestionService extends app.Service {
@@ -285,6 +286,16 @@ module.exports = app => {
       try {
         const res = await Tag.find({});
         return res;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    async getChat(chatId, last) {
+      try {
+        const messages = await Chat.find({chatId});
+        // todo
+        return messages;
       } catch (e) {
         throw new Error('SOMETHING_ERROR');
       }

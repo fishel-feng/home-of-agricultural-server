@@ -154,6 +154,17 @@ class QuestionController extends Controller {
     const tags = await this.service.question.getTags();
     this.ctx.body = tags;
   }
+
+
+  /**
+   * 获取聊天信息
+   */
+  async getChat() {
+    const chatId = this.ctx.params.chatId;
+    const last = this.ctx.params.last;
+    const messages = await this.service.question.getChat(chatId, last);
+    this.ctx.body = messages;
+  }
 }
 
 module.exports = QuestionController;

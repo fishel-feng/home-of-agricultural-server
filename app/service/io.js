@@ -45,7 +45,6 @@ module.exports = app => {
       const targetSocketId = await app.redis.get(SOCKET + targetId);
       if (targetSocketId) {
         this.ctx.socket.nsp.sockets[targetSocketId].emit('chat', {
-          chatId,
           type,
           content,
           sender: userId,

@@ -467,6 +467,44 @@ var QuestionController = function (_Controller) {
 
       return getTags;
     }()
+
+    /**
+     * 获取聊天信息
+     */
+
+  }, {
+    key: 'getChat',
+    value: function () {
+      var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12() {
+        var chatId, last, messages;
+        return regeneratorRuntime.wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                chatId = this.ctx.params.chatId;
+                last = this.ctx.params.last;
+                _context12.next = 4;
+                return this.service.question.getChat(chatId, last);
+
+              case 4:
+                messages = _context12.sent;
+
+                this.ctx.body = messages;
+
+              case 6:
+              case 'end':
+                return _context12.stop();
+            }
+          }
+        }, _callee12, this);
+      }));
+
+      function getChat() {
+        return _ref12.apply(this, arguments);
+      }
+
+      return getChat;
+    }()
   }]);
 
   return QuestionController;

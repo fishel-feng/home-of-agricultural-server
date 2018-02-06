@@ -105,6 +105,8 @@ module.exports = app => {
   app.get('/question/getQuestion/:questionId', app.controller.question.getQuestion);
   // 获取标签
   app.get('/questions/getTags', app.controller.question.getTags);
+  // 分页获取聊天记录
+  app.get('/questions/getChat/:chatId/:last', verifyAccount, app.controller.question.getChat);
 
   // socket.io接口
   // 登录

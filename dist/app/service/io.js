@@ -109,7 +109,6 @@ module.exports = function (app) {
                   }
 
                   this.ctx.socket.nsp.sockets[targetSocketId].emit('chat', {
-                    chatId: chatId,
                     type: type,
                     content: content,
                     sender: userId

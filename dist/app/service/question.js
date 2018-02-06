@@ -14,7 +14,8 @@ module.exports = function (app) {
   var _app$model = app.model,
       Question = _app$model.Question,
       User = _app$model.User,
-      Tag = _app$model.Tag;
+      Tag = _app$model.Tag,
+      Chat = _app$model.Chat;
 
   var PAGE_SIZE = 30;
 
@@ -660,6 +661,42 @@ module.exports = function (app) {
         }
 
         return getTags;
+      }()
+    }, {
+      key: 'getChat',
+      value: function () {
+        var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(chatId, last) {
+          var messages;
+          return regeneratorRuntime.wrap(function _callee12$(_context12) {
+            while (1) {
+              switch (_context12.prev = _context12.next) {
+                case 0:
+                  _context12.prev = 0;
+                  _context12.next = 3;
+                  return Chat.find({ chatId: chatId });
+
+                case 3:
+                  messages = _context12.sent;
+                  return _context12.abrupt('return', messages);
+
+                case 7:
+                  _context12.prev = 7;
+                  _context12.t0 = _context12['catch'](0);
+                  throw new Error('SOMETHING_ERROR');
+
+                case 10:
+                case 'end':
+                  return _context12.stop();
+              }
+            }
+          }, _callee12, this, [[0, 7]]);
+        }));
+
+        function getChat(_x18, _x19) {
+          return _ref12.apply(this, arguments);
+        }
+
+        return getChat;
       }()
     }]);
 
