@@ -269,6 +269,16 @@ class UserController extends Controller {
       circleList: circles,
     };
   }
+
+  /**
+   * 查看我收到的消息
+   */
+  async showMessage() {
+    const messages = await this.service.user.showMessage();
+    this.ctx.body = {
+      messages,
+    };
+  }
 }
 
 module.exports = UserController;

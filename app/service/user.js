@@ -10,6 +10,7 @@ module.exports = app => {
     User,
     Circle,
     Question,
+    Message,
   } = app.model;
   const PAGE_SIZE = 30;
 
@@ -423,6 +424,22 @@ module.exports = app => {
           throw new Error('SOMETHING_ERROR');
         }
         return circles;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    async showMessage() {
+      try {
+        const messages = await Message.find({
+          myId: this.ctx.user._id,
+        }).sort({
+          time: 'desc',
+        });
+        if (!messages) {
+          throw new Error('SOMETHING_ERROR');
+        }
+        return messages;
       } catch (e) {
         throw new Error('SOMETHING_ERROR');
       }

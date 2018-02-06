@@ -42,6 +42,8 @@ module.exports = app => {
   app.get('/user/getAnswers/:last', verifyAccount, app.controller.user.getAnswers);
   // 查看我发表的动态
   app.get('/user/getCircles/:last', verifyAccount, app.controller.user.getCircles);
+  // 查看我的消息
+  app.get('/user/showMessage', verifyAccount, app.controller.user.showMessage);
 
   // ----------新闻模块-----------
   // 查看‘首页’

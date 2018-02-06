@@ -19,7 +19,8 @@ module.exports = function (app) {
   var _app$model = app.model,
       User = _app$model.User,
       Circle = _app$model.Circle,
-      Question = _app$model.Question;
+      Question = _app$model.Question,
+      Message = _app$model.Message;
 
   var PAGE_SIZE = 30;
 
@@ -1040,6 +1041,55 @@ module.exports = function (app) {
         }
 
         return getCircles;
+      }()
+    }, {
+      key: 'showMessage',
+      value: function () {
+        var _ref18 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee18() {
+          var messages;
+          return regeneratorRuntime.wrap(function _callee18$(_context18) {
+            while (1) {
+              switch (_context18.prev = _context18.next) {
+                case 0:
+                  _context18.prev = 0;
+                  _context18.next = 3;
+                  return Message.find({
+                    myId: this.ctx.user._id
+                  }).sort({
+                    time: 'desc'
+                  });
+
+                case 3:
+                  messages = _context18.sent;
+
+                  if (messages) {
+                    _context18.next = 6;
+                    break;
+                  }
+
+                  throw new Error('SOMETHING_ERROR');
+
+                case 6:
+                  return _context18.abrupt('return', messages);
+
+                case 9:
+                  _context18.prev = 9;
+                  _context18.t0 = _context18['catch'](0);
+                  throw new Error('SOMETHING_ERROR');
+
+                case 12:
+                case 'end':
+                  return _context18.stop();
+              }
+            }
+          }, _callee18, this, [[0, 9]]);
+        }));
+
+        function showMessage() {
+          return _ref18.apply(this, arguments);
+        }
+
+        return showMessage;
       }()
 
       /**

@@ -749,6 +749,44 @@ var UserController = function (_Controller) {
 
       return getCircles;
     }()
+
+    /**
+     * 查看我收到的消息
+     */
+
+  }, {
+    key: 'showMessage',
+    value: function () {
+      var _ref18 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee18() {
+        var messages;
+        return regeneratorRuntime.wrap(function _callee18$(_context18) {
+          while (1) {
+            switch (_context18.prev = _context18.next) {
+              case 0:
+                _context18.next = 2;
+                return this.service.user.showMessage();
+
+              case 2:
+                messages = _context18.sent;
+
+                this.ctx.body = {
+                  messages: messages
+                };
+
+              case 4:
+              case 'end':
+                return _context18.stop();
+            }
+          }
+        }, _callee18, this);
+      }));
+
+      function showMessage() {
+        return _ref18.apply(this, arguments);
+      }
+
+      return showMessage;
+    }()
   }]);
 
   return UserController;
