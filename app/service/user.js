@@ -14,6 +14,9 @@ module.exports = app => {
   } = app.model;
   const PAGE_SIZE = 30;
 
+  const RECENT = 'RECENT';
+  const NEW_MESSAGE = 'NEW_MESSAGE';
+
   const NEW_VERIFY_CODE_PREFIX = 'NEW';
   const RESET_VERIFY_CODE_PREFIX = 'RESET';
   const SALT = 'dcv9u89h93ggf78rth3cng02n';
@@ -440,6 +443,36 @@ module.exports = app => {
           throw new Error('SOMETHING_ERROR');
         }
         return messages;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    async getRecent() {
+      try {
+        const res = [];
+        const recent = await app.redis.zrangebyscore(RECENT + this.ctx.user._id, 0, Date.now());
+        if (!recent.length) {
+          return res;
+        }
+        for (const item of recent) {
+          const user = await User.findById(item, 'certification nickName headImage description');
+          const temp = {
+            userId: item,
+            certification: user.certification,
+            nickName: user.nickName,
+            headImage: user.headImage,
+            description: user.description,
+            newMessage: false,
+          };
+          if (await app.redis.sismember(NEW_MESSAGE + this.ctx.user._id, item)) {
+            temp.newMessage = true;
+            res.unshift(temp);
+          } else {
+            res.unshift(temp);
+          }
+        }
+        return res;
       } catch (e) {
         throw new Error('SOMETHING_ERROR');
       }

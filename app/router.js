@@ -44,6 +44,8 @@ module.exports = app => {
   app.get('/user/getCircles/:last', verifyAccount, app.controller.user.getCircles);
   // 查看我的消息
   app.get('/user/showMessage', verifyAccount, app.controller.user.showMessage);
+  // 查看最近联系的人
+  app.get('/user/getRecent', verifyAccount, app.controller.user.getRecent);
 
   // ----------新闻模块-----------
   // 查看‘首页’

@@ -673,11 +673,16 @@ module.exports = function (app) {
                 case 0:
                   _context12.prev = 0;
                   _context12.next = 3;
-                  return Chat.find({ chatId: chatId });
+                  return Chat.find({
+                    chatId: chatId,
+                    time: { $lt: last }
+                  }).sort({
+                    time: 'desc'
+                  }).limit(PAGE_SIZE).exec();
 
                 case 3:
                   messages = _context12.sent;
-                  return _context12.abrupt('return', messages);
+                  return _context12.abrupt('return', messages.reverse());
 
                 case 7:
                   _context12.prev = 7;

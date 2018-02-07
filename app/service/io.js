@@ -4,6 +4,8 @@ module.exports = app => {
   const SOCKET = 'SOCKET';
   const MESSAGE = 'MESSAGE';
   const CHAT = 'CHAT';
+  const RECENT = 'RECENT';
+  const NEW_MESSAGE = 'NEW_MESSAGE';
   const {
     User,
     Question,
@@ -42,6 +44,9 @@ module.exports = app => {
         content,
         sender: userId,
       }).save();
+      await app.redis.zadd(RECENT + targetId, Date.now(), userId);
+      await app.redis.sadd(NEW_MESSAGE + targetId, userId);
+      await app.redis.zadd(RECENT + userId, Date.now(), targetId);
       const targetSocketId = await app.redis.get(SOCKET + targetId);
       if (targetSocketId) {
         this.ctx.socket.nsp.sockets[targetSocketId].emit('chat', {
@@ -165,7 +170,7 @@ module.exports = app => {
       } else {
         await app.redis.rpush(MESSAGE + authorId, '1');
       }
-      attentions.forEach(async id => {
+      for (const id of attentions) {
         await new Message({
           myId: id,
           type: 'attention',
@@ -186,7 +191,7 @@ module.exports = app => {
         } else {
           await app.redis.set(MESSAGE + id, '1');
         }
-      });
+      }
     }
 
     /**

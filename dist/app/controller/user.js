@@ -787,6 +787,44 @@ var UserController = function (_Controller) {
 
       return showMessage;
     }()
+
+    /**
+     * 查看最近联系的人
+     */
+
+  }, {
+    key: 'getRecent',
+    value: function () {
+      var _ref19 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee19() {
+        var recent;
+        return regeneratorRuntime.wrap(function _callee19$(_context19) {
+          while (1) {
+            switch (_context19.prev = _context19.next) {
+              case 0:
+                _context19.next = 2;
+                return this.service.user.getRecent();
+
+              case 2:
+                recent = _context19.sent;
+
+                this.ctx.body = {
+                  recent: recent
+                };
+
+              case 4:
+              case 'end':
+                return _context19.stop();
+            }
+          }
+        }, _callee19, this);
+      }));
+
+      function getRecent() {
+        return _ref19.apply(this, arguments);
+      }
+
+      return getRecent;
+    }()
   }]);
 
   return UserController;

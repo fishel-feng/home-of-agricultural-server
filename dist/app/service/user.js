@@ -24,6 +24,9 @@ module.exports = function (app) {
 
   var PAGE_SIZE = 30;
 
+  var RECENT = 'RECENT';
+  var NEW_MESSAGE = 'NEW_MESSAGE';
+
   var NEW_VERIFY_CODE_PREFIX = 'NEW';
   var RESET_VERIFY_CODE_PREFIX = 'RESET';
   var SALT = 'dcv9u89h93ggf78rth3cng02n';
@@ -1090,6 +1093,136 @@ module.exports = function (app) {
         }
 
         return showMessage;
+      }()
+    }, {
+      key: 'getRecent',
+      value: function () {
+        var _ref19 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee19() {
+          var res, recent, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, item, user, temp;
+
+          return regeneratorRuntime.wrap(function _callee19$(_context19) {
+            while (1) {
+              switch (_context19.prev = _context19.next) {
+                case 0:
+                  _context19.prev = 0;
+                  res = [];
+                  _context19.next = 4;
+                  return app.redis.zrangebyscore(RECENT + this.ctx.user._id, 0, Date.now());
+
+                case 4:
+                  recent = _context19.sent;
+
+                  if (recent.length) {
+                    _context19.next = 7;
+                    break;
+                  }
+
+                  return _context19.abrupt('return', res);
+
+                case 7:
+                  _iteratorNormalCompletion = true;
+                  _didIteratorError = false;
+                  _iteratorError = undefined;
+                  _context19.prev = 10;
+                  _iterator = recent[Symbol.iterator]();
+
+                case 12:
+                  if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+                    _context19.next = 29;
+                    break;
+                  }
+
+                  item = _step.value;
+                  _context19.next = 16;
+                  return User.findById(item, 'certification nickName headImage description');
+
+                case 16:
+                  user = _context19.sent;
+                  temp = {
+                    userId: item,
+                    certification: user.certification,
+                    nickName: user.nickName,
+                    headImage: user.headImage,
+                    description: user.description,
+                    newMessage: false
+                  };
+                  _context19.next = 20;
+                  return app.redis.sismember(NEW_MESSAGE + this.ctx.user._id, item);
+
+                case 20:
+                  if (!_context19.sent) {
+                    _context19.next = 25;
+                    break;
+                  }
+
+                  temp.newMessage = true;
+                  res.unshift(temp);
+                  _context19.next = 26;
+                  break;
+
+                case 25:
+                  res.unshift(temp);
+
+                case 26:
+                  _iteratorNormalCompletion = true;
+                  _context19.next = 12;
+                  break;
+
+                case 29:
+                  _context19.next = 35;
+                  break;
+
+                case 31:
+                  _context19.prev = 31;
+                  _context19.t0 = _context19['catch'](10);
+                  _didIteratorError = true;
+                  _iteratorError = _context19.t0;
+
+                case 35:
+                  _context19.prev = 35;
+                  _context19.prev = 36;
+
+                  if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                  }
+
+                case 38:
+                  _context19.prev = 38;
+
+                  if (!_didIteratorError) {
+                    _context19.next = 41;
+                    break;
+                  }
+
+                  throw _iteratorError;
+
+                case 41:
+                  return _context19.finish(38);
+
+                case 42:
+                  return _context19.finish(35);
+
+                case 43:
+                  return _context19.abrupt('return', res);
+
+                case 46:
+                  _context19.prev = 46;
+                  _context19.t1 = _context19['catch'](0);
+                  throw new Error('SOMETHING_ERROR');
+
+                case 49:
+                case 'end':
+                  return _context19.stop();
+              }
+            }
+          }, _callee19, this, [[0, 46], [10, 31, 35, 43], [36,, 38, 42]]);
+        }));
+
+        function getRecent() {
+          return _ref19.apply(this, arguments);
+        }
+
+        return getRecent;
       }()
 
       /**

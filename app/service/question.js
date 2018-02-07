@@ -293,9 +293,14 @@ module.exports = app => {
 
     async getChat(chatId, last) {
       try {
-        const messages = await Chat.find({chatId});
-        // todo
-        return messages;
+        const messages = await Chat.find({
+          chatId,
+          time: { $lt: last },
+        }).sort({
+          time: 'desc',
+        }).limit(PAGE_SIZE)
+          .exec();
+        return messages.reverse();
       } catch (e) {
         throw new Error('SOMETHING_ERROR');
       }

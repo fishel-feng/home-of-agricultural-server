@@ -279,6 +279,16 @@ class UserController extends Controller {
       messages,
     };
   }
+
+  /**
+   * 查看最近联系的人
+   */
+  async getRecent() {
+    const recent = await this.service.user.getRecent();
+    this.ctx.body = {
+      recent,
+    };
+  }
 }
 
 module.exports = UserController;
