@@ -521,11 +521,11 @@ module.exports = function (app) {
                 case 0:
                   _context8.prev = 0;
                   _context8.next = 3;
-                  return User.update({
-                    _id: this.ctx.user._id
-                  }, {
+                  return User.findByIdAndUpdate(this.ctx.user._id, {
                     $pull: {
-                      'followings.userId': targetId
+                      followings: {
+                        userId: targetId
+                      }
                     },
                     $inc: {
                       followingCount: -1
@@ -534,11 +534,11 @@ module.exports = function (app) {
 
                 case 3:
                   _context8.next = 5;
-                  return User.update({
-                    _id: targetId
-                  }, {
+                  return User.findByIdAndUpdate(targetId, {
                     $pull: {
-                      'followers.userId': this.ctx.user._id
+                      followers: {
+                        userId: this.ctx.user._id
+                      }
                     },
                     $inc: {
                       followerCount: -1

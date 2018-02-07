@@ -228,21 +228,21 @@ module.exports = app => {
      */
     async cancelFollow(targetId) {
       try {
-        await User.update({
-          _id: this.ctx.user._id,
-        }, {
+        await User.findByIdAndUpdate(this.ctx.user._id, {
           $pull: {
-            'followings.userId': targetId,
+            followings: {
+              userId: targetId,
+            },
           },
           $inc: {
             followingCount: -1,
           },
         });
-        await User.update({
-          _id: targetId,
-        }, {
+        await User.findByIdAndUpdate(targetId, {
           $pull: {
-            'followers.userId': this.ctx.user._id,
+            followers: {
+              userId: this.ctx.user._id,
+            },
           },
           $inc: {
             followerCount: -1,
