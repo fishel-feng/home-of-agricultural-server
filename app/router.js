@@ -26,7 +26,7 @@ module.exports = app => {
   app.post('/user/giveFollow', verifyAccount, app.controller.user.giveFollow);
   // 取消关注用户
   app.post('/user/cancelFollow', verifyAccount, app.controller.user.cancelFollow);
-  // 查看‘我的’
+  // 初始化个人信息
   app.get('/user/getUserIndex', verifyAccount, app.controller.user.getUserIndex);
   // 查看收藏文章列表
   app.get('/user/getCollections', verifyAccount, app.controller.user.getCollections);
@@ -105,16 +105,20 @@ module.exports = app => {
   app.get('/question/getAllQuestionList/:last', app.controller.question.getAllQuestionList);
   // 查看问题详情
   app.get('/question/getQuestion/:questionId', app.controller.question.getQuestion);
-  // 获取标签
-  app.get('/questions/getTags', app.controller.question.getTags);
+  // 获取全部标签
+  app.get('/question/getTags', app.controller.question.getTags);
+  // 设置tag
+  app.post('/question/saveTags', verifyAccount, app.controller.question.saveTags);
   // 分页获取聊天记录
-  app.get('/questions/getChat/:chatId/:last', verifyAccount, app.controller.question.getChat);
+  app.get('/question/getChat/:chatId/:last', verifyAccount, app.controller.question.getChat);
 
   // socket.io接口
   // 登录
   app.io.route('login', app.io.controller.io.login);
   // 聊天
   app.io.route('chat', app.io.controller.io.chat);
+  // 消息已读
+  app.io.route('read', app.io.controller.io.read);
   // 点赞
   app.io.route('like', app.io.controller.io.like);
   // 评论
@@ -125,8 +129,6 @@ module.exports = app => {
   app.io.route('invite', app.io.controller.io.invite);
   // 关注用户
   app.io.route('follow', app.io.controller.io.follow);
-  // 离开
-  app.io.route('disconnecting', app.io.controller.io.disconnecting);
 
   // *************管理后台接口************
   // app.post('/admin/login', app.controller.admin.login);

@@ -469,27 +469,29 @@ var QuestionController = function (_Controller) {
     }()
 
     /**
-     * 获取聊天信息
+     * 设置tag
      */
 
   }, {
-    key: 'getChat',
+    key: 'saveTags',
     value: function () {
       var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12() {
-        var chatId, last, messages;
+        var tags, status;
         return regeneratorRuntime.wrap(function _callee12$(_context12) {
           while (1) {
             switch (_context12.prev = _context12.next) {
               case 0:
-                chatId = this.ctx.params.chatId;
-                last = this.ctx.params.last;
+                this.ctx.validate({
+                  tags: 'array'
+                });
+                tags = this.ctx.request.body.tags;
                 _context12.next = 4;
-                return this.service.question.getChat(chatId, last);
+                return this.service.question.saveTags(tags);
 
               case 4:
-                messages = _context12.sent;
+                status = _context12.sent;
 
-                this.ctx.body = messages;
+                this.ctx.body = status;
 
               case 6:
               case 'end':
@@ -499,8 +501,46 @@ var QuestionController = function (_Controller) {
         }, _callee12, this);
       }));
 
-      function getChat() {
+      function saveTags() {
         return _ref12.apply(this, arguments);
+      }
+
+      return saveTags;
+    }()
+
+    /**
+     * 获取聊天信息
+     */
+
+  }, {
+    key: 'getChat',
+    value: function () {
+      var _ref13 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee13() {
+        var chatId, last, messages;
+        return regeneratorRuntime.wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                chatId = this.ctx.params.chatId;
+                last = this.ctx.params.last;
+                _context13.next = 4;
+                return this.service.question.getChat(chatId, last);
+
+              case 4:
+                messages = _context13.sent;
+
+                this.ctx.body = messages;
+
+              case 6:
+              case 'end':
+                return _context13.stop();
+            }
+          }
+        }, _callee13, this);
+      }));
+
+      function getChat() {
+        return _ref13.apply(this, arguments);
       }
 
       return getChat;

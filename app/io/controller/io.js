@@ -8,9 +8,7 @@ class IOController extends Controller {
    */
   async login() {
     const token = this.ctx.args[0];
-    const socketId = await this.service.io.login(token);
-    // todo 开发测试使用，记得删除
-    console.log(socketId);
+    await this.service.io.login(token);
   }
 
   /**
@@ -22,6 +20,15 @@ class IOController extends Controller {
     const content = this.ctx.args[2];
     const type = this.ctx.args[3];
     await this.service.io.chat(userToken, targetId, content, type);
+  }
+
+  /**
+   * 消息已读
+   */
+  async read() {
+    const userToken = this.ctx.args[0];
+    const targetId = this.ctx.args[1];
+    await this.service.io.read(userToken, targetId);
   }
 
   /**
@@ -70,14 +77,6 @@ class IOController extends Controller {
     const userToken = this.ctx.args[0];
     const targetId = this.ctx.args[1];
     await this.service.io.follow(userToken, targetId);
-  }
-
-  /**
-   * 离开
-   */
-  async disconnecting() {
-    // todo
-    console.log('close');
   }
 }
 

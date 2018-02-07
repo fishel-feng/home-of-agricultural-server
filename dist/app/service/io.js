@@ -117,7 +117,7 @@ module.exports = function (app) {
                 case 12:
                   targetSocketId = _context2.sent;
 
-                  if (!targetSocketId) {
+                  if (!(targetSocketId && this.ctx.socket.nsp.sockets[targetSocketId])) {
                     _context2.next = 17;
                     break;
                   }
@@ -150,6 +150,40 @@ module.exports = function (app) {
       }()
 
       /**
+       * 消息已读
+       * @param {String} userToken token
+       * @param {String} targetId 消息作者
+       */
+
+    }, {
+      key: 'read',
+      value: function () {
+        var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(userToken, targetId) {
+          var userId;
+          return regeneratorRuntime.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  userId = this.getUserId(userToken);
+                  _context3.next = 3;
+                  return app.redis.srem(NEW_MESSAGE + userId, targetId);
+
+                case 3:
+                case 'end':
+                  return _context3.stop();
+              }
+            }
+          }, _callee3, this);
+        }));
+
+        function read(_x6, _x7) {
+          return _ref3.apply(this, arguments);
+        }
+
+        return read;
+      }()
+
+      /**
        * 点赞
        * @param {String} userToken token
        * @param {String} targetId 被赞的人id
@@ -159,19 +193,19 @@ module.exports = function (app) {
     }, {
       key: 'like',
       value: function () {
-        var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(userToken, targetId, circleId) {
+        var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(userToken, targetId, circleId) {
           var userId, user, targetSocketId;
-          return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          return regeneratorRuntime.wrap(function _callee4$(_context4) {
             while (1) {
-              switch (_context3.prev = _context3.next) {
+              switch (_context4.prev = _context4.next) {
                 case 0:
                   userId = this.getUserId(userToken);
-                  _context3.next = 3;
+                  _context4.next = 3;
                   return User.findById(userId);
 
                 case 3:
-                  user = _context3.sent;
-                  _context3.next = 6;
+                  user = _context4.sent;
+                  _context4.next = 6;
                   return new Message({
                     myId: targetId,
                     type: 'like',
@@ -181,14 +215,14 @@ module.exports = function (app) {
                   }).save();
 
                 case 6:
-                  _context3.next = 8;
+                  _context4.next = 8;
                   return app.redis.get(SOCKET + targetId);
 
                 case 8:
-                  targetSocketId = _context3.sent;
+                  targetSocketId = _context4.sent;
 
-                  if (!targetSocketId) {
-                    _context3.next = 13;
+                  if (!(targetSocketId && this.ctx.socket.nsp.sockets[targetSocketId])) {
+                    _context4.next = 13;
                     break;
                   }
 
@@ -198,23 +232,23 @@ module.exports = function (app) {
                     nickName: user.nickName,
                     circleId: circleId
                   });
-                  _context3.next = 15;
+                  _context4.next = 15;
                   break;
 
                 case 13:
-                  _context3.next = 15;
+                  _context4.next = 15;
                   return app.redis.set(MESSAGE + targetId, '1');
 
                 case 15:
                 case 'end':
-                  return _context3.stop();
+                  return _context4.stop();
               }
             }
-          }, _callee3, this);
+          }, _callee4, this);
         }));
 
-        function like(_x6, _x7, _x8) {
-          return _ref3.apply(this, arguments);
+        function like(_x8, _x9, _x10) {
+          return _ref4.apply(this, arguments);
         }
 
         return like;
@@ -230,25 +264,25 @@ module.exports = function (app) {
     }, {
       key: 'comment',
       value: function () {
-        var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(userToken, circleId, targetId) {
+        var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(userToken, circleId, targetId) {
           var userId, user, circle, authorId, authorSocketId, targetSocketId;
-          return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          return regeneratorRuntime.wrap(function _callee5$(_context5) {
             while (1) {
-              switch (_context4.prev = _context4.next) {
+              switch (_context5.prev = _context5.next) {
                 case 0:
                   userId = this.getUserId(userToken);
-                  _context4.next = 3;
+                  _context5.next = 3;
                   return User.findById(userId);
 
                 case 3:
-                  user = _context4.sent;
-                  _context4.next = 6;
+                  user = _context5.sent;
+                  _context5.next = 6;
                   return Circle.findById(circleId);
 
                 case 6:
-                  circle = _context4.sent;
+                  circle = _context5.sent;
                   authorId = circle.userId;
-                  _context4.next = 10;
+                  _context5.next = 10;
                   return new Message({
                     myId: authorId,
                     type: 'comment',
@@ -258,14 +292,14 @@ module.exports = function (app) {
                   }).save();
 
                 case 10:
-                  _context4.next = 12;
+                  _context5.next = 12;
                   return app.redis.get(SOCKET + authorId);
 
                 case 12:
-                  authorSocketId = _context4.sent;
+                  authorSocketId = _context5.sent;
 
-                  if (!authorSocketId) {
-                    _context4.next = 17;
+                  if (!(authorSocketId && this.ctx.socket.nsp.sockets[authorSocketId])) {
+                    _context5.next = 17;
                     break;
                   }
 
@@ -275,20 +309,20 @@ module.exports = function (app) {
                     nickName: user.nickName,
                     circleId: circleId
                   });
-                  _context4.next = 19;
+                  _context5.next = 19;
                   break;
 
                 case 17:
-                  _context4.next = 19;
+                  _context5.next = 19;
                   return app.redis.set(MESSAGE + authorId, '1');
 
                 case 19:
                   if (!targetId) {
-                    _context4.next = 31;
+                    _context5.next = 31;
                     break;
                   }
 
-                  _context4.next = 22;
+                  _context5.next = 22;
                   return new Message({
                     myId: targetId,
                     type: 'reply',
@@ -298,14 +332,14 @@ module.exports = function (app) {
                   }).save();
 
                 case 22:
-                  _context4.next = 24;
+                  _context5.next = 24;
                   return app.redis.get(SOCKET + targetId);
 
                 case 24:
-                  targetSocketId = _context4.sent;
+                  targetSocketId = _context5.sent;
 
-                  if (!targetSocketId) {
-                    _context4.next = 29;
+                  if (!(targetSocketId && this.ctx.socket.nsp.sockets[targetSocketId])) {
+                    _context5.next = 29;
                     break;
                   }
 
@@ -315,23 +349,23 @@ module.exports = function (app) {
                     nickName: user.nickName,
                     circleId: circleId
                   });
-                  _context4.next = 31;
+                  _context5.next = 31;
                   break;
 
                 case 29:
-                  _context4.next = 31;
+                  _context5.next = 31;
                   return app.redis.set(MESSAGE + targetId, '1');
 
                 case 31:
                 case 'end':
-                  return _context4.stop();
+                  return _context5.stop();
               }
             }
-          }, _callee4, this);
+          }, _callee5, this);
         }));
 
-        function comment(_x9, _x10, _x11) {
-          return _ref4.apply(this, arguments);
+        function comment(_x11, _x12, _x13) {
+          return _ref5.apply(this, arguments);
         }
 
         return comment;
@@ -346,178 +380,9 @@ module.exports = function (app) {
     }, {
       key: 'answer',
       value: function () {
-        var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(userToken, questionId) {
+        var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(userToken, questionId) {
           var userId, user, question, attentions, authorId, authorSocketId, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, id, socketId;
 
-          return regeneratorRuntime.wrap(function _callee5$(_context5) {
-            while (1) {
-              switch (_context5.prev = _context5.next) {
-                case 0:
-                  userId = this.getUserId(userToken);
-                  _context5.next = 3;
-                  return User.findById(userId);
-
-                case 3:
-                  user = _context5.sent;
-                  _context5.next = 6;
-                  return Question.findById(questionId);
-
-                case 6:
-                  question = _context5.sent;
-                  attentions = question.attentions;
-                  authorId = question.userId;
-                  _context5.next = 11;
-                  return new Message({
-                    myId: authorId,
-                    type: 'answer',
-                    userId: userId,
-                    nickName: user.nickName,
-                    questionId: question._id,
-                    title: question.title
-                  }).save();
-
-                case 11:
-                  _context5.next = 13;
-                  return app.redis.get(SOCKET + authorId);
-
-                case 13:
-                  authorSocketId = _context5.sent;
-
-                  if (!authorSocketId) {
-                    _context5.next = 18;
-                    break;
-                  }
-
-                  this.ctx.socket.nsp.sockets[authorSocketId].emit('message', {
-                    type: 'answer',
-                    userId: userId,
-                    nickName: user.nickName,
-                    questionId: question._id,
-                    title: question.title
-                  });
-                  _context5.next = 20;
-                  break;
-
-                case 18:
-                  _context5.next = 20;
-                  return app.redis.rpush(MESSAGE + authorId, '1');
-
-                case 20:
-                  _iteratorNormalCompletion = true;
-                  _didIteratorError = false;
-                  _iteratorError = undefined;
-                  _context5.prev = 23;
-                  _iterator = attentions[Symbol.iterator]();
-
-                case 25:
-                  if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-                    _context5.next = 41;
-                    break;
-                  }
-
-                  id = _step.value;
-                  _context5.next = 29;
-                  return new Message({
-                    myId: id,
-                    type: 'attention',
-                    userId: userId,
-                    nickName: user.nickName,
-                    questionId: question._id,
-                    title: question.title
-                  }).save();
-
-                case 29:
-                  _context5.next = 31;
-                  return app.redis.get(SOCKET + id);
-
-                case 31:
-                  socketId = _context5.sent;
-
-                  if (!socketId) {
-                    _context5.next = 36;
-                    break;
-                  }
-
-                  this.ctx.socket.nsp.sockets[socketId].emit('message', {
-                    type: 'attention',
-                    userId: userId,
-                    nickName: user.nickName,
-                    questionId: question._id,
-                    title: question.title
-                  });
-                  _context5.next = 38;
-                  break;
-
-                case 36:
-                  _context5.next = 38;
-                  return app.redis.set(MESSAGE + id, '1');
-
-                case 38:
-                  _iteratorNormalCompletion = true;
-                  _context5.next = 25;
-                  break;
-
-                case 41:
-                  _context5.next = 47;
-                  break;
-
-                case 43:
-                  _context5.prev = 43;
-                  _context5.t0 = _context5['catch'](23);
-                  _didIteratorError = true;
-                  _iteratorError = _context5.t0;
-
-                case 47:
-                  _context5.prev = 47;
-                  _context5.prev = 48;
-
-                  if (!_iteratorNormalCompletion && _iterator.return) {
-                    _iterator.return();
-                  }
-
-                case 50:
-                  _context5.prev = 50;
-
-                  if (!_didIteratorError) {
-                    _context5.next = 53;
-                    break;
-                  }
-
-                  throw _iteratorError;
-
-                case 53:
-                  return _context5.finish(50);
-
-                case 54:
-                  return _context5.finish(47);
-
-                case 55:
-                case 'end':
-                  return _context5.stop();
-              }
-            }
-          }, _callee5, this, [[23, 43, 47, 55], [48,, 50, 54]]);
-        }));
-
-        function answer(_x12, _x13) {
-          return _ref5.apply(this, arguments);
-        }
-
-        return answer;
-      }()
-
-      /**
-       * 邀请回答
-       * @param {String} userToken token
-       * @param {String} expertId 专家id
-       * @param {String} questionId 问题id
-       */
-
-    }, {
-      key: 'invite',
-      value: function () {
-        var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(userToken, expertId, questionId) {
-          var userId, user, question, expertSocketId;
           return regeneratorRuntime.wrap(function _callee6$(_context6) {
             while (1) {
               switch (_context6.prev = _context6.next) {
@@ -533,7 +398,176 @@ module.exports = function (app) {
 
                 case 6:
                   question = _context6.sent;
-                  _context6.next = 9;
+                  attentions = question.attentions;
+                  authorId = question.userId;
+                  _context6.next = 11;
+                  return new Message({
+                    myId: authorId,
+                    type: 'answer',
+                    userId: userId,
+                    nickName: user.nickName,
+                    questionId: question._id,
+                    title: question.title
+                  }).save();
+
+                case 11:
+                  _context6.next = 13;
+                  return app.redis.get(SOCKET + authorId);
+
+                case 13:
+                  authorSocketId = _context6.sent;
+
+                  if (!(authorSocketId && this.ctx.socket.nsp.sockets[authorSocketId])) {
+                    _context6.next = 18;
+                    break;
+                  }
+
+                  this.ctx.socket.nsp.sockets[authorSocketId].emit('message', {
+                    type: 'answer',
+                    userId: userId,
+                    nickName: user.nickName,
+                    questionId: question._id,
+                    title: question.title
+                  });
+                  _context6.next = 20;
+                  break;
+
+                case 18:
+                  _context6.next = 20;
+                  return app.redis.rpush(MESSAGE + authorId, '1');
+
+                case 20:
+                  _iteratorNormalCompletion = true;
+                  _didIteratorError = false;
+                  _iteratorError = undefined;
+                  _context6.prev = 23;
+                  _iterator = attentions[Symbol.iterator]();
+
+                case 25:
+                  if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+                    _context6.next = 41;
+                    break;
+                  }
+
+                  id = _step.value;
+                  _context6.next = 29;
+                  return new Message({
+                    myId: id,
+                    type: 'attention',
+                    userId: userId,
+                    nickName: user.nickName,
+                    questionId: question._id,
+                    title: question.title
+                  }).save();
+
+                case 29:
+                  _context6.next = 31;
+                  return app.redis.get(SOCKET + id);
+
+                case 31:
+                  socketId = _context6.sent;
+
+                  if (!(socketId && this.ctx.socket.nsp.sockets[socketId])) {
+                    _context6.next = 36;
+                    break;
+                  }
+
+                  this.ctx.socket.nsp.sockets[socketId].emit('message', {
+                    type: 'attention',
+                    userId: userId,
+                    nickName: user.nickName,
+                    questionId: question._id,
+                    title: question.title
+                  });
+                  _context6.next = 38;
+                  break;
+
+                case 36:
+                  _context6.next = 38;
+                  return app.redis.set(MESSAGE + id, '1');
+
+                case 38:
+                  _iteratorNormalCompletion = true;
+                  _context6.next = 25;
+                  break;
+
+                case 41:
+                  _context6.next = 47;
+                  break;
+
+                case 43:
+                  _context6.prev = 43;
+                  _context6.t0 = _context6['catch'](23);
+                  _didIteratorError = true;
+                  _iteratorError = _context6.t0;
+
+                case 47:
+                  _context6.prev = 47;
+                  _context6.prev = 48;
+
+                  if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                  }
+
+                case 50:
+                  _context6.prev = 50;
+
+                  if (!_didIteratorError) {
+                    _context6.next = 53;
+                    break;
+                  }
+
+                  throw _iteratorError;
+
+                case 53:
+                  return _context6.finish(50);
+
+                case 54:
+                  return _context6.finish(47);
+
+                case 55:
+                case 'end':
+                  return _context6.stop();
+              }
+            }
+          }, _callee6, this, [[23, 43, 47, 55], [48,, 50, 54]]);
+        }));
+
+        function answer(_x14, _x15) {
+          return _ref6.apply(this, arguments);
+        }
+
+        return answer;
+      }()
+
+      /**
+       * 邀请回答
+       * @param {String} userToken token
+       * @param {String} expertId 专家id
+       * @param {String} questionId 问题id
+       */
+
+    }, {
+      key: 'invite',
+      value: function () {
+        var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(userToken, expertId, questionId) {
+          var userId, user, question, expertSocketId;
+          return regeneratorRuntime.wrap(function _callee7$(_context7) {
+            while (1) {
+              switch (_context7.prev = _context7.next) {
+                case 0:
+                  userId = this.getUserId(userToken);
+                  _context7.next = 3;
+                  return User.findById(userId);
+
+                case 3:
+                  user = _context7.sent;
+                  _context7.next = 6;
+                  return Question.findById(questionId);
+
+                case 6:
+                  question = _context7.sent;
+                  _context7.next = 9;
                   return new Message({
                     myId: expertId,
                     type: 'invite',
@@ -544,14 +578,14 @@ module.exports = function (app) {
                   }).save();
 
                 case 9:
-                  _context6.next = 11;
+                  _context7.next = 11;
                   return app.redis.get(SOCKET + expertId);
 
                 case 11:
-                  expertSocketId = _context6.sent;
+                  expertSocketId = _context7.sent;
 
-                  if (!expertSocketId) {
-                    _context6.next = 16;
+                  if (!(expertSocketId && this.ctx.socket.nsp.sockets[expertSocketId])) {
+                    _context7.next = 16;
                     break;
                   }
 
@@ -562,23 +596,23 @@ module.exports = function (app) {
                     questionId: question._id,
                     title: question.title
                   });
-                  _context6.next = 18;
+                  _context7.next = 18;
                   break;
 
                 case 16:
-                  _context6.next = 18;
+                  _context7.next = 18;
                   return app.redis.set(MESSAGE + expertId, '1');
 
                 case 18:
                 case 'end':
-                  return _context6.stop();
+                  return _context7.stop();
               }
             }
-          }, _callee6, this);
+          }, _callee7, this);
         }));
 
-        function invite(_x14, _x15, _x16) {
-          return _ref6.apply(this, arguments);
+        function invite(_x16, _x17, _x18) {
+          return _ref7.apply(this, arguments);
         }
 
         return invite;
@@ -593,19 +627,19 @@ module.exports = function (app) {
     }, {
       key: 'follow',
       value: function () {
-        var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(userToken, targetId) {
+        var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(userToken, targetId) {
           var userId, user, targetSocketId;
-          return regeneratorRuntime.wrap(function _callee7$(_context7) {
+          return regeneratorRuntime.wrap(function _callee8$(_context8) {
             while (1) {
-              switch (_context7.prev = _context7.next) {
+              switch (_context8.prev = _context8.next) {
                 case 0:
                   userId = this.getUserId(userToken);
-                  _context7.next = 3;
+                  _context8.next = 3;
                   return User.findById(userId);
 
                 case 3:
-                  user = _context7.sent;
-                  _context7.next = 6;
+                  user = _context8.sent;
+                  _context8.next = 6;
                   return new Message({
                     myId: targetId,
                     type: 'follow',
@@ -614,14 +648,14 @@ module.exports = function (app) {
                   }).save();
 
                 case 6:
-                  _context7.next = 8;
+                  _context8.next = 8;
                   return app.redis.get(SOCKET + targetId);
 
                 case 8:
-                  targetSocketId = _context7.sent;
+                  targetSocketId = _context8.sent;
 
-                  if (!targetSocketId) {
-                    _context7.next = 13;
+                  if (!(targetSocketId && this.ctx.socket.nsp.sockets[targetSocketId])) {
+                    _context8.next = 13;
                     break;
                   }
 
@@ -630,23 +664,23 @@ module.exports = function (app) {
                     userId: userId,
                     nickName: user.nickName
                   });
-                  _context7.next = 15;
+                  _context8.next = 15;
                   break;
 
                 case 13:
-                  _context7.next = 15;
+                  _context8.next = 15;
                   return app.redis.set(MESSAGE + targetId, '1');
 
                 case 15:
                 case 'end':
-                  return _context7.stop();
+                  return _context8.stop();
               }
             }
-          }, _callee7, this);
+          }, _callee8, this);
         }));
 
-        function follow(_x17, _x18) {
-          return _ref7.apply(this, arguments);
+        function follow(_x19, _x20) {
+          return _ref8.apply(this, arguments);
         }
 
         return follow;

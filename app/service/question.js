@@ -291,6 +291,17 @@ module.exports = app => {
       }
     }
 
+    async saveTags(tags) {
+      try {
+        await User.findByIdAndUpdate(this.ctx.user._id, {
+          tags,
+        });
+        return 'success';
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
     async getChat(chatId, last) {
       try {
         const messages = await Chat.find({

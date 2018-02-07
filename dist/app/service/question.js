@@ -663,16 +663,52 @@ module.exports = function (app) {
         return getTags;
       }()
     }, {
-      key: 'getChat',
+      key: 'saveTags',
       value: function () {
-        var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(chatId, last) {
-          var messages;
+        var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(tags) {
           return regeneratorRuntime.wrap(function _callee12$(_context12) {
             while (1) {
               switch (_context12.prev = _context12.next) {
                 case 0:
                   _context12.prev = 0;
                   _context12.next = 3;
+                  return User.findByIdAndUpdate(this.ctx.user._id, {
+                    tags: tags
+                  });
+
+                case 3:
+                  return _context12.abrupt('return', 'success');
+
+                case 6:
+                  _context12.prev = 6;
+                  _context12.t0 = _context12['catch'](0);
+                  throw new Error('SOMETHING_ERROR');
+
+                case 9:
+                case 'end':
+                  return _context12.stop();
+              }
+            }
+          }, _callee12, this, [[0, 6]]);
+        }));
+
+        function saveTags(_x18) {
+          return _ref12.apply(this, arguments);
+        }
+
+        return saveTags;
+      }()
+    }, {
+      key: 'getChat',
+      value: function () {
+        var _ref13 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee13(chatId, last) {
+          var messages;
+          return regeneratorRuntime.wrap(function _callee13$(_context13) {
+            while (1) {
+              switch (_context13.prev = _context13.next) {
+                case 0:
+                  _context13.prev = 0;
+                  _context13.next = 3;
                   return Chat.find({
                     chatId: chatId,
                     time: { $lt: last }
@@ -681,24 +717,24 @@ module.exports = function (app) {
                   }).limit(PAGE_SIZE).exec();
 
                 case 3:
-                  messages = _context12.sent;
-                  return _context12.abrupt('return', messages.reverse());
+                  messages = _context13.sent;
+                  return _context13.abrupt('return', messages.reverse());
 
                 case 7:
-                  _context12.prev = 7;
-                  _context12.t0 = _context12['catch'](0);
+                  _context13.prev = 7;
+                  _context13.t0 = _context13['catch'](0);
                   throw new Error('SOMETHING_ERROR');
 
                 case 10:
                 case 'end':
-                  return _context12.stop();
+                  return _context13.stop();
               }
             }
-          }, _callee12, this, [[0, 7]]);
+          }, _callee13, this, [[0, 7]]);
         }));
 
-        function getChat(_x18, _x19) {
-          return _ref12.apply(this, arguments);
+        function getChat(_x19, _x20) {
+          return _ref13.apply(this, arguments);
         }
 
         return getChat;

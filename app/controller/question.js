@@ -155,6 +155,19 @@ class QuestionController extends Controller {
     this.ctx.body = tags;
   }
 
+  /**
+   * 设置tag
+   */
+  async saveTags() {
+    this.ctx.validate({
+      tags: 'array',
+    });
+    const {
+      tags,
+    } = this.ctx.request.body;
+    const status = await this.service.question.saveTags(tags);
+    this.ctx.body = status;
+  }
 
   /**
    * 获取聊天信息
