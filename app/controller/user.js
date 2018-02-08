@@ -1,6 +1,8 @@
 'use strict';
+
 const Controller = require('egg').Controller;
-class UserController extends Controller {
+
+module.exports = class UserController extends Controller {
 
   /**
    * 用户注册
@@ -281,6 +283,4 @@ class UserController extends Controller {
       recent,
     };
   }
-}
-
-module.exports = UserController;
+};

@@ -12,7 +12,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var Controller = require('egg').Controller;
 
-var UserController = function (_Controller) {
+module.exports = function (_Controller) {
   _inherits(UserController, _Controller);
 
   function UserController() {
@@ -788,6 +788,4 @@ var UserController = function (_Controller) {
 
   return UserController;
 }(Controller);
-
-module.exports = UserController;
 //# sourceMappingURL=user.js.map

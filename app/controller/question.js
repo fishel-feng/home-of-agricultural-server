@@ -1,6 +1,8 @@
 'use strict';
+
 const Controller = require('egg').Controller;
-class QuestionController extends Controller {
+
+module.exports = class QuestionController extends Controller {
 
   /**
    * 新建问题
@@ -178,6 +180,4 @@ class QuestionController extends Controller {
     const messages = await this.service.question.getChat(chatId, last);
     this.ctx.body = messages;
   }
-}
-
-module.exports = QuestionController;
+};

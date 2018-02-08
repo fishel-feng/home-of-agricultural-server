@@ -12,7 +12,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var Controller = require('egg').Controller;
 
-var UploadController = function (_Controller) {
+module.exports = function (_Controller) {
   _inherits(UploadController, _Controller);
 
   function UploadController() {
@@ -60,6 +60,4 @@ var UploadController = function (_Controller) {
 
   return UploadController;
 }(Controller);
-
-module.exports = UploadController;
 //# sourceMappingURL=upload.js.map

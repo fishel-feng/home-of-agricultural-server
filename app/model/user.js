@@ -11,7 +11,10 @@ module.exports = app => {
     },
     tags: Array,
     nickName: String,
-    headImage: String,
+    headImage: {
+      type: String,
+      default: 'default.png',
+    },
     gender: String,
     age: Number,
     job: String,

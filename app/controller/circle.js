@@ -2,7 +2,7 @@
 
 const Controller = require('egg').Controller;
 
-class CircleController extends Controller {
+module.exports = class CircleController extends Controller {
 
   /**
    * 发表动态
@@ -141,6 +141,4 @@ class CircleController extends Controller {
     const result = await this.service.circle.getLikeList(circleId);
     this.ctx.body = result;
   }
-}
-
-module.exports = CircleController;
+};

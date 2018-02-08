@@ -1,7 +1,8 @@
 'use strict';
 
 const Controller = require('egg').Controller;
-class NewsController extends Controller {
+
+module.exports = class NewsController extends Controller {
 
   /**
    * 获取新闻首页
@@ -63,6 +64,4 @@ class NewsController extends Controller {
       status,
     };
   }
-}
-
-module.exports = NewsController;
+};

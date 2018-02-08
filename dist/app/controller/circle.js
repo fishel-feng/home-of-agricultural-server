@@ -12,7 +12,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var Controller = require('egg').Controller;
 
-var CircleController = function (_Controller) {
+module.exports = function (_Controller) {
   _inherits(CircleController, _Controller);
 
   function CircleController() {
@@ -430,6 +430,4 @@ var CircleController = function (_Controller) {
 
   return CircleController;
 }(Controller);
-
-module.exports = CircleController;
 //# sourceMappingURL=circle.js.map
