@@ -333,13 +333,14 @@ module.exports = function (app) {
        * @param {String} job 职业
        * @param {String} location 地区
        * @param {String} description 个人简介
+       * @param {String} description 头像
        * @return {String} 成功状态
        */
 
     }, {
       key: 'modifyUserInfo',
       value: function () {
-        var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(nickName, gender, age, job, location, description) {
+        var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(nickName, gender, age, job, location, description, headImage) {
           return regeneratorRuntime.wrap(function _callee5$(_context5) {
             while (1) {
               switch (_context5.prev = _context5.next) {
@@ -354,7 +355,8 @@ module.exports = function (app) {
                     age: age,
                     job: job,
                     location: location,
-                    description: description
+                    description: description,
+                    headImage: headImage
                   });
 
                 case 3:
@@ -373,56 +375,11 @@ module.exports = function (app) {
           }, _callee5, this, [[0, 6]]);
         }));
 
-        function modifyUserInfo(_x11, _x12, _x13, _x14, _x15, _x16) {
+        function modifyUserInfo(_x11, _x12, _x13, _x14, _x15, _x16, _x17) {
           return _ref5.apply(this, arguments);
         }
 
         return modifyUserInfo;
-      }()
-
-      /**
-       * 修改用户头像
-       * @param {String} headImage 头像
-       * @return {String} 成功状态
-       */
-
-    }, {
-      key: 'modifyHeadImage',
-      value: function () {
-        var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(headImage) {
-          return regeneratorRuntime.wrap(function _callee6$(_context6) {
-            while (1) {
-              switch (_context6.prev = _context6.next) {
-                case 0:
-                  _context6.prev = 0;
-                  _context6.next = 3;
-                  return User.update({
-                    _id: this.ctx.user._id
-                  }, {
-                    headImage: headImage
-                  });
-
-                case 3:
-                  return _context6.abrupt('return', 'success');
-
-                case 6:
-                  _context6.prev = 6;
-                  _context6.t0 = _context6['catch'](0);
-                  throw new Error('MODIFY_FAIL');
-
-                case 9:
-                case 'end':
-                  return _context6.stop();
-              }
-            }
-          }, _callee6, this, [[0, 6]]);
-        }));
-
-        function modifyHeadImage(_x17) {
-          return _ref6.apply(this, arguments);
-        }
-
-        return modifyHeadImage;
       }()
 
       /**
@@ -434,19 +391,19 @@ module.exports = function (app) {
     }, {
       key: 'giveFollow',
       value: function () {
-        var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(targetId) {
+        var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(targetId) {
           var targetUser;
-          return regeneratorRuntime.wrap(function _callee7$(_context7) {
+          return regeneratorRuntime.wrap(function _callee6$(_context6) {
             while (1) {
-              switch (_context7.prev = _context7.next) {
+              switch (_context6.prev = _context6.next) {
                 case 0:
-                  _context7.prev = 0;
-                  _context7.next = 3;
+                  _context6.prev = 0;
+                  _context6.next = 3;
                   return User.findById(targetId);
 
                 case 3:
-                  targetUser = _context7.sent;
-                  _context7.next = 6;
+                  targetUser = _context6.sent;
+                  _context6.next = 6;
                   return User.update({
                     _id: this.ctx.user._id
                   }, {
@@ -464,7 +421,7 @@ module.exports = function (app) {
                   });
 
                 case 6:
-                  _context7.next = 8;
+                  _context6.next = 8;
                   return User.update({
                     _id: targetId
                   }, {
@@ -483,23 +440,23 @@ module.exports = function (app) {
                   });
 
                 case 8:
-                  return _context7.abrupt('return', 'success');
+                  return _context6.abrupt('return', 'success');
 
                 case 11:
-                  _context7.prev = 11;
-                  _context7.t0 = _context7['catch'](0);
+                  _context6.prev = 11;
+                  _context6.t0 = _context6['catch'](0);
                   throw new Error('MODIFY_FAIL');
 
                 case 14:
                 case 'end':
-                  return _context7.stop();
+                  return _context6.stop();
               }
             }
-          }, _callee7, this, [[0, 11]]);
+          }, _callee6, this, [[0, 11]]);
         }));
 
         function giveFollow(_x18) {
-          return _ref7.apply(this, arguments);
+          return _ref6.apply(this, arguments);
         }
 
         return giveFollow;
@@ -514,13 +471,13 @@ module.exports = function (app) {
     }, {
       key: 'cancelFollow',
       value: function () {
-        var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(targetId) {
-          return regeneratorRuntime.wrap(function _callee8$(_context8) {
+        var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(targetId) {
+          return regeneratorRuntime.wrap(function _callee7$(_context7) {
             while (1) {
-              switch (_context8.prev = _context8.next) {
+              switch (_context7.prev = _context7.next) {
                 case 0:
-                  _context8.prev = 0;
-                  _context8.next = 3;
+                  _context7.prev = 0;
+                  _context7.next = 3;
                   return User.findByIdAndUpdate(this.ctx.user._id, {
                     $pull: {
                       followings: {
@@ -533,7 +490,7 @@ module.exports = function (app) {
                   });
 
                 case 3:
-                  _context8.next = 5;
+                  _context7.next = 5;
                   return User.findByIdAndUpdate(targetId, {
                     $pull: {
                       followers: {
@@ -546,23 +503,23 @@ module.exports = function (app) {
                   });
 
                 case 5:
-                  return _context8.abrupt('return', 'success');
+                  return _context7.abrupt('return', 'success');
 
                 case 8:
-                  _context8.prev = 8;
-                  _context8.t0 = _context8['catch'](0);
+                  _context7.prev = 8;
+                  _context7.t0 = _context7['catch'](0);
                   throw new Error('MODIFY_FAIL');
 
                 case 11:
                 case 'end':
-                  return _context8.stop();
+                  return _context7.stop();
               }
             }
-          }, _callee8, this, [[0, 8]]);
+          }, _callee7, this, [[0, 8]]);
         }));
 
         function cancelFollow(_x19) {
-          return _ref8.apply(this, arguments);
+          return _ref7.apply(this, arguments);
         }
 
         return cancelFollow;
@@ -577,44 +534,44 @@ module.exports = function (app) {
     }, {
       key: 'getUserInfo',
       value: function () {
-        var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(userId) {
+        var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(userId) {
           var user;
-          return regeneratorRuntime.wrap(function _callee9$(_context9) {
+          return regeneratorRuntime.wrap(function _callee8$(_context8) {
             while (1) {
-              switch (_context9.prev = _context9.next) {
+              switch (_context8.prev = _context8.next) {
                 case 0:
-                  _context9.prev = 0;
-                  _context9.next = 3;
+                  _context8.prev = 0;
+                  _context8.next = 3;
                   return User.findById(userId, 'certification nickName headImage description gender age questionCount answerCount circleCount job location followerCount followingCount');
 
                 case 3:
-                  user = _context9.sent;
+                  user = _context8.sent;
 
                   if (user) {
-                    _context9.next = 6;
+                    _context8.next = 6;
                     break;
                   }
 
                   throw new Error('NOT_FOUND');
 
                 case 6:
-                  return _context9.abrupt('return', user);
+                  return _context8.abrupt('return', user);
 
                 case 9:
-                  _context9.prev = 9;
-                  _context9.t0 = _context9['catch'](0);
+                  _context8.prev = 9;
+                  _context8.t0 = _context8['catch'](0);
                   throw new Error('NOT_FOUND');
 
                 case 12:
                 case 'end':
-                  return _context9.stop();
+                  return _context8.stop();
               }
             }
-          }, _callee9, this, [[0, 9]]);
+          }, _callee8, this, [[0, 9]]);
         }));
 
         function getUserInfo(_x20) {
-          return _ref9.apply(this, arguments);
+          return _ref8.apply(this, arguments);
         }
 
         return getUserInfo;
@@ -628,20 +585,71 @@ module.exports = function (app) {
     }, {
       key: 'getUserIndex',
       value: function () {
-        var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+        var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
           var user;
+          return regeneratorRuntime.wrap(function _callee9$(_context9) {
+            while (1) {
+              switch (_context9.prev = _context9.next) {
+                case 0:
+                  _context9.prev = 0;
+                  _context9.next = 3;
+                  return User.findById(this.ctx.user._id);
+
+                case 3:
+                  user = _context9.sent;
+
+                  if (user) {
+                    _context9.next = 6;
+                    break;
+                  }
+
+                  throw new Error('SOMETHING_ERROR');
+
+                case 6:
+                  return _context9.abrupt('return', user);
+
+                case 9:
+                  _context9.prev = 9;
+                  _context9.t0 = _context9['catch'](0);
+                  throw new Error('SOMETHING_ERROR');
+
+                case 12:
+                case 'end':
+                  return _context9.stop();
+              }
+            }
+          }, _callee9, this, [[0, 9]]);
+        }));
+
+        function getUserIndex() {
+          return _ref9.apply(this, arguments);
+        }
+
+        return getUserIndex;
+      }()
+
+      /**
+       * 查看收藏的文章列表
+       * @return {*} 收藏的文章
+       */
+
+    }, {
+      key: 'getCollections',
+      value: function () {
+        var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+          var collections;
           return regeneratorRuntime.wrap(function _callee10$(_context10) {
             while (1) {
               switch (_context10.prev = _context10.next) {
                 case 0:
                   _context10.prev = 0;
                   _context10.next = 3;
-                  return User.findById(this.ctx.user._id);
+                  return User.findById(this.ctx.user._id, 'collections');
 
                 case 3:
-                  user = _context10.sent;
+                  collections = _context10.sent;
 
-                  if (user) {
+                  if (collections) {
                     _context10.next = 6;
                     break;
                   }
@@ -649,7 +657,7 @@ module.exports = function (app) {
                   throw new Error('SOMETHING_ERROR');
 
                 case 6:
-                  return _context10.abrupt('return', user);
+                  return _context10.abrupt('return', collections);
 
                 case 9:
                   _context10.prev = 9;
@@ -664,59 +672,8 @@ module.exports = function (app) {
           }, _callee10, this, [[0, 9]]);
         }));
 
-        function getUserIndex() {
-          return _ref10.apply(this, arguments);
-        }
-
-        return getUserIndex;
-      }()
-
-      /**
-       * 查看收藏的文章列表
-       * @return {*} 收藏的文章
-       */
-
-    }, {
-      key: 'getCollections',
-      value: function () {
-        var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
-          var collections;
-          return regeneratorRuntime.wrap(function _callee11$(_context11) {
-            while (1) {
-              switch (_context11.prev = _context11.next) {
-                case 0:
-                  _context11.prev = 0;
-                  _context11.next = 3;
-                  return User.findById(this.ctx.user._id, 'collections');
-
-                case 3:
-                  collections = _context11.sent;
-
-                  if (collections) {
-                    _context11.next = 6;
-                    break;
-                  }
-
-                  throw new Error('SOMETHING_ERROR');
-
-                case 6:
-                  return _context11.abrupt('return', collections);
-
-                case 9:
-                  _context11.prev = 9;
-                  _context11.t0 = _context11['catch'](0);
-                  throw new Error('SOMETHING_ERROR');
-
-                case 12:
-                case 'end':
-                  return _context11.stop();
-              }
-            }
-          }, _callee11, this, [[0, 9]]);
-        }));
-
         function getCollections() {
-          return _ref11.apply(this, arguments);
+          return _ref10.apply(this, arguments);
         }
 
         return getCollections;
@@ -731,14 +688,14 @@ module.exports = function (app) {
     }, {
       key: 'getAttentions',
       value: function () {
-        var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(last) {
+        var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(last) {
           var attentions;
-          return regeneratorRuntime.wrap(function _callee12$(_context12) {
+          return regeneratorRuntime.wrap(function _callee11$(_context11) {
             while (1) {
-              switch (_context12.prev = _context12.next) {
+              switch (_context11.prev = _context11.next) {
                 case 0:
-                  _context12.prev = 0;
-                  _context12.next = 3;
+                  _context11.prev = 0;
+                  _context11.next = 3;
                   return Question.find({
                     _id: {
                       $in: this.ctx.user.attentions
@@ -749,33 +706,33 @@ module.exports = function (app) {
                   }).limit(PAGE_SIZE).exec();
 
                 case 3:
-                  attentions = _context12.sent;
+                  attentions = _context11.sent;
 
                   if (attentions) {
-                    _context12.next = 6;
+                    _context11.next = 6;
                     break;
                   }
 
                   throw new Error('SOMETHING_ERROR');
 
                 case 6:
-                  return _context12.abrupt('return', attentions);
+                  return _context11.abrupt('return', attentions);
 
                 case 9:
-                  _context12.prev = 9;
-                  _context12.t0 = _context12['catch'](0);
+                  _context11.prev = 9;
+                  _context11.t0 = _context11['catch'](0);
                   throw new Error('SOMETHING_ERROR');
 
                 case 12:
                 case 'end':
-                  return _context12.stop();
+                  return _context11.stop();
               }
             }
-          }, _callee12, this, [[0, 9]]);
+          }, _callee11, this, [[0, 9]]);
         }));
 
         function getAttentions(_x21) {
-          return _ref12.apply(this, arguments);
+          return _ref11.apply(this, arguments);
         }
 
         return getAttentions;
@@ -789,8 +746,54 @@ module.exports = function (app) {
     }, {
       key: 'getFollowings',
       value: function () {
-        var _ref13 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee13() {
+        var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12() {
           var followings;
+          return regeneratorRuntime.wrap(function _callee12$(_context12) {
+            while (1) {
+              switch (_context12.prev = _context12.next) {
+                case 0:
+                  _context12.prev = 0;
+                  _context12.next = 3;
+                  return User.find({
+                    _id: {
+                      $in: [this.ctx.user.followings]
+                    }
+                  }, '_id nickName headImage');
+
+                case 3:
+                  followings = _context12.sent;
+                  return _context12.abrupt('return', followings);
+
+                case 7:
+                  _context12.prev = 7;
+                  _context12.t0 = _context12['catch'](0);
+                  throw new Error('SOMETHING_ERROR');
+
+                case 10:
+                case 'end':
+                  return _context12.stop();
+              }
+            }
+          }, _callee12, this, [[0, 7]]);
+        }));
+
+        function getFollowings() {
+          return _ref12.apply(this, arguments);
+        }
+
+        return getFollowings;
+      }()
+
+      /**
+       * 查看关注我的人列表
+       * @return {*} 关注我的人
+       */
+
+    }, {
+      key: 'getFollowers',
+      value: function () {
+        var _ref13 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee13() {
+          var followers;
           return regeneratorRuntime.wrap(function _callee13$(_context13) {
             while (1) {
               switch (_context13.prev = _context13.next) {
@@ -799,13 +802,13 @@ module.exports = function (app) {
                   _context13.next = 3;
                   return User.find({
                     _id: {
-                      $in: [this.ctx.user.followings]
+                      $in: [this.ctx.user.followers]
                     }
                   }, '_id nickName headImage');
 
                 case 3:
-                  followings = _context13.sent;
-                  return _context13.abrupt('return', followings);
+                  followers = _context13.sent;
+                  return _context13.abrupt('return', followers);
 
                 case 7:
                   _context13.prev = 7;
@@ -820,54 +823,8 @@ module.exports = function (app) {
           }, _callee13, this, [[0, 7]]);
         }));
 
-        function getFollowings() {
-          return _ref13.apply(this, arguments);
-        }
-
-        return getFollowings;
-      }()
-
-      /**
-       * 查看关注我的人列表
-       * @return {*} 关注我的人
-       */
-
-    }, {
-      key: 'getFollowers',
-      value: function () {
-        var _ref14 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee14() {
-          var followers;
-          return regeneratorRuntime.wrap(function _callee14$(_context14) {
-            while (1) {
-              switch (_context14.prev = _context14.next) {
-                case 0:
-                  _context14.prev = 0;
-                  _context14.next = 3;
-                  return User.find({
-                    _id: {
-                      $in: [this.ctx.user.followers]
-                    }
-                  }, '_id nickName headImage');
-
-                case 3:
-                  followers = _context14.sent;
-                  return _context14.abrupt('return', followers);
-
-                case 7:
-                  _context14.prev = 7;
-                  _context14.t0 = _context14['catch'](0);
-                  throw new Error('SOMETHING_ERROR');
-
-                case 10:
-                case 'end':
-                  return _context14.stop();
-              }
-            }
-          }, _callee14, this, [[0, 7]]);
-        }));
-
         function getFollowers() {
-          return _ref14.apply(this, arguments);
+          return _ref13.apply(this, arguments);
         }
 
         return getFollowers;
@@ -882,14 +839,14 @@ module.exports = function (app) {
     }, {
       key: 'getQuestions',
       value: function () {
-        var _ref15 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee15(last) {
+        var _ref14 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee14(last) {
           var questions;
-          return regeneratorRuntime.wrap(function _callee15$(_context15) {
+          return regeneratorRuntime.wrap(function _callee14$(_context14) {
             while (1) {
-              switch (_context15.prev = _context15.next) {
+              switch (_context14.prev = _context14.next) {
                 case 0:
-                  _context15.prev = 0;
-                  _context15.next = 3;
+                  _context14.prev = 0;
+                  _context14.next = 3;
                   return Question.find({
                     userId: this.ctx.user._id,
                     time: { $lt: last }
@@ -898,33 +855,33 @@ module.exports = function (app) {
                   }).limit(PAGE_SIZE).exec();
 
                 case 3:
-                  questions = _context15.sent;
+                  questions = _context14.sent;
 
                   if (questions) {
-                    _context15.next = 6;
+                    _context14.next = 6;
                     break;
                   }
 
                   throw new Error('SOMETHING_ERROR');
 
                 case 6:
-                  return _context15.abrupt('return', questions);
+                  return _context14.abrupt('return', questions);
 
                 case 9:
-                  _context15.prev = 9;
-                  _context15.t0 = _context15['catch'](0);
+                  _context14.prev = 9;
+                  _context14.t0 = _context14['catch'](0);
                   throw new Error('SOMETHING_ERROR');
 
                 case 12:
                 case 'end':
-                  return _context15.stop();
+                  return _context14.stop();
               }
             }
-          }, _callee15, this, [[0, 9]]);
+          }, _callee14, this, [[0, 9]]);
         }));
 
         function getQuestions(_x22) {
-          return _ref15.apply(this, arguments);
+          return _ref14.apply(this, arguments);
         }
 
         return getQuestions;
@@ -939,14 +896,14 @@ module.exports = function (app) {
     }, {
       key: 'getAnswers',
       value: function () {
-        var _ref16 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee16(last) {
+        var _ref15 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee15(last) {
           var answers;
-          return regeneratorRuntime.wrap(function _callee16$(_context16) {
+          return regeneratorRuntime.wrap(function _callee15$(_context15) {
             while (1) {
-              switch (_context16.prev = _context16.next) {
+              switch (_context15.prev = _context15.next) {
                 case 0:
-                  _context16.prev = 0;
-                  _context16.next = 3;
+                  _context15.prev = 0;
+                  _context15.next = 3;
                   return Question.find({
                     _id: {
                       $in: this.ctx.user.answers
@@ -957,33 +914,33 @@ module.exports = function (app) {
                   }).limit(PAGE_SIZE).exec();
 
                 case 3:
-                  answers = _context16.sent;
+                  answers = _context15.sent;
 
                   if (answers) {
-                    _context16.next = 6;
+                    _context15.next = 6;
                     break;
                   }
 
                   throw new Error('SOMETHING_ERROR');
 
                 case 6:
-                  return _context16.abrupt('return', answers);
+                  return _context15.abrupt('return', answers);
 
                 case 9:
-                  _context16.prev = 9;
-                  _context16.t0 = _context16['catch'](0);
+                  _context15.prev = 9;
+                  _context15.t0 = _context15['catch'](0);
                   throw new Error('SOMETHING_ERROR');
 
                 case 12:
                 case 'end':
-                  return _context16.stop();
+                  return _context15.stop();
               }
             }
-          }, _callee16, this, [[0, 9]]);
+          }, _callee15, this, [[0, 9]]);
         }));
 
         function getAnswers(_x23) {
-          return _ref16.apply(this, arguments);
+          return _ref15.apply(this, arguments);
         }
 
         return getAnswers;
@@ -998,14 +955,14 @@ module.exports = function (app) {
     }, {
       key: 'getCircles',
       value: function () {
-        var _ref17 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee17(last) {
+        var _ref16 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee16(last) {
           var circles;
-          return regeneratorRuntime.wrap(function _callee17$(_context17) {
+          return regeneratorRuntime.wrap(function _callee16$(_context16) {
             while (1) {
-              switch (_context17.prev = _context17.next) {
+              switch (_context16.prev = _context16.next) {
                 case 0:
-                  _context17.prev = 0;
-                  _context17.next = 3;
+                  _context16.prev = 0;
+                  _context16.next = 3;
                   return Circle.find({
                     userId: this.ctx.user._id,
                     time: { $lt: last }
@@ -1014,9 +971,58 @@ module.exports = function (app) {
                   });
 
                 case 3:
-                  circles = _context17.sent;
+                  circles = _context16.sent;
 
                   if (circles) {
+                    _context16.next = 6;
+                    break;
+                  }
+
+                  throw new Error('SOMETHING_ERROR');
+
+                case 6:
+                  return _context16.abrupt('return', circles);
+
+                case 9:
+                  _context16.prev = 9;
+                  _context16.t0 = _context16['catch'](0);
+                  throw new Error('SOMETHING_ERROR');
+
+                case 12:
+                case 'end':
+                  return _context16.stop();
+              }
+            }
+          }, _callee16, this, [[0, 9]]);
+        }));
+
+        function getCircles(_x24) {
+          return _ref16.apply(this, arguments);
+        }
+
+        return getCircles;
+      }()
+    }, {
+      key: 'showMessage',
+      value: function () {
+        var _ref17 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee17() {
+          var messages;
+          return regeneratorRuntime.wrap(function _callee17$(_context17) {
+            while (1) {
+              switch (_context17.prev = _context17.next) {
+                case 0:
+                  _context17.prev = 0;
+                  _context17.next = 3;
+                  return Message.find({
+                    myId: this.ctx.user._id
+                  }).sort({
+                    time: 'desc'
+                  });
+
+                case 3:
+                  messages = _context17.sent;
+
+                  if (messages) {
                     _context17.next = 6;
                     break;
                   }
@@ -1024,7 +1030,7 @@ module.exports = function (app) {
                   throw new Error('SOMETHING_ERROR');
 
                 case 6:
-                  return _context17.abrupt('return', circles);
+                  return _context17.abrupt('return', messages);
 
                 case 9:
                   _context17.prev = 9;
@@ -1039,57 +1045,8 @@ module.exports = function (app) {
           }, _callee17, this, [[0, 9]]);
         }));
 
-        function getCircles(_x24) {
-          return _ref17.apply(this, arguments);
-        }
-
-        return getCircles;
-      }()
-    }, {
-      key: 'showMessage',
-      value: function () {
-        var _ref18 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee18() {
-          var messages;
-          return regeneratorRuntime.wrap(function _callee18$(_context18) {
-            while (1) {
-              switch (_context18.prev = _context18.next) {
-                case 0:
-                  _context18.prev = 0;
-                  _context18.next = 3;
-                  return Message.find({
-                    myId: this.ctx.user._id
-                  }).sort({
-                    time: 'desc'
-                  });
-
-                case 3:
-                  messages = _context18.sent;
-
-                  if (messages) {
-                    _context18.next = 6;
-                    break;
-                  }
-
-                  throw new Error('SOMETHING_ERROR');
-
-                case 6:
-                  return _context18.abrupt('return', messages);
-
-                case 9:
-                  _context18.prev = 9;
-                  _context18.t0 = _context18['catch'](0);
-                  throw new Error('SOMETHING_ERROR');
-
-                case 12:
-                case 'end':
-                  return _context18.stop();
-              }
-            }
-          }, _callee18, this, [[0, 9]]);
-        }));
-
         function showMessage() {
-          return _ref18.apply(this, arguments);
+          return _ref17.apply(this, arguments);
         }
 
         return showMessage;
@@ -1097,47 +1054,47 @@ module.exports = function (app) {
     }, {
       key: 'getRecent',
       value: function () {
-        var _ref19 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee19() {
+        var _ref18 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee18() {
           var res, recent, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, item, user, temp;
 
-          return regeneratorRuntime.wrap(function _callee19$(_context19) {
+          return regeneratorRuntime.wrap(function _callee18$(_context18) {
             while (1) {
-              switch (_context19.prev = _context19.next) {
+              switch (_context18.prev = _context18.next) {
                 case 0:
-                  _context19.prev = 0;
+                  _context18.prev = 0;
                   res = [];
-                  _context19.next = 4;
+                  _context18.next = 4;
                   return app.redis.zrangebyscore(RECENT + this.ctx.user._id, 0, Date.now());
 
                 case 4:
-                  recent = _context19.sent;
+                  recent = _context18.sent;
 
                   if (recent.length) {
-                    _context19.next = 7;
+                    _context18.next = 7;
                     break;
                   }
 
-                  return _context19.abrupt('return', res);
+                  return _context18.abrupt('return', res);
 
                 case 7:
                   _iteratorNormalCompletion = true;
                   _didIteratorError = false;
                   _iteratorError = undefined;
-                  _context19.prev = 10;
+                  _context18.prev = 10;
                   _iterator = recent[Symbol.iterator]();
 
                 case 12:
                   if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-                    _context19.next = 29;
+                    _context18.next = 29;
                     break;
                   }
 
                   item = _step.value;
-                  _context19.next = 16;
+                  _context18.next = 16;
                   return User.findById(item, 'certification nickName headImage description');
 
                 case 16:
-                  user = _context19.sent;
+                  user = _context18.sent;
                   temp = {
                     userId: item,
                     certification: user.certification,
@@ -1146,18 +1103,18 @@ module.exports = function (app) {
                     description: user.description,
                     newMessage: false
                   };
-                  _context19.next = 20;
+                  _context18.next = 20;
                   return app.redis.sismember(NEW_MESSAGE + this.ctx.user._id, item);
 
                 case 20:
-                  if (!_context19.sent) {
-                    _context19.next = 25;
+                  if (!_context18.sent) {
+                    _context18.next = 25;
                     break;
                   }
 
                   temp.newMessage = true;
                   res.unshift(temp);
-                  _context19.next = 26;
+                  _context18.next = 26;
                   break;
 
                 case 25:
@@ -1165,61 +1122,61 @@ module.exports = function (app) {
 
                 case 26:
                   _iteratorNormalCompletion = true;
-                  _context19.next = 12;
+                  _context18.next = 12;
                   break;
 
                 case 29:
-                  _context19.next = 35;
+                  _context18.next = 35;
                   break;
 
                 case 31:
-                  _context19.prev = 31;
-                  _context19.t0 = _context19['catch'](10);
+                  _context18.prev = 31;
+                  _context18.t0 = _context18['catch'](10);
                   _didIteratorError = true;
-                  _iteratorError = _context19.t0;
+                  _iteratorError = _context18.t0;
 
                 case 35:
-                  _context19.prev = 35;
-                  _context19.prev = 36;
+                  _context18.prev = 35;
+                  _context18.prev = 36;
 
                   if (!_iteratorNormalCompletion && _iterator.return) {
                     _iterator.return();
                   }
 
                 case 38:
-                  _context19.prev = 38;
+                  _context18.prev = 38;
 
                   if (!_didIteratorError) {
-                    _context19.next = 41;
+                    _context18.next = 41;
                     break;
                   }
 
                   throw _iteratorError;
 
                 case 41:
-                  return _context19.finish(38);
+                  return _context18.finish(38);
 
                 case 42:
-                  return _context19.finish(35);
+                  return _context18.finish(35);
 
                 case 43:
-                  return _context19.abrupt('return', res);
+                  return _context18.abrupt('return', res);
 
                 case 46:
-                  _context19.prev = 46;
-                  _context19.t1 = _context19['catch'](0);
+                  _context18.prev = 46;
+                  _context18.t1 = _context18['catch'](0);
                   throw new Error('SOMETHING_ERROR');
 
                 case 49:
                 case 'end':
-                  return _context19.stop();
+                  return _context18.stop();
               }
             }
-          }, _callee19, this, [[0, 46], [10, 31, 35, 43], [36,, 38, 42]]);
+          }, _callee18, this, [[0, 46], [10, 31, 35, 43], [36,, 38, 42]]);
         }));
 
         function getRecent() {
-          return _ref19.apply(this, arguments);
+          return _ref18.apply(this, arguments);
         }
 
         return getRecent;

@@ -138,9 +138,10 @@ module.exports = app => {
      * @param {String} job 职业
      * @param {String} location 地区
      * @param {String} description 个人简介
+     * @param {String} description 头像
      * @return {String} 成功状态
      */
-    async modifyUserInfo(nickName, gender, age, job, location, description) {
+    async modifyUserInfo(nickName, gender, age, job, location, description, headImage) {
       try {
         await User.update({
           _id: this.ctx.user._id,
@@ -151,23 +152,6 @@ module.exports = app => {
           job,
           location,
           description,
-        });
-        return 'success';
-      } catch (e) {
-        throw new Error('MODIFY_FAIL');
-      }
-    }
-
-    /**
-     * 修改用户头像
-     * @param {String} headImage 头像
-     * @return {String} 成功状态
-     */
-    async modifyHeadImage(headImage) {
-      try {
-        await User.update({
-          _id: this.ctx.user._id,
-        }, {
           headImage,
         });
         return 'success';

@@ -20,8 +20,6 @@ module.exports = app => {
   app.post('/user/sendVerifyCode', app.controller.user.sendVerifyCode);
   // 修改用户资料
   app.post('/user/modifyUserInfo', verifyAccount, app.controller.user.modifyUserInfo);
-  // 修改头像
-  app.post('/user/modifyHeadImage', verifyAccount, app.controller.user.modifyHeadImage);
   // 关注用户
   app.post('/user/giveFollow', verifyAccount, app.controller.user.giveFollow);
   // 取消关注用户

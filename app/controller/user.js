@@ -116,6 +116,11 @@ class UserController extends Controller {
         required: true,
         allowEmpty: true,
       },
+      headImage: {
+        type: 'string',
+        required: true,
+        allowEmpty: true,
+      },
     });
     const {
       nickName,
@@ -124,22 +129,9 @@ class UserController extends Controller {
       job,
       location,
       description,
+      headImage,
     } = this.ctx.request.body;
-    const status = await this.ctx.service.user.modifyUserInfo(nickName, gender, age, job, location, description);
-    this.ctx.body = {
-      status,
-    };
-  }
-
-  /**
-   * 修改用户头像
-   */
-  async modifyHeadImage() {
-    const parts = this.ctx.multipart({
-      autoFields: true,
-    });
-    const images = await this.service.upload.upload(parts, 'headImage');
-    const status = await this.service.user.modifyHeadImage(images[0]);
+    const status = await this.ctx.service.user.modifyUserInfo(nickName, gender, age, job, location, description, headImage);
     this.ctx.body = {
       status,
     };
