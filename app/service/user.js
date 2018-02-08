@@ -100,7 +100,7 @@ module.exports = app => {
     /**
      * 发送验证码
      * @param {String} tel 用户信息
-     * @param {String} reset 是否为重置密码
+     * @param {boolean} reset 是否为重置密码
      * @return {String} 成功状态
      */
     async sendVerifyCode(tel, reset = false) {
@@ -138,7 +138,7 @@ module.exports = app => {
      * @param {String} job 职业
      * @param {String} location 地区
      * @param {String} description 个人简介
-     * @param {String} description 头像
+     * @param {String} headImage 头像
      * @return {String} 成功状态
      */
     async modifyUserInfo(nickName, gender, age, job, location, description, headImage) {
