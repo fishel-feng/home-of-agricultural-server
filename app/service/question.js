@@ -33,7 +33,10 @@ module.exports = app => {
         const question = await new Question({
           title,
           content,
-          tag,
+          tag: {
+            tagName: tag.tagName,
+            tagId: tag._id,
+          },
           images,
           desc,
           userId: user._id,

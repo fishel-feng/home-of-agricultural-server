@@ -67,7 +67,10 @@ module.exports = function (app) {
                   return new Question({
                     title: title,
                     content: content,
-                    tag: tag,
+                    tag: {
+                      tagName: tag.tagName,
+                      tagId: tag._id
+                    },
                     images: images,
                     desc: desc,
                     userId: user._id,
