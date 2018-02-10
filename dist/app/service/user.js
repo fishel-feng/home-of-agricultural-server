@@ -410,6 +410,7 @@ module.exports = function (app) {
                     $push: {
                       followings: {
                         userId: targetId,
+                        certification: targetUser.certification,
                         nickName: targetUser.nickName,
                         headImage: targetUser.headImage,
                         description: targetUser.description
