@@ -282,7 +282,8 @@ module.exports = app => {
         if (!collections) {
           throw new Error('SOMETHING_ERROR');
         }
-        return collections;
+        const result = collections.collections.reverse();
+        return result;
       } catch (e) {
         throw new Error('SOMETHING_ERROR');
       }

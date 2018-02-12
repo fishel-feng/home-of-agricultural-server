@@ -460,7 +460,9 @@ module.exports = function (_Controller) {
               case 2:
                 collections = _context10.sent;
 
-                this.ctx.body = collections;
+                this.ctx.body = {
+                  collections: collections
+                };
 
               case 4:
               case 'end':

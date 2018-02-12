@@ -638,7 +638,7 @@ module.exports = function (app) {
       key: 'getCollections',
       value: function () {
         var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
-          var collections;
+          var collections, result;
           return regeneratorRuntime.wrap(function _callee10$(_context10) {
             while (1) {
               switch (_context10.prev = _context10.next) {
@@ -658,19 +658,20 @@ module.exports = function (app) {
                   throw new Error('SOMETHING_ERROR');
 
                 case 6:
-                  return _context10.abrupt('return', collections);
+                  result = collections.collections.reverse();
+                  return _context10.abrupt('return', result);
 
-                case 9:
-                  _context10.prev = 9;
+                case 10:
+                  _context10.prev = 10;
                   _context10.t0 = _context10['catch'](0);
                   throw new Error('SOMETHING_ERROR');
 
-                case 12:
+                case 13:
                 case 'end':
                   return _context10.stop();
               }
             }
-          }, _callee10, this, [[0, 9]]);
+          }, _callee10, this, [[0, 10]]);
         }));
 
         function getCollections() {

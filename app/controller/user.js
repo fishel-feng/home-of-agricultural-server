@@ -197,7 +197,9 @@ module.exports = class UserController extends Controller {
    */
   async getCollections() {
     const collections = await this.service.user.getCollections();
-    this.ctx.body = collections;
+    this.ctx.body = {
+      collections,
+    };
   }
 
   /**
