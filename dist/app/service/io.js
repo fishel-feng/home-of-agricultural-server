@@ -39,11 +39,10 @@ module.exports = function (app) {
       /**
        * 登录
        * @param {String} token token
-       * @return {Promise<void>} id
        */
       value: function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(token) {
-          var userId, socketId;
+          var userId, socketId, hasNewMessage, userCount;
           return regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
@@ -54,9 +53,26 @@ module.exports = function (app) {
                   return app.redis.set(SOCKET + userId, socketId);
 
                 case 4:
-                  return _context.abrupt('return', socketId);
+                  _context.next = 6;
+                  return app.redis.get('MESSAGE' + userId);
 
-                case 5:
+                case 6:
+                  hasNewMessage = !!_context.sent;
+
+                  if (hasNewMessage) {
+                    this.ctx.socket.emit('message');
+                  }
+                  _context.next = 10;
+                  return app.redis.zcard(CHAT + userId);
+
+                case 10:
+                  userCount = _context.sent;
+
+                  if (userCount) {
+                    this.ctx.socket.emit('chat', userCount);
+                  }
+
+                case 12:
                 case 'end':
                   return _context.stop();
               }
@@ -132,7 +148,7 @@ module.exports = function (app) {
 
                 case 17:
                   _context2.next = 19;
-                  return app.redis.sadd(CHAT + targetId, 'chatId');
+                  return app.redis.sadd(CHAT + targetId, chatId);
 
                 case 19:
                 case 'end':

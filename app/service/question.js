@@ -73,7 +73,7 @@ module.exports = app => {
             questionCount: -1,
           },
         });
-        if (res.result.n !== 1) {
+        if (res.result.n !== '1') {
           throw new Error();
         }
         return 'success';

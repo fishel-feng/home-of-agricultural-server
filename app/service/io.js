@@ -19,13 +19,19 @@ module.exports = app => {
     /**
      * 登录
      * @param {String} token token
-     * @return {Promise<void>} id
      */
     async login(token) {
       const userId = this.getUserId(token);
       const socketId = this.ctx.socket.id;
       await app.redis.set(SOCKET + userId, socketId);
-      return socketId;
+      const hasNewMessage = !!await app.redis.get('MESSAGE' + userId);
+      if (hasNewMessage) {
+        this.ctx.socket.emit('message');
+      }
+      const userCount = await app.redis.zcard(CHAT + userId);
+      if (userCount) {
+        this.ctx.socket.emit('chat', userCount);
+      }
     }
 
     /**
@@ -55,7 +61,7 @@ module.exports = app => {
           sender: userId,
         });
       } else {
-        await app.redis.sadd(CHAT + targetId, 'chatId');
+        await app.redis.sadd(CHAT + targetId, chatId);
       }
     }
 

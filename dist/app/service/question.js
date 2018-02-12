@@ -145,7 +145,7 @@ module.exports = function (app) {
                   });
 
                 case 6:
-                  if (!(res.result.n !== 1)) {
+                  if (!(res.result.n !== '1')) {
                     _context2.next = 8;
                     break;
                   }
