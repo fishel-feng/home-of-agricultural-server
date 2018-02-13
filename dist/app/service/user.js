@@ -20,7 +20,8 @@ module.exports = function (app) {
       User = _app$model.User,
       Circle = _app$model.Circle,
       Question = _app$model.Question,
-      Message = _app$model.Message;
+      Message = _app$model.Message,
+      Expert = _app$model.Expert;
 
   var PAGE_SIZE = 30;
 
@@ -1182,6 +1183,62 @@ module.exports = function (app) {
         }
 
         return getRecent;
+      }()
+    }, {
+      key: 'applyCertification',
+      value: function () {
+        var _ref19 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee19(realName, idCardNumber, urls, tag, message) {
+          var expert;
+          return regeneratorRuntime.wrap(function _callee19$(_context19) {
+            while (1) {
+              switch (_context19.prev = _context19.next) {
+                case 0:
+                  _context19.next = 2;
+                  return Expert.findOne({ idCardNumber: idCardNumber });
+
+                case 2:
+                  expert = _context19.sent;
+
+                  if (!expert) {
+                    _context19.next = 5;
+                    break;
+                  }
+
+                  throw new Error('REPEAT');
+
+                case 5:
+                  _context19.prev = 5;
+                  _context19.next = 8;
+                  return new Expert({
+                    userId: this.ctx.user._id,
+                    realName: realName,
+                    idCardNumber: idCardNumber,
+                    urls: urls,
+                    tag: tag,
+                    message: message
+                  }).save();
+
+                case 8:
+                  return _context19.abrupt('return', 'success');
+
+                case 11:
+                  _context19.prev = 11;
+                  _context19.t0 = _context19['catch'](5);
+                  throw new Error('SOMETHING_ERROR');
+
+                case 14:
+                case 'end':
+                  return _context19.stop();
+              }
+            }
+          }, _callee19, this, [[5, 11]]);
+        }));
+
+        function applyCertification(_x25, _x26, _x27, _x28, _x29) {
+          return _ref19.apply(this, arguments);
+        }
+
+        return applyCertification;
       }()
 
       /**

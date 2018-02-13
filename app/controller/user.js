@@ -285,4 +285,28 @@ module.exports = class UserController extends Controller {
       recent,
     };
   }
+
+  /**
+   * 申请专家认证
+   */
+  async applyCertification() {
+    this.ctx.validate({
+      realName: 'string',
+      idCardNumber: /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/,
+      urls: 'array',
+      tag: 'string',
+      message: 'string',
+    });
+    const {
+      realName,
+      idCardNumber,
+      urls,
+      tag,
+      message,
+    } = this.ctx.request.body;
+    const result = await this.service.user.applyCertification(realName, idCardNumber, urls, tag, message);
+    this.ctx.body = {
+      result,
+    };
+  }
 };

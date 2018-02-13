@@ -3,90 +3,91 @@
 module.exports = {
   NOT_FOUND: {
     code: 404,
-    message: '没找到',
+    message: '没找到'
   },
   SOMETHING_ERROR: {
     code: 500,
-    message: '未知错误',
+    message: '未知错误'
   },
   INVALID_PARAM: {
     code: 422,
-    message: '参数错误',
+    message: '参数错误'
   },
   ERROR_USER: {
     code: 423,
-    message: '用户名或密码错误',
+    message: '用户名或密码错误'
   },
   UPLOAD_FAILED: {
     code: 425,
-    message: '图片上传失败',
+    message: '图片上传失败'
   },
   ADD_CIRCLE_ERROR: {
     code: 466,
-    message: '发表动态失败',
+    message: '发表动态失败'
   },
   DELETE_CIRCLE_ERROR: {
     code: 488,
-    message: '删除动态失败',
+    message: '删除动态失败'
   },
   ADD_COMMENT_ERROR: {
     code: 494,
-    message: '添加评论动态失败',
+    message: '添加评论动态失败'
   },
   REPEAT_LIKE: {
     code: 499,
-    message: '重复点赞',
+    message: '重复点赞'
   },
   GIVE_LIKE_ERROR: {
     code: 459,
-    message: '点赞异常',
+    message: '点赞异常'
   },
   CANCEL_LIKE_ERROR: {
     code: 493,
-    message: '取消赞异常',
+    message: '取消赞异常'
   },
   GET_LIST_ERROR: {
     code: 423,
-    message: '获取列表信息',
+    message: '获取列表信息'
   },
   SEND_CODE_ERROR: {
     code: 427,
-    message: '发送验证码异常',
+    message: '发送验证码异常'
   },
   VERIFY_CODE_ERROR: {
     code: 457,
-    message: '验证码错误',
+    message: '验证码错误'
   },
   USER_EXIST: {
     code: 455,
-    message: '此手机号已注册',
+    message: '此手机号已注册'
   },
   NO_USER: {
     code: 492,
-    message: '用户未注册',
+    message: '用户未注册'
   },
   RESET_PASSWORD_ERROR: {
     code: 428,
-    message: '重置密码失败',
+    message: '重置密码失败'
   },
   NO_AUTHORIZATION: {
     code: 328,
-    message: '未认证',
+    message: '未认证'
   },
   AUTH_ERROR: {
     code: 328,
-    message: '认证错误',
+    message: '认证错误'
   },
   MODIFY_FAIL: {
     code: 328,
-    message: '修改失败',
+    message: '修改失败'
   },
   DELETE_ERROR: {
     code: 328,
-    message: '删除失败',
+    message: '删除失败'
   },
   REPEAT: {
     code: 444,
-    message: '重复认证',
-  },
+    message: '重复认证'
+  }
 };
+//# sourceMappingURL=error.js.map

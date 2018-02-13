@@ -44,6 +44,8 @@ module.exports = app => {
   app.get('/user/showMessage', verifyAccount, app.controller.user.showMessage);
   // 查看最近联系的人
   app.get('/user/getRecent', verifyAccount, app.controller.user.getRecent);
+  // 申请专家认证
+  app.post('/user/applyCertification', verifyAccount, app.controller.user.applyCertification);
 
   // ----------新闻模块-----------
   // 查看‘首页’

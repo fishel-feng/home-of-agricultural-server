@@ -786,6 +786,53 @@ module.exports = function (_Controller) {
 
       return getRecent;
     }()
+
+    /**
+     * 申请专家认证
+     */
+
+  }, {
+    key: 'applyCertification',
+    value: function () {
+      var _ref19 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee19() {
+        var _ctx$request$body6, realName, idCardNumber, urls, tag, message, result;
+
+        return regeneratorRuntime.wrap(function _callee19$(_context19) {
+          while (1) {
+            switch (_context19.prev = _context19.next) {
+              case 0:
+                this.ctx.validate({
+                  realName: 'string',
+                  idCardNumber: /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/,
+                  urls: 'array',
+                  tag: 'string',
+                  message: 'string'
+                });
+                _ctx$request$body6 = this.ctx.request.body, realName = _ctx$request$body6.realName, idCardNumber = _ctx$request$body6.idCardNumber, urls = _ctx$request$body6.urls, tag = _ctx$request$body6.tag, message = _ctx$request$body6.message;
+                _context19.next = 4;
+                return this.service.user.applyCertification(realName, idCardNumber, urls, tag, message);
+
+              case 4:
+                result = _context19.sent;
+
+                this.ctx.body = {
+                  result: result
+                };
+
+              case 6:
+              case 'end':
+                return _context19.stop();
+            }
+          }
+        }, _callee19, this);
+      }));
+
+      function applyCertification() {
+        return _ref19.apply(this, arguments);
+      }
+
+      return applyCertification;
+    }()
   }]);
 
   return UserController;

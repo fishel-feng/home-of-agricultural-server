@@ -11,6 +11,7 @@ module.exports = app => {
     Circle,
     Question,
     Message,
+    Expert,
   } = app.model;
   const PAGE_SIZE = 30;
 
@@ -459,6 +460,26 @@ module.exports = app => {
           }
         }
         return res;
+      } catch (e) {
+        throw new Error('SOMETHING_ERROR');
+      }
+    }
+
+    async applyCertification(realName, idCardNumber, urls, tag, message) {
+      const expert = await Expert.findOne({ idCardNumber });
+      if (expert) {
+        throw new Error('REPEAT');
+      }
+      try {
+        await new Expert({
+          userId: this.ctx.user._id,
+          realName,
+          idCardNumber,
+          urls,
+          tag,
+          message,
+        }).save();
+        return 'success';
       } catch (e) {
         throw new Error('SOMETHING_ERROR');
       }
