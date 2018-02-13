@@ -60,7 +60,8 @@ module.exports = app => {
   app.post('/news/deleteFromCollections', verifyAccount, app.controller.news.deleteFromCollections);
 
   // ----------百科模块------------
-  // app.get('/wiki/getAll', app.controller.wiki.getAll);
+  // 查询百科
+  app.get('/wiki/getWiki/:keyWord', app.controller.wiki.getWiki);
 
   // ----------圈子模块------------
   // 发表动态
