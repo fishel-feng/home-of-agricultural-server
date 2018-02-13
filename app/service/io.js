@@ -24,13 +24,15 @@ module.exports = app => {
       const userId = this.getUserId(token);
       const socketId = this.ctx.socket.id;
       await app.redis.set(SOCKET + userId, socketId);
-      const hasNewMessage = !!await app.redis.get('MESSAGE' + userId);
+      const hasNewMessage = !!await app.redis.get(MESSAGE + userId);
       if (hasNewMessage) {
         this.ctx.socket.emit('message');
+        await app.redis.del(MESSAGE + userId);
       }
-      const userCount = await app.redis.zcard(CHAT + userId);
+      const userCount = await app.redis.scard(CHAT + userId);
       if (userCount) {
-        this.ctx.socket.emit('chat', userCount);
+        this.ctx.socket.emit('chatMessage', userCount);
+        await app.redis.del(CHAT + userId);
       }
     }
 
@@ -184,7 +186,7 @@ module.exports = app => {
           title: question.title,
         });
       } else {
-        await app.redis.rpush(MESSAGE + authorId, '1');
+        await app.redis.set(MESSAGE + authorId, '1');
       }
       for (const id of attentions) {
         await new Message({

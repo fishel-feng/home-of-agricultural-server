@@ -54,25 +54,37 @@ module.exports = function (app) {
 
                 case 4:
                   _context.next = 6;
-                  return app.redis.get('MESSAGE' + userId);
+                  return app.redis.get(MESSAGE + userId);
 
                 case 6:
                   hasNewMessage = !!_context.sent;
 
-                  if (hasNewMessage) {
-                    this.ctx.socket.emit('message');
+                  if (!hasNewMessage) {
+                    _context.next = 11;
+                    break;
                   }
-                  _context.next = 10;
-                  return app.redis.zcard(CHAT + userId);
 
-                case 10:
+                  this.ctx.socket.emit('message');
+                  _context.next = 11;
+                  return app.redis.del(MESSAGE + userId);
+
+                case 11:
+                  _context.next = 13;
+                  return app.redis.scard(CHAT + userId);
+
+                case 13:
                   userCount = _context.sent;
 
-                  if (userCount) {
-                    this.ctx.socket.emit('chat', userCount);
+                  if (!userCount) {
+                    _context.next = 18;
+                    break;
                   }
 
-                case 12:
+                  this.ctx.socket.emit('chatMessage', userCount);
+                  _context.next = 18;
+                  return app.redis.del(CHAT + userId);
+
+                case 18:
                 case 'end':
                   return _context.stop();
               }
@@ -450,7 +462,7 @@ module.exports = function (app) {
 
                 case 18:
                   _context6.next = 20;
-                  return app.redis.rpush(MESSAGE + authorId, '1');
+                  return app.redis.set(MESSAGE + authorId, '1');
 
                 case 20:
                   _iteratorNormalCompletion = true;
