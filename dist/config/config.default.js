@@ -25,8 +25,8 @@ module.exports = function (appInfo) {
 
   config.aliSms = {
     client: {
-      accessKeyId: 'LTAIC2RTwc2egSTi',
-      secretAccessKey: '4UyjdFtn9ubES63V5MJtRW8A7e7QjV'
+      accessKeyId: 'LTAIZhqIon36l7eq',
+      secretAccessKey: 'dnARhtehAzlIncPocziOiXUufowpxX'
     }
   };
 

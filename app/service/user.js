@@ -121,10 +121,22 @@ module.exports = app => {
         const verifyCode = this.generateVerifyCode();
         if (reset) {
           await app.redis.set(RESET_VERIFY_CODE_PREFIX + tel, verifyCode);
+          app.redis.expire(RESET_VERIFY_CODE_PREFIX + tel, 5 * 60);
         } else {
           await app.redis.set(NEW_VERIFY_CODE_PREFIX + tel, verifyCode);
+          app.redis.expire(NEW_VERIFY_CODE_PREFIX + tel, 5 * 60);
         }
-        // todo 发短信
+        await app.aliSms.sendSMS({
+          PhoneNumbers: tel,
+          SignName: '小农之家',
+          TemplateCode: 'SMS_112485253',
+          TemplateParam: JSON.stringify({ code: verifyCode }),
+        });
+        if (reset) {
+          app.redis.expire(RESET_VERIFY_CODE_PREFIX + tel, 5 * 60);
+        } else {
+          app.redis.expire(NEW_VERIFY_CODE_PREFIX + tel, 5 * 60);
+        }
         return 'success';
       } catch (e) {
         throw new Error('SEND_CODE_ERROR');

@@ -288,7 +288,7 @@ module.exports = function (app) {
                   verifyCode = this.generateVerifyCode();
 
                   if (!reset) {
-                    _context4.next = 17;
+                    _context4.next = 18;
                     break;
                   }
 
@@ -296,27 +296,45 @@ module.exports = function (app) {
                   return app.redis.set(RESET_VERIFY_CODE_PREFIX + tel, verifyCode);
 
                 case 15:
-                  _context4.next = 19;
+                  app.redis.expire(RESET_VERIFY_CODE_PREFIX + tel, 5 * 60);
+                  _context4.next = 21;
                   break;
 
-                case 17:
-                  _context4.next = 19;
+                case 18:
+                  _context4.next = 20;
                   return app.redis.set(NEW_VERIFY_CODE_PREFIX + tel, verifyCode);
 
-                case 19:
+                case 20:
+                  app.redis.expire(NEW_VERIFY_CODE_PREFIX + tel, 5 * 60);
+
+                case 21:
+                  _context4.next = 23;
+                  return app.aliSms.sendSMS({
+                    PhoneNumbers: tel,
+                    SignName: '小农之家',
+                    TemplateCode: 'SMS_112485253',
+                    TemplateParam: JSON.stringify({ code: verifyCode })
+                  });
+
+                case 23:
+                  if (reset) {
+                    app.redis.expire(RESET_VERIFY_CODE_PREFIX + tel, 5 * 60);
+                  } else {
+                    app.redis.expire(NEW_VERIFY_CODE_PREFIX + tel, 5 * 60);
+                  }
                   return _context4.abrupt('return', 'success');
 
-                case 22:
-                  _context4.prev = 22;
+                case 27:
+                  _context4.prev = 27;
                   _context4.t0 = _context4['catch'](10);
                   throw new Error('SEND_CODE_ERROR');
 
-                case 25:
+                case 30:
                 case 'end':
                   return _context4.stop();
               }
             }
-          }, _callee4, this, [[10, 22]]);
+          }, _callee4, this, [[10, 27]]);
         }));
 
         function sendVerifyCode(_x10) {
